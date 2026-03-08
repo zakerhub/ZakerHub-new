@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control | ZakerHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            --primary: #6366F1;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg: #f8fafc;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 40px; color: #1e293b; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        h1 { font-weight: 800; font-size: 2rem; margin-bottom: 30px; color: #0f172a; display: flex; align-items: center; gap: 10px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+        
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .card h2 { font-size: 1.25rem; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        
+        .btn { 
+            padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; 
+            font-weight: 600; display: inline-flex; align-items: center; gap: 5px; transition: 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: white; width: 100%; justify-content: center; }
+        .btn-success { background: var(--success); color: white; font-size: 0.8rem; }
+        .btn-danger { background: var(--danger); color: white; font-size: 0.8rem; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 12px; background: #f1f5f9; font-size: 0.85rem; }
+        td { padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .badge-waiting { background: #fef3c7; color: #92400e; }
+
+        #msg { padding: 10px; border-radius: 6px; margin-bottom: 15px; display: none; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1><i data-feather="shield"></i> ZakerHub Admin Panel</h1>
+
+    <div id="msg"></div>
+
+    <div class="grid">
+        <div class="card">
+            <h2><i data-feather="user-plus"></i> Add Teacher</h2>
+            <form id="addTeacherForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="tName" required placeholder="Dr. Smith">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="tEmail" required placeholder="teacher@zakerhub.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" id="tPhone" placeholder="+20 123...">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="tPass" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Teacher Account</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="clock"></i> Pending Course Enrollments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="enrollmentBody">
+                    <tr><td colspan="3" style="text-align:center;">Loading requests...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://127.0.0.1:8000/api/v1";
+    const token = localStorage.getItem('token');
+
+    // 1. Admin Security Guard
+    async function checkAdminAuth() {
+        if (!token) { window.location.href = 'signin.html'; return; }
+        
+        const res = await fetch(`${API_URL}/auth/me/`, {
+            headers: { 'Authorization': `Token ${token}` }
+        });
+        const user = await res.json();
+        
+        // If the user isn't an admin, kick them out!
+        if (user.role !== 'admin') {
+            alert("Access Denied: Admins Only.");
+            window.location.href = 'dashboard.html';
+        }
+    }
+
+    const showMsg = (text, isError = false) => {
+        const msgDiv = document.getElementById('msg');
+        msgDiv.innerText = text;
+        msgDiv.style.display = 'block';
+        msgDiv.style.background = isError ? '#fee2e2' : '#dcfce7';
+        msgDiv.style.color = isError ? '#991b1b' : '#166534';
+        setTimeout(() => msgDiv.style.display = 'none', 4000);
+    };
+
+    // 2. Add Teacher (POST to your signup endpoint)
+    document.getElementById('addTeacherForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+            name: document.getElementById('tName').value,
+            email: document.getElementById('tEmail').value,
+            phone: document.getElementById('tPhone').value,
+            password: document.getElementById('tPass').value,
+            role: 'teacher' // Your backend uses 'role' to assign permissions
+        };
+
+        try {
+            const res = await fetch(`${API_URL}/auth/signup/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (res.ok) {
+                showMsg("Teacher account created successfully!");
+                document.getElementById('addTeacherForm').reset();
+            } else {
+                const data = await res.json();
+                showMsg(data.detail || "Error creating account", true);
+            }
+        } catch (err) {
+            showMsg("Connection to server failed", true);
+        }
+    });
+
+    // 3. Load Pending Enrollments (GET from your subscriptions endpoint)
+    async function loadRequests() {
+        try {
+            const res = await fetch(`${API_URL}/subscriptions/enrollments/?status=pending`, {
+                headers: { 'Authorization': `Token ${token}` }
+            });
+            const enrollments = await res.json();
+            
+            const tbody = document.getElementById('enrollmentBody');
+            
+            if (!enrollments.length) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No pending requests</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = enrollments.map(reg => `
+                <tr>
+                    <td><b>${reg.student_name}</b></td>
+                    <td>${reg.course_name}</td>
+                    <td>
+                        <button class="btn btn-success" onclick="handleAction(${reg.id}, 'approved')">
+                            <i data-feather="check" width="14"></i>
+                        </button>
+                        <button class="btn btn-danger" onclick="handleAction(${reg.id}, 'rejected')">
+                            <i data-feather="x" width="14"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            feather.replace();
+        } catch (err) {
+            console.error("Failed to load requests", err);
+        }
+    }
+
+    // 4. Approve/Deny (PATCH the enrollment status)
+    async function handleAction(enrollmentId, newStatus) {
+        try {
+            const res = await fetch(`${API_URL}/subscriptions/enrollments/${enrollmentId}/`, {
+                method: 'PATCH',
+                headers: { 
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+            
+            if (res.ok) {
+                showMsg(`Enrollment ${newStatus === 'approved' ? 'Approved' : 'Rejected'}`);
+                loadRequests(); // Refresh table
+            }
+        } catch (err) {
+            showMsg("Action failed", true);
+        }
+    }
+
+    // Run Security Check and Load Data
+    window.onload = async () => {
+        feather.replace();
+        await checkAdminAuth();
+        loadRequests();
+    };
+</script>
+
+</body>
+</html>

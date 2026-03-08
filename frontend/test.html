@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <!-- Title -->
+    <meta property="og:title" content="Results - ModaMate" />
+    
+    <!-- Description -->
+    <meta property="og:description" content="AI-Powered Clothing Search Engine" />
+
+    <!-- Image -->
+    <meta property="og:image" content="https://res.cloudinary.com/ddyftb9yl/image/upload/fl_preserve_transparency/v1743707831/LightTheme_xgcwi8.jpg?_s=public-apps" />
+
+    <!-- Favicon for light theme -->
+    <link rel="icon" type="image/png" href="assets/img/LightTheme.ico" media="(prefers-color-scheme: light)">
+    
+    <!-- Favicon for dark theme -->
+    <link rel="icon" type="image/png" href="assets/img/DarkTheme.ico" media="(prefers-color-scheme: dark)">
+
+    <link rel="stylesheet" href="./assets/css/style-prefix.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="header-main">
+        <div class="container" style="height: 4em; display: flex;">
+          <a href="index.html" class="header-logo">
+            <h1 style="color: rgb(32, 31, 31);">ModaMate</h1>
+          </a>
+  
+          <div class="header-search-container">
+            <input id="searchbar" style="border-color: gray;" type="search" name="search" class="search-field" placeholder="Search" />
+  
+            <button class="search-btn" id="searchbtn" style="color: black;">
+              <ion-icon name="search-outline"></ion-icon>
+            </button>
+          </div>
+  
+          </div>
+        </div>
+      </div>
+
+    <div style="margin: auto;">
+    <div class="product-main">
+    <div id="results-div" class="product-grid" style="padding-left: 7em; padding-right: 7em; padding-top: 1em;">
+        
+    </div>
+    </div>
+    </div>
+    <script type="module">
+        import { results } from './backend/improved-search.js';
+        let searchbar = document.getElementById('searchbar')
+        searchbar.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                // Prevent the form from submitting and refreshing the page
+                event.preventDefault(); 
+    
+                let query = searchbar.value.trim();
+                if (query) {
+                    window.location.href = `results.html?query=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+        function updateTitle(title) {
+            document.title = `Results for "${title}" | ModaMate`
+        }
+        function activateTheme() {
+            const darkModeButton = document.querySelector('button[data-bs-theme-value="dark"]');
+            if (darkModeButton) {
+                darkModeButton.classList.add('active');
+            }
+        }
+        
+        let searchbtn = document.getElementById('searchbtn')
+        searchbtn.onclick = function() {
+            if (searchbar.value.trim()) {
+              window.location.href = `results.html?query=${encodeURIComponent(searchbar.value.trim())}`;
+            }
+        }
+    
+        window.onload = function() {
+            let parameters = new URLSearchParams(window.location.search);
+            let query = parameters.get("query");
+            updateTitle(query);
+            activateTheme();
+            searchbar.value = query;
+            results(query);
+        }
+        </script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

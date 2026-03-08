@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Zaker Hub</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script> 
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <span class="logo-hub">ZH</span> Zaker Hub
+        </div>
+        <nav class="main-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i data-feather="grid"></i> Dashboard
+            </a>
+            <a href="courses.html" class="nav-item">
+                <i data-feather="book-open"></i> My Courses
+            </a>
+            <a href="assignments.html" class="nav-item">
+                <i data-feather="file-text"></i> Assignments
+                <span class="notification-badge" id="assignment-count">0</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <i data-feather="calendar"></i> Schedule
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i data-feather="settings"></i> Settings
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="nav-item" id="logout-btn">
+                <i data-feather="log-out"></i> Log Out
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <h1 id="welcome-message">Welcome Back!</h1>
+            <div class="user-profile">
+                <div class="profile-info">
+                    <span class="user-name" id="display-name">Loading...</span>
+                    <span class="user-role" id="display-phone">...</span>
+                </div>
+                <div class="avatar" id="display-initials">??</div>
+            </div>
+        </header>
+
+        <section class="dashboard-section courses-grid">
+            <h2>Current Courses</h2>
+            <div class="course-cards-container" id="courses-container">
+                <div class="text-center p-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-section tasks-and-meetings">
+            
+            <div class="due-tasks">
+                <h2>Assignments Due</h2>
+                <div class="task-list" id="assignments-list">
+                    <p class="text-muted">No pending assignments.</p>
+                </div>
+            </div>
+
+            <div class="upcoming-meetings">
+                <h2>Online Meetings (Zoom)</h2>
+                <div class="meeting-list" id="meetings-list">
+                    <p class="text-muted">No meetings scheduled.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+    const API_URL = "http://127.0.0.1:8000/api/v1";
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        window.location.href = 'signin.html';
+    }
+
+    async function loadDashboard() {
+        try {
+            const userRes = await fetch(`${API_URL}/auth/me/`, {
+                headers: { 'Authorization': `Token ${token}` }
+            });
+            
+            if (userRes.ok) {
+                const userData = await userRes.json();
+                document.getElementById('welcome-message').textContent = `Welcome Back, ${userData.name}!`;
+                document.getElementById('display-name').textContent = userData.name;
+                document.getElementById('display-phone').textContent = userData.phone || userData.email;
+                document.getElementById('display-initials').textContent = userData.name.substring(0, 2).toUpperCase();
+            } else {
+                localStorage.removeItem('token');
+                window.location.href = 'signin.html';
+            }
+
+            const coursesRes = await fetch(`${API_URL}/academics/courses/`, {
+                headers: { 'Authorization': `Token ${token}` }
+            });
+
+            if (coursesRes.ok) {
+                const courses = await coursesRes.json();
+                renderCourses(courses);
+            }
+
+            const assignmentsRes = await fetch(`${API_URL}/academics/assignments/`, {
+                headers: { 'Authorization': `Token ${token}` }
+            });
+
+            if (assignmentsRes.ok) {
+                const assignments = await assignmentsRes.json();
+                renderAssignments(assignments);
+            }
+
+        } catch (err) {
+            console.error("Dashboard Load Error:", err);
+        }
+    }
+
+    function renderCourses(courses) {
+        const container = document.getElementById('courses-container');
+        container.innerHTML = '';
+
+        if (courses.length === 0) {
+            container.innerHTML = '<div class="alert alert-info w-100">You are not enrolled in any courses yet.</div>';
+            return;
+        }
+
+        courses.forEach(course => {
+            const card = document.createElement('div');
+            card.className = 'course-card animated-card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <h3>${course.name}</h3>
+                    <span class="curriculum-tag ${course.curriculum ? course.curriculum.toLowerCase() : 'dp'}-tag">${course.curriculum || 'General'}</span>
+                </div>
+                <p class="instructor">Instructor: ${course.teacher_name || 'TBA'}</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: ${course.progress || 0}%;"></div>
+                    <span class="progress-text">${course.progress || 0}% Complete</span>
+                </div>
+                <br>
+                <a href="course-detail.html?id=${course.id}" class="btn-card-access">Access Course →</a>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderAssignments(assignments) {
+        const listContainer = document.getElementById('assignments-list');
+        const badge = document.getElementById('assignment-count');
+        
+        listContainer.innerHTML = '';
+        const pending = assignments.filter(a => !a.is_submitted);
+        badge.textContent = pending.length;
+
+        if (pending.length === 0) {
+            listContainer.innerHTML = '<p class="text-muted">All caught up! No pending assignments.</p>';
+            return;
+        }
+
+        pending.slice(0, 5).forEach(asm => {
+            const item = document.createElement('div');
+            item.className = 'task-item animated-task';
+            item.innerHTML = `
+                <i data-feather="file-text" class="task-icon"></i>
+                <div class="task-info">
+                    <h4>${asm.title}</h4>
+                    <p>${asm.course_name} | Due: ${new Date(asm.due_date).toLocaleDateString()}</p>
+                </div>
+                <a href="assignment-view.html?id=${asm.id}" class="btn-task action-submit">View</a>
+            `;
+            listContainer.appendChild(item);
+        });
+        feather.replace();
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        window.location.href = 'signin.html';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        feather.replace();
+        loadDashboard();
+    });
+    </script>
+</body>
+</html>

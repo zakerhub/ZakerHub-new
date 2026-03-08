@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Enrollment | Zaker Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --whatsapp-green: #25d366;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .registration-card {
+            width: 100%;
+            max-width: 550px;
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            margin: 20px;
+        }
+
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 0; }
+        .header p { color: var(--text-muted); margin-top: 5px; }
+
+        /* Course Summary Box */
+        .summary-grid {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .item { display: flex; align-items: flex-start; gap: 12px; }
+        .item i { color: var(--primary); font-size: 1.1rem; margin-top: 3px; }
+        .item label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700; }
+        .item span { font-weight: 600; font-size: 1rem; color: var(--text-main); }
+
+        /* Steps Layout */
+        .step-list { margin-bottom: 2.5rem; }
+        .step-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-desc h4 { margin: 0 0 4px 0; font-size: 1rem; color: var(--text-main); }
+        .step-desc p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+        .highlight { color: var(--primary); font-weight: 700; }
+
+        /* Action Button */
+        .btn-confirm {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-confirm:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .wa-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--whatsapp-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .wa-link:hover { text-decoration: underline; }
+
+        /* Loading State */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="main-content" class="registration-card hidden">
+    <div class="header">
+        <h1>Course Registration</h1>
+        <p>Follow these steps to finalize your payment</p>
+    </div>
+
+    <div class="summary-grid">
+        <div class="item">
+            <i class="fas fa-graduation-cap"></i>
+            <div><label>Course</label><span id="cName">Loading...</span></div>
+        </div>
+        <div class="item">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <div><label>Teacher</label><span id="tName">Loading...</span></div>
+        </div>
+        <div class="item">
+            <i class="fas fa-tag"></i>
+            <div><label>Type</label><span id="cType">Full Term</span></div>
+        </div>
+        <div class="item">
+            <i class="fas fa-credit-card"></i>
+            <div><label>Price</label><span id="cPrice">EGP 0.00</span></div>
+        </div>
+    </div>
+
+    <div class="step-list">
+        <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-desc">
+                <h4>InstaPay Transfer</h4>
+                <p>Send the exact amount to <span class="highlight">zakerhub@instapay</span></p>
+            </div>
+        </div>
+        <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-desc">
+                <h4>Screenshot Receipt</h4>
+                <p>Take a clear screenshot of the successful transaction page.</p>
+            </div>
+        </div>
+        <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-desc">
+                <h4>WhatsApp Verification</h4>
+                <p>Send the screenshot to <span class="highlight">+01234567890</span> from your registered number.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-confirm" onclick="confirmApplication()">
+        <i class="fas fa-check-double"></i> Confirm & Submit
+    </button>
+
+    <a href="https://wa.me/01234567890" class="wa-link">
+        <i class="fab fa-whatsapp"></i> Need help? Contact Support
+    </a>
+</div>
+
+<script>
+    // 1. Initial Checks (Auth & Role)
+    async function checkAccess() {
+        try {
+            // We fetch the current user data from an endpoint (you might need to add this to your Express server)
+            // Or use a generic check if the route returns 401
+            const res = await fetch('/api/user-status'); 
+            // Note: Create a simple route server.get("/api/user-status", protectRoute, (req, res) => res.json(req.user));
+            
+            if (res.status === 401) {
+                window.location.href = "/"; // Not logged in
+                return;
+            }
+            
+            const user = await res.json();
+            
+            if (user.type === 'teacher') {
+                alert("Teachers cannot register for courses.");
+                window.location.href = "/dashboard";
+                return;
+            }
+
+            // If we get here, user is a student. Show the UI.
+            document.getElementById('main-content').classList.remove('hidden');
+            loadCourseData(); 
+        } catch (err) {
+            window.location.href = "/";
+        }
+    }
+
+    // 2. Fetch Course Details (Optional: You can pass these via URL params)
+    function loadCourseData() {
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('cName').innerText = params.get('name') || "Selected Course";
+        document.getElementById('tName').innerText = params.get('teacher') || "Main Instructor";
+        document.getElementById('cPrice').innerText = params.get('price') || "Contact Support";
+    }
+
+    // 3. Confirm API Request
+    async function confirmApplication() {
+        const params = new URLSearchParams(window.location.search);
+        const course_id = params.get('course_id');
+
+        if (!course_id) return alert("Missing Course ID");
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ course_id: course_id })
+            });
+
+            if (response.ok) {
+                alert("Confirmed! Please ensure you've sent the WhatsApp message.");
+                window.location.reload(); 
+            } else {
+                const msg = await response.text();
+                alert(msg);
+            }
+        } catch (e) {
+            alert("Connection error occurred.");
+        }
+    }
+
+    // Run access check on load
+    checkAccess();
+</script>
+
+</body>
+</html>

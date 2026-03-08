@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment | Zaker Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            --google-blue: #1a73e8;
+            --google-gray: #5f6368;
+            --google-light: #f1f3f4;
+            --navy-hub: #172a50;
+            --text-dark: #3c4043;
+            --border-color: #dadce0;
+        }
+
+        body {
+            margin: 0;
+            background-color: #fff;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        
+        .btn-return {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: white;
+            color: var(--google-gray);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-return:hover { background: var(--google-light); }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .nav-avatar { width: 32px; height: 32px; border-radius: 50%; }
+
+        .tabs-container {
+            display: none;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab {
+            padding: 15px 24px;
+            cursor: pointer;
+            color: var(--google-gray);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
+        .tab.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .full-width { grid-template-columns: 1fr; }
+
+        .assignment-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border-bottom: 1px solid var(--google-blue);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .icon-circle {
+            background: var(--google-blue);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .title-area h1 { margin: 0; font-family: 'Google Sans', sans-serif; font-weight: 400; font-size: 2rem; color: var(--google-blue); }
+        .meta-text { color: var(--google-gray); font-size: 0.9rem; margin-top: 4px; }
+
+        .description { line-height: 1.6; font-size: 0.95rem; white-space: pre-wrap; }
+
+        .work-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+            padding: 24px;
+            position: sticky;
+            top: 100px;
+        }
+        .work-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .work-card-header h2 { margin: 0; font-size: 1.25rem; font-weight: 400; }
+        .status-label { font-size: 0.85rem; font-weight: 600; }
+        .status-assigned { color: var(--google-gray); }
+        .status-done { color: #1e8e3e; }
+
+        .btn-action {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: var(--google-blue);
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+        .btn-primary { background: var(--google-blue); color: #fff; border: none; }
+        .btn-primary:hover { background: #185abc; }
+        .btn-danger { color: #d93025; border-color: #fce8e6; }
+        .btn-danger:hover { background: #fce8e6; }
+
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .submissions-table th { text-align: left; padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--google-gray); }
+        .submissions-table td { padding: 16px; border-bottom: 1px solid #f1f3f4; }
+        
+        .cog-btn {
+            background: none;
+            border: none;
+            color: var(--google-gray);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        .cog-btn:hover { background: var(--google-light); }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-box { background: white; padding: 24px; border-radius: 8px; width: 450px; }
+        .modal-box h3 { margin-top: 0; }
+        .modal-box input, .modal-box textarea { width: 100%; margin: 10px 0; padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; }
+
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="course-stream.html" class="btn-return" id="back-link">
+                <i data-feather="arrow-left" style="width: 18px;"></i>
+                Return to course
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="cog-btn" id="teacher-cog" onclick="toggleModal(true)" style="display: none;">
+                <i data-feather="settings"></i>
+            </button>
+            <img src="https://ui-avatars.com/api/?name=User&background=172a50&color=fff" class="nav-avatar">
+        </div>
+    </nav>
+
+    <div class="tabs-container" id="teacher-tabs">
+        <div class="tab active" id="tab-instructions" onclick="showSection('instructions')">Instructions</div>
+        <div class="tab" id="tab-work" onclick="showSection('student-work')">Student work</div>
+    </div>
+
+    <main class="main-content" id="layout-grid">
+        
+        <section id="content-instructions">
+            <div class="assignment-header">
+                <div class="icon-circle"><i data-feather="file-text"></i></div>
+                <div class="title-area">
+                    <h1 id="asm-title">Loading...</h1>
+                    <div class="meta-text">
+                        <span id="asm-prof">Teacher</span> • 
+                        <span id="asm-date">Date</span>
+                    </div>
+                    <div class="meta-text" style="font-weight: 500; border-top: 1px solid #eee; margin-top: 8px; padding-top: 8px;">
+                        <span id="asm-points">0 points</span>
+                    </div>
+                </div>
+            </div>
+            <div class="description" id="asm-desc"></div>
+        </section>
+
+        <section id="content-sidebar">
+            <div class="work-card">
+                <div class="work-card-header">
+                    <h2>Your work</h2>
+                    <span class="status-label status-assigned" id="work-status">Assigned</span>
+                </div>
+
+                <div id="upload-zone">
+                    <label class="btn-action">
+                        <i data-feather="plus" style="width: 14px; vertical-align: middle;"></i> Add or create
+                        <input type="file" id="file-input" onchange="submitFile(this)">
+                    </label>
+                    <button class="btn-action btn-primary" onclick="document.getElementById('file-input').click()">Mark as done</button>
+                </div>
+
+                <div id="submitted-zone" style="display: none;">
+                    <div style="border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                        <i data-feather="file" style="color: var(--google-blue);"></i>
+                        <span style="font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis;" id="filename-display"></span>
+                    </div>
+                    <div id="grade-display" style="margin-bottom: 10px; font-weight: 600; color: var(--google-blue); display: none;"></div>
+                    <button class="btn-action btn-danger" onclick="unsubmit()">Unsubmit</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="content-student-work" style="display: none; width: 100%;">
+            <div class="work-card" style="width: 100%;">
+                <table class="submissions-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>File</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacher-rows"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal" id="edit-modal">
+        <div class="modal-box">
+            <h3>Edit Assignment</h3>
+            <input type="text" id="edit-title" placeholder="Assignment Title">
+            <textarea id="edit-description" rows="5" placeholder="Instructions"></textarea>
+            <input type="number" id="edit-points" placeholder="Points">
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn-action" style="width: auto;" onclick="toggleModal(false)">Cancel</button>
+                <button class="btn-action btn-primary" style="width: auto;" onclick="saveAssignment()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000/api/v1";
+        const token = localStorage.getItem('token');
+        const urlParams = new URLSearchParams(window.location.search);
+        const assignmentId = urlParams.get('id');
+
+        if (!token) window.location.href = 'signin.html';
+        if (!assignmentId) window.location.href = 'dashboard.html';
+
+        async function init() {
+            feather.replace();
+            try {
+                const userRes = await fetch(`${API_URL}/auth/me/`, {
+                    headers: { 'Authorization': `Token ${token}` }
+                });
+                const userData = await userRes.json();
+                document.querySelector('.nav-avatar').src = `https://ui-avatars.com/api/?name=${userData.name}&background=172a50&color=fff`;
+
+                const asmRes = await fetch(`${API_URL}/academics/assignments/${assignmentId}/`, {
+                    headers: { 'Authorization': `Token ${token}` }
+                });
+                const asmData = await asmRes.json();
+                renderAssignmentDetails(asmData);
+
+                if (userData.role === 'teacher') {
+                    setupTeacherView(asmData);
+                } else {
+                    checkStudentSubmission();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderAssignmentDetails(data) {
+            document.getElementById('asm-title').textContent = data.title;
+            document.getElementById('asm-desc').textContent = data.description;
+            document.getElementById('asm-points').textContent = `${data.points || 100} points`;
+            document.getElementById('asm-prof').textContent = data.teacher_name || "Instructor";
+            if(data.created_at) document.getElementById('asm-date').textContent = new Date(data.created_at).toLocaleDateString();
+            
+            document.getElementById('edit-title').value = data.title;
+            document.getElementById('edit-description').value = data.description;
+            document.getElementById('edit-points').value = data.points;
+        }
+
+        async function checkStudentSubmission() {
+            try {
+                const res = await fetch(`${API_URL}/academics/items/?assignment=${assignmentId}`, {
+                    headers: { 'Authorization': `Token ${token}` }
+                });
+                const items = await res.json();
+                if (items.length > 0) {
+                    const submission = items[0];
+                    showSubmittedState(submission.title || "File Uploaded");
+                    if (submission.grade) {
+                        const gradeDiv = document.getElementById('grade-display');
+                        gradeDiv.innerText = `Grade: ${submission.grade} / 100`;
+                        gradeDiv.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function submitFile(el) {
+            const file = el.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('assignment', assignmentId);
+            formData.append('title', file.name);
+
+            try {
+                const res = await fetch(`${API_URL}/academics/items/`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Token ${token}` },
+                    body: formData
+                });
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    alert("Submission failed.");
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function unsubmit() {
+            if (!confirm("Remove your submission?")) return;
+            try {
+                const res = await fetch(`${API_URL}/academics/items/?assignment=${assignmentId}`, {
+                    headers: { 'Authorization': `Token ${token}` }
+                });
+                const items = await res.json();
+                if (items.length > 0) {
+                    await fetch(`${API_URL}/academics/items/${items[0].id}/`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Token ${token}` }
+                    });
+                    location.reload();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function setupTeacherView(data) {
+            document.getElementById('teacher-tabs').style.display = 'flex';
+            document.getElementById('teacher-cog').style.display = 'block';
+            document.getElementById('content-sidebar').style.display = 'none';
+            document.getElementById('layout-grid').classList.add('full-width');
+            loadAllSubmissions();
+        }
+
+        async function loadAllSubmissions() {
+            try {
+                const res = await fetch(`${API_URL}/academics/submissions/?assignment=${assignmentId}`, {
+                    headers: { 'Authorization': `Token ${token}` }
+                });
+                const submissions = await res.json();
+                const tbody = document.getElementById('teacher-rows');
+                tbody.innerHTML = submissions.map(s => `
+                    <tr>
+                        <td style="font-weight: 500;">${s.student_name}</td>
+                        <td class="${s.file_url ? 'status-done' : 'status-assigned'}">
+                            ${s.file_url ? 'Turned in' : 'Assigned'}
+                        </td>
+                        <td>${s.file_url ? `<a href="${s.file_url}" target="_blank" style="color:var(--google-blue);">View Work</a>` : '--'}</td>
+                        <td>
+                            <input type="number" value="${s.grade || ''}" 
+                                   onchange="updateGrade(${s.id}, this.value)"
+                                   style="width:60px; padding:4px; border:1px solid #ddd; border-radius:4px;"> 
+                            / 100
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function updateGrade(submissionId, score) {
+            try {
+                await fetch(`${API_URL}/academics/submissions/${submissionId}/`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ grade: score })
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function saveAssignment() {
+            const data = {
+                title: document.getElementById('edit-title').value,
+                description: document.getElementById('edit-description').value,
+                points: document.getElementById('edit-points').value
+            };
+            try {
+                const res = await fetch(`${API_URL}/academics/assignments/${assignmentId}/`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) location.reload();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const isInstructions = section === 'instructions';
+            document.getElementById(isInstructions ? 'tab-instructions' : 'tab-work').classList.add('active');
+            document.getElementById('content-instructions').style.display = isInstructions ? 'block' : 'none';
+            document.getElementById('content-student-work').style.display = isInstructions ? 'none' : 'block';
+        }
+
+        function showSubmittedState(filename) {
+            document.getElementById('upload-zone').style.display = 'none';
+            document.getElementById('submitted-zone').style.display = 'block';
+            document.getElementById('work-status').innerText = "Turned in";
+            document.getElementById('work-status').className = "status-label status-done";
+            document.getElementById('filename-display').innerText = filename;
+        }
+
+        function toggleModal(show) {
+            document.getElementById('edit-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

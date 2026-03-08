@@ -1,0 +1,147 @@
+/* --- 1. Global Reset and Variables (Updated Navy Theme) --- */
+:root {
+    --color-primary-navy: #172a50; /* Sleek Navy Blue */
+    --color-primary-accent: #635bff; /* Stripe's bright blue/purple for CTAs */
+    --color-text-dark: #30313d; /* Near-black for main text */
+    --color-text-light: #525f7f; /* Subdued text */
+    --color-bg-light: #f6f9fc; /* Light background for sections */
+    --color-white: #ffffff;
+    --color-shadow: rgba(23, 42, 80, 0.15); /* Shadow from Navy */
+    --font-family-sans: 'Inter', sans-serif;
+    --border-radius-lg: 12px;
+    --border-radius-sm: 6px;
+}
+
+/* ... (Existing global styles remain) ... */
+
+/* --- 2. Typography --- */
+h1 strong {
+    color: var(--color-primary-navy); /* Headline emphasis in Navy */
+    font-style: normal; /* Remove italics for a more formal look */
+}
+
+/* --- 3. Utility (Buttons and Links) --- */
+.btn-primary {
+    background-color: var(--color-primary-accent); /* Keep the vibrant blue for the main CTA */
+    color: var(--color-white);
+    box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: #584fe3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 91, 255, 0.6);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary-navy); /* Secondary CTA matches the navy theme */
+    border-color: var(--color-primary-navy);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(23, 42, 80, 0.05);
+    border-color: #11213f;
+    transform: translateY(-1px);
+}
+
+.cta-link {
+    color: var(--color-primary-navy); /* Nav sign-in link is navy */
+}
+
+.cta-link:hover {
+    background-color: rgba(23, 42, 80, 0.08);
+}
+
+/* --- 4. Navigation Bar --- */
+.logo {
+    color: var(--color-primary-navy);
+}
+
+.logo-hub {
+    /* Use the bright accent color on the logo initials for pop */
+    color: var(--color-primary-accent); 
+    font-weight: 800;
+}
+
+/* --- 5. Hero Visual (Card) --- */
+.card-mockup {
+    /* Ensure the card shadow uses the Navy color for a sophisticated depth */
+    box-shadow: 0 20px 50px var(--color-shadow);
+}
+.card-tab.active {
+    color: var(--color-primary-navy); /* Active tab highlight */
+}
+
+.chart-bar {
+    background-color: var(--color-primary-navy); /* Chart bars are navy */
+}
+
+/* --- 6. New Curriculum Section --- */
+.curriculum-section {
+    padding: 6rem 6%;
+    background-color: var(--color-white); /* White background for contrast */
+    text-align: center;
+}
+
+.curriculum-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.curriculum-item {
+    background-color: var(--color-bg-light);
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    border-left: 5px solid var(--color-primary-navy); /* Navy accent stripe */
+    transition: all 0.3s ease;
+    opacity: 0; 
+    transform: translateY(20px);
+    text-align: left;
+}
+
+.curriculum-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--color-shadow);
+}
+
+.curriculum-item h3 {
+    color: var(--color-primary-navy);
+    margin-bottom: 0.5rem;
+}
+
+.curriculum-item .icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: var(--color-primary-accent); /* Use bright accent for icons */
+}
+
+/* --- 7. Featurette Section --- */
+.featurette-section {
+    padding: 6rem 6%;
+    background-color: var(--color-bg-light); /* Lighter gray background */
+    border-top: 1px solid #e6ebf1;
+}
+
+.feature-item .icon {
+    color: var(--color-primary-navy); /* Feature icons in Navy */
+}
+
+/* --- 8. Footer --- */
+footer {
+    border-top: 1px solid #e6ebf1;
+}
+footer a {
+    color: var(--color-primary-accent);
+}
+
+/* --- 9. Keyframe Animations (JS Controlled Visibility) --- */
+
+.is-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}

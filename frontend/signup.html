@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ZakerHub</title>
+    <link rel="stylesheet" href="./assets/css/signin.css">
+    <style>
+        .eye-closed { display: none; }
+        .role-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+        .role-option { 
+            flex: 1; padding: 10px; border: 1px solid #e3e8ee; border-radius: 8px; 
+            text-align: center; cursor: pointer; font-weight: 600;
+        }
+        .role-option.active { background: #6366F1; color: white; border-color: #6366F1; }
+        .error-message { color: #ff4d4d; font-size: 0.8rem; margin-top: 5px; }
+        .success-message { display: none; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="8" fill="#6366F1"/><path d="M12 14h12v8H12v-8zm2 2v4h8v-4h-8zm-2-4h12v2H12v-2zm0 12h12v2H12v-2z" fill="white"/></svg>
+                </div>
+                <h1>Create Account</h1>
+                <p>Join ZakerHub today</p>
+            </div>
+            
+            <form id="signupForm" class="login-form">
+                <!-- <div class="form-group">
+                    <label>I am a:</label>
+                    <div class="role-selector">
+                        <div class="role-option active" data-role="student">Student</div>
+                        <div class="role-option" data-role="teacher">Teacher</div>
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Create Account</span>
+                </button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <h3>Account Created!</h3>
+                <p>Please wait for admin approval to access all features.</p>
+                <a href="signin.html">Go to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const API_URL = "http://127.0.0.1:8000/api/v1";
+    let selectedRole = 'student'; // Default role
+
+    // 1. Role Selection Logic
+    const roleOptions = document.querySelectorAll('.role-option');
+    roleOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            roleOptions.forEach(el => el.classList.remove('active'));
+            opt.classList.add('active');
+            selectedRole = opt.dataset.role;
+        });
+    });
+
+    // 2. Handle Signup Submission
+    const signupForm = document.getElementById('signupForm');
+    const emailError = document.getElementById('emailError');
+    const successMessage = document.getElementById('successMessage');
+    const submitBtn = signupForm.querySelector('.login-btn');
+
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Reset UI state
+        emailError.textContent = "";
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = "Creating Account...";
+
+        // Collect data from HTML
+        const emailValue = document.getElementById('email').value;
+        const phoneValue = document.getElementById('phone').value;
+        const passwordValue = document.getElementById('password').value;
+
+        // Construct the body exactly as your API expects
+        const signupData = {
+            email: emailValue,
+            name: emailValue.split('@')[0], // API requires 'name', using email prefix as placeholder
+            password: passwordValue,
+            phone: phoneValue
+            // Note: If your backend handles roles, you can add 'role: selectedRole' here
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/auth/signup/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(signupData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Success! Hide form and show success message
+                signupForm.style.display = 'none';
+                successMessage.style.display = 'block';
+            } else {
+                // Handle errors (like email already exists)
+                if (result.email) {
+                    emailError.textContent = result.email[0];
+                } else if (result.detail) {
+                    emailError.textContent = result.detail;
+                } else {
+                    emailError.textContent = "Signup failed. Please check your details.";
+                }
+            }
+        } catch (err) {
+            console.error("Network error:", err);
+            emailError.textContent = "Cannot connect to server. Ensure your Python backend is running.";
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = "Create Account";
+        }
+    });
+</script>
+</body>
+</html>

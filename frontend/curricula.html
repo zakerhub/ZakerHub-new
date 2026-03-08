@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration Hub | Zaker Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script> 
+
+    <style>
+        /* --- 1. Variables and Global Reset (Consistent with Landing Page) --- */
+        :root {
+            --color-primary-navy: #172a50; 
+            --color-primary-accent: #635bff; 
+            --color-text-dark: #30313d; 
+            --color-text-light: #525f7f;
+            --color-bg-light: #f6f9fc; 
+            --color-white: #ffffff;
+            --color-shadow: rgba(23, 42, 80, 0.15); 
+            --font-family-sans: 'Inter', sans-serif;
+            --border-radius-lg: 12px;
+            --border-radius-sm: 6px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            line-height: 1.6;
+            color: var(--color-text-dark);
+            background-color: var(--color-bg-light);
+            padding-bottom: 4rem;
+        }
+
+        /* --- 2. Navigation Bar (Simplified for Internal Page) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--color-white);
+            border-bottom: 1px solid #e6ebf1;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-navy);
+        }
+
+        .logo-hub {
+            color: var(--color-primary-accent);
+            font-weight: 800;
+        }
+        
+        .back-link {
+            color: var(--color-primary-navy);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: var(--color-primary-accent);
+        }
+
+        /* --- 3. Header & Main Container --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 4%;
+            text-align: center;
+        }
+
+        .header-content {
+            margin-bottom: 3rem;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-content p {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+        }
+
+        /* --- 4. Curriculum Grid (The Main Rectangles) --- */
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .curriculum-card {
+            background-color: var(--color-white);
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid #e6ebf1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            opacity: 0; /* Initial state for JS animation */
+            transform: translateY(20px);
+        }
+
+        .curriculum-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(23, 42, 80, 0.1);
+            border-color: var(--color-primary-accent);
+        }
+        
+        /* Colored Top Accent Bar */
+        .curriculum-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--color-primary-navy);
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Specific colors for visual variety */
+        .curriculum-card[data-type="igcse"]::before { background-color: #388e3c; } /* Green */
+        .curriculum-card[data-type="ad"]::before { background-color: #1976d2; } /* Blue */
+        .curriculum-card[data-type="dp"]::before { background-color: #e53935; } /* Red */
+        .curriculum-card[data-type="sat"]::before { background-color: #ffbd44; } /* Yellow */
+        .curriculum-card[data-type="act"]::before { background-color: #00ca4e; } /* Bright Green */
+        .curriculum-card[data-type="est"]::before { background-color: #635bff; } /* Accent Blue/Purple */
+
+        .card-icon {
+            color: var(--color-primary-navy);
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1rem;
+            stroke-width: 2.5;
+        }
+
+        .curriculum-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .curriculum-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .action-text {
+            display: flex;
+            align-items: center;
+            color: var(--color-primary-accent);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .action-text i {
+            margin-left: 8px;
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+        
+        .curriculum-card:hover .action-text i {
+            transform: translateX(5px);
+        }
+
+        /* --- 5. Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            border-top: 1px solid #e6ebf1;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-hub">ZH</span> Zaker Hub
+        </div>
+        <a href="javascript:history.back()" class="back-link">
+            <i data-feather="arrow-left"></i> Back to Dashboard
+        </a>
+    </header>
+
+    <div class="main-container">
+        
+        <div class="header-content">
+            <h1>Select Your Curriculum Pathway</h1>
+            <p>Click on any of the following to view the available subjects and begin your course registration.</p>
+        </div>
+
+        <div class="curriculum-grid">
+
+            <div class="curriculum-card animated-card" data-type="igcse">
+                <i data-feather="globe" class="card-icon"></i>
+                <h3>IGCSE / IG</h3>
+                <p>Comprehensive support for Cambridge, Edexcel, and Oxford AQA International General Certificate of Secondary Education programs.</p>
+                <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
+            </div>
+            
+            <div class="curriculum-card animated-card" data-type="ad">
+                <i data-feather="book-open" class="card-icon"></i>
+                <h3>American Diploma (AD)</h3>
+                <p>Full academic track tailored for US high school requirements, including honors, AP prep, and elective subject registration.</p>
+                <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
+            </div>
+
+            <div class="curriculum-card animated-card" data-type="dp">
+                <i data-feather="trello" class="card-icon"></i>
+                <h3>IB Diploma Programme (DP)</h3>
+                <p>Enroll in standard and higher level courses, with specialized registration for TOK, EE, and CAS components.</p>
+                <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
+            </div>
+
+            <div class="curriculum-card animated-card" data-type="sat">
+                <i data-feather="edit" class="card-icon"></i>
+                <h3>SAT (Digital & Paper)</h3>
+                <p>Targeted prep courses for all sections of the Scholastic Assessment Test to maximize your university admissions score.</p>
+                <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
+            </div>
+            
+            <div class="curriculum-card animated-card" data-type="act">
+                <i data-feather="check-circle" class="card-icon"></i>
+                <h3>ACT</h3>
+                <p>Focused subject review and timed practice tests for the American College Testing exam's English, Math, Science, and Reading sections.</p>
+                <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
+            </div>
+            
+            <div class="curriculum-card animated-card" data-type="est">
+                <i data-feather="compass" class="card-icon"></i>
+                <h3>EST (Egyptian Scholastic)</h3>
+                <p>Specialized courses designed specifically for the local Egyptian Scholastic Test curriculum and assessment structure.</p>
+                <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Zaker Hub. Global Education Management. Built by WebVera | <a href="#">Need Help?</a></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+
+            // --- 1. Scroll-Based Fade-In Animation (Card Entrance) ---
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1 
+            };
+
+            const itemsToObserve = document.querySelectorAll('.curriculum-card');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Apply animation via CSS properties
+                        entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            itemsToObserve.forEach((item, index) => {
+                // Stagger the item reveals for a waterfall effect
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+            
+            // --- 2. Card Click Handler (Simulated Navigation) ---
+            itemsToObserve.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const curriculumType = card.getAttribute('data-type');
+                    // In a real application, this would redirect or dynamically load content.
+                    alert(`You clicked to register for: ${curriculumType.toUpperCase()} Courses. \n\nNext step: Loading the list of subjects...`);
+                    // Example: window.location.href = `/register/subjects?curriculum=${curriculumType}`;
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

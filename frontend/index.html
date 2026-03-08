@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaker Hub | Global Curricula, Local Excellence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. Global Reset and Variables (Updated Navy Theme) --- */
+        :root {
+            --color-primary-navy: #172a50; /* Sleek Navy Blue */
+            --color-primary-accent: #635bff; /* Stripe's bright blue/purple for CTAs */
+            --color-text-dark: #30313d; 
+            --color-text-light: #525f7f; 
+            --color-bg-light: #f6f9fc; /* Light background for sections */
+            --color-white: #ffffff;
+            --color-shadow: rgba(23, 42, 80, 0.15); /* Shadow from Navy */
+            --font-family-sans: 'Inter', sans-serif;
+            --border-radius-lg: 12px;
+            --border-radius-sm: 6px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            line-height: 1.6;
+            color: var(--color-text-dark);
+            background-color: var(--color-white);
+            overflow-x: hidden; /* Prevents horizontal scroll from animations */
+        }
+
+        /* --- 2. Typography & Emphasis --- */
+        h1 {
+            font-size: 4rem; 
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        h1 strong {
+            color: var(--color-primary-navy); 
+            font-style: normal;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--color-text-dark);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+        }
+
+        /* --- 3. Utility (Buttons and Links) --- */
+        .btn-primary, .btn-secondary {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary-accent); 
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: #584fe3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 91, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-primary-navy); 
+            border-color: var(--color-primary-navy);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(23, 42, 80, 0.05);
+            border-color: #11213f;
+            transform: translateY(-1px);
+        }
+
+        .cta-link {
+            color: var(--color-primary-navy);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: background-color 0.2s;
+        }
+
+        .cta-link:hover {
+            background-color: rgba(23, 42, 80, 0.08);
+        }
+
+        /* --- 4. Navigation Bar --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--color-white);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-navy);
+        }
+
+        .logo-hub {
+            color: var(--color-primary-accent);
+            font-weight: 800;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary-navy);
+        }
+
+        /* --- 5. Hero Section --- */
+        .hero-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4rem 6%; 
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            max-width: 50%;
+        }
+
+        .hero-subtext {
+            margin: 1.5rem 0 2rem 0;
+            font-size: 1.3rem;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .trusted-by {
+            border-top: 1px solid #e6ebf1;
+            padding-top: 1.5rem;
+        }
+
+        .trusted-by p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-dark);
+        }
+
+        .logos span {
+            display: inline-block;
+            margin-right: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        /* --- 6. Hero Visual (Animated Card) --- */
+        .hero-visual {
+            width: 40%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .card-mockup {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 20px 50px var(--color-shadow);
+            overflow: hidden;
+            border: 1px solid #e6ebf1;
+            transform: perspective(1000px) rotateY(-10deg) scale(0.95); /* Initial 3D tilt */
+            opacity: 0; /* Initial state for JS animation */
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background-color: #f6f9fc;
+            border-bottom: 1px solid #e6ebf1;
+        }
+
+        .dot-red, .dot-yellow, .dot-green {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .dot-red { background-color: #ff5c5c; }
+        .dot-yellow { background-color: #ffbd44; }
+        .dot-green { background-color: #00ca4e; }
+
+        .card-tab {
+            margin-left: 1.5rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            cursor: pointer;
+        }
+
+        .card-tab.active {
+            background-color: var(--color-white);
+            color: var(--color-primary-navy);
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .metric-box {
+            margin-bottom: 2rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.2rem;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            color: #00ca4e;
+            font-weight: 600;
+        }
+
+        .chart-area {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 120px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e6ebf1;
+        }
+
+        .chart-bar {
+            width: 15%;
+            background-color: var(--color-primary-navy);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.8s ease-out; 
+        }
+
+        /* Initial/Default bar heights for the visual */
+        .bar-1 { height: 40%; }
+        .bar-2 { height: 75%; }
+        .bar-3 { height: 50%; }
+        .bar-4 { height: 90%; }
+        .bar-5 { height: 65%; }
+
+        /* --- 7. Curriculum Focus Section --- */
+        .curriculum-section {
+            padding: 6rem 6%;
+            background-color: var(--color-white); 
+            text-align: center;
+        }
+        
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .curriculum-item {
+            background-color: var(--color-bg-light);
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            border-left: 5px solid var(--color-primary-navy); 
+            transition: all 0.3s ease;
+            opacity: 0; 
+            transform: translateY(20px);
+            text-align: left;
+        }
+        
+        .curriculum-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--color-shadow);
+        }
+        
+        .curriculum-item h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-navy);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .curriculum-item .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            color: var(--color-primary-accent); 
+        }
+
+        /* --- 8. Featurette Section --- */
+        .featurette-section {
+            padding: 6rem 6%;
+            background-color: var(--color-bg-light); 
+            border-top: 1px solid #e6ebf1;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background-color: var(--color-white);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e6ebf1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0; 
+            transform: translateY(20px);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item h3 .icon {
+            color: var(--color-primary-navy); 
+        }
+
+        /* --- 9. Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            border-top: 1px solid #e6ebf1;
+        }
+
+        footer a {
+            color: var(--color-primary-accent);
+            text-decoration: none;
+        }
+
+        /* --- 10. Keyframe Animations (JS Controlled Visibility) --- */
+
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-hub">ZH</span> Zaker Hub
+        </div>
+        <nav class="nav-links">
+            <a href="curricula.html">Curricula</a>
+            <a href="#features">Features</a>
+            <a href="#">Policies</a>
+            <a href="signin.html" class="cta-link">Sign In</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-headline" id="headline-text">
+                <br><div style="color: f6f9fc; visibility: hidden;">The</div> Sleekest Platform for <br>Global Curriculum Management.
+            </h1>
+            <p class="hero-subtext">
+                Zaker Hub is engineered to manage **IGCSE, American Diploma, and DP** programs with unmatched clarity and a refined, powerful aesthetic.
+            </p>
+            <div class="hero-cta-group">
+                <a href="curricula.html" class="btn-primary">Explore Courses Now</a>
+                <a href="dashboard.html" class="btn-secondary">Open Dashboard <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="trusted-by">
+                <p>Trusted by premier international schools.</p>
+                <div class="logos">
+                    <span>IGCSE Prep</span>
+                    <span>AD Academy</span>
+                    <span>DP Centre</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual" id="visual-card">
+            <div class="card-mockup">
+                <div class="card-header">
+                    <span class="dot-red"></span>
+                    <span class="dot-yellow"></span>
+                    <span class="dot-green"></span>
+                    <div class="card-tab active">Course Progress</div>
+                    <div class="card-tab">Assessments</div>
+                </div>
+                <div class="card-body">
+                    <div class="metric-box">
+                        <p class="metric-label">Students Enrolled This Quarter</p>
+                        <h2 class="metric-value">2,150</h2>
+                        <span class="metric-change">+8.2% in Q3</span>
+                    </div>
+                    <div class="chart-area">
+                        <div class="chart-bar bar-1"></div>
+                        <div class="chart-bar bar-2"></div>
+                        <div class="chart-bar bar-3"></div>
+                        <div class="chart-bar bar-4"></div>
+                        <div class="chart-bar bar-5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="curriculum-section" id="curricula">
+        <h2>Curricula Managed with Precision.</h2>
+        <div class="curriculum-grid">
+            <div class="curriculum-item fade-in" data-curriculum="igcse">
+                <h3><span class="icon">🇬🇧</span> IGCSE</h3>
+                <p>Detailed tracking for Cambridge and Edexcel syllabi, from Checkpoint to A-Levels. Fully compliant and comprehensive.</p>
+            </div>
+            <div class="curriculum-item fade-in" data-curriculum="ad">
+                <h3><span class="icon">🇺🇸</span> American Diploma</h3>
+                <p>Gradebook and credit management system designed for US high school requirements, including elective and AP course pathways.</p>
+            </div>
+            <div class="curriculum-item fade-in" data-curriculum="dp">
+                <h3><span class="icon">🌐</span> Diploma Programme (DP)</h3>
+                <p>Integrated tools for managing CAS, Extended Essay (EE), and Theory of Knowledge (TOK). Streamlined IB compliance.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="featurette-section" id="features">
+        <h2>Built for **Scale** and **Simplicity**.</h2>
+        <div class="feature-grid">
+            <div class="feature-item fade-in">
+                <h3><span class="icon">✨</span> Gorgeous UX</h3>
+                <p>An intuitive interface inspired by the best of modern fintech platforms. No clutter, just clarity.</p>
+            </div>
+            <div class="feature-item fade-in">
+                <h3><span class="icon">🔗</span> Integration</h3>
+                <p>Connect with your teacher and tools via a powerful, well-documented app. Seamless data flow.</p>
+            </div>
+            <div class="feature-item fade-in">
+                <h3><span class="icon">🔒</span> Enterprise-Grade Security</h3>
+                <p>World-class security and compliance built-in from the ground up, protecting your students' data.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Zaker Hub. Global Education Management. Built by WebVera.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. Hero Text and Card Entrance Animation (On Load) ---
+            const headline = document.getElementById('headline-text');
+            const visualCard = document.getElementById('visual-card');
+
+            // Split headline text into words for individual animation
+            headline.innerHTML = headline.textContent.split(' ').map(word => 
+                `<span style="display: inline-block; opacity: 0;">${word}</span>`
+            ).join(' ');
+
+            const words = headline.querySelectorAll('span');
+            
+            // Animate words in sequence
+            words.forEach((word, index) => {
+                setTimeout(() => {
+                    word.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+                    word.style.opacity = '1';
+                    word.style.transform = 'translateY(0)';
+                }, index * 80); // Stagger the animation
+            });
+
+            // Animate the Card (3D Tilt Reveal)
+            setTimeout(() => {
+                const mockup = visualCard.querySelector('.card-mockup');
+                if (mockup) {
+                    mockup.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; // Smooth, high-quality easing
+                    mockup.style.opacity = '1';
+                    mockup.style.transform = 'perspective(1000px) rotateY(0deg) scale(1)';
+                }
+            }, 500); 
+
+            // --- 2. Chart Value Animation (Simulating Live Data) ---
+            const chartBars = document.querySelectorAll('.chart-bar');
+            
+            // Give the chart a burst of animation to look like live data loading
+            setTimeout(() => {
+                chartBars.forEach(bar => {
+                    const originalHeight = bar.style.height; 
+                    bar.style.height = '10%'; // Shrink for "loading" effect
+                    
+                    setTimeout(() => {
+                        bar.style.height = originalHeight; // Restore to animate
+                    }, 100);
+                });
+            }, 1200);
+
+
+            // --- 3. Scroll-Based Fade-In Animation (Curriculum and Featurette Sections) ---
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1 
+            };
+
+            const itemsToObserve = document.querySelectorAll('.feature-item, .curriculum-item');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add class to trigger the CSS transition
+                        entry.target.classList.add('is-visible');
+                        // Stop observing once it's visible
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            itemsToObserve.forEach((item, index) => {
+                // Stagger the item reveals for a waterfall effect
+                item.style.transitionDelay = `${index * 0.15}s`;
+                item.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(item);
+            });
+
+            // --- 4. Navbar Shadow on Scroll ---
+            const navbar = document.querySelector('.navbar');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                } else {
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
