@@ -30,6 +30,8 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.role == 'ADMIN':
             return Enrollment.objects.all()
+        if user.role == 'TEACHER':
+            return Enrollment.objects.filter(subscription_option__course__teacher=user)
         if user.role == 'STUDENT':
             return Enrollment.objects.filter(student=user)
         return Enrollment.objects.none()

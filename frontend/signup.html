@@ -1,144 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - ZakerHub</title>
-    <link rel="stylesheet" href="./assets/css/signin.css">
+    <title>Create Account | Zaker Hub</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+
     <style>
-        .eye-closed { display: none; }
-        .role-selector { display: flex; gap: 10px; margin-bottom: 20px; }
-        .role-option { 
-            flex: 1; padding: 10px; border: 1px solid #e3e8ee; border-radius: 8px; 
-            text-align: center; cursor: pointer; font-weight: 600;
+        :root {
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #30313d;
+            --color-text-light: #525f7f;
+            --color-bg-light: #f6f9fc;
+            --color-white: #ffffff;
+            --font-family-sans: 'Inter', sans-serif;
+            --border-radius: 16px;
         }
-        .role-option.active { background: #6366F1; color: white; border-color: #6366F1; }
-        .error-message { color: #ff4d4d; font-size: 0.8rem; margin-top: 5px; }
-        .success-message { display: none; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background: radial-gradient(circle at top left, #f6f9fc, #eef3f7);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--color-text-dark);
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 50px rgba(23, 42, 80, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-box {
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            box-shadow: 0 8px 16px rgba(99, 91, 255, 0.2);
+        }
+
+        .signup-header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--color-primary-navy);
+            margin-bottom: 0.3rem;
+        }
+
+        .signup-header p {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- Role Selector --- */
+        .role-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .role-option {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--color-text-light);
+        }
+
+        .role-option.active {
+            background: white;
+            color: var(--color-primary-accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Form Elements --- */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            color: #94a3b8;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 11px 12px 11px 38px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--color-primary-accent);
+            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.08);
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--color-primary-navy);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .signup-btn:hover {
+            background: #233b6e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(23, 42, 80, 0.1);
+        }
+
+        .auth-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+        }
+
+        .auth-footer a {
+            color: var(--color-primary-accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .error-text {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .success-overlay {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .success-icon {
+            width: 56px;
+            height: 56px;
+            background: #dcfce7;
+            color: #16a34a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
     </style>
 </head>
+
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="logo">
-                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="8" fill="#6366F1"/><path d="M12 14h12v8H12v-8zm2 2v4h8v-4h-8zm-2-4h12v2H12v-2zm0 12h12v2H12v-2z" fill="white"/></svg>
+    <div class="signup-container">
+        <div class="signup-card" id="signupCard">
+            <div class="signup-header">
+                <div class="logo-box">
+                    <i data-feather="user-plus"></i>
                 </div>
                 <h1>Create Account</h1>
-                <p>Join ZakerHub today</p>
+                <p>Join Zaker Hub's learning community</p>
             </div>
-            
-            <form id="signupForm" class="login-form">
-                <!-- <div class="form-group">
-                    <label>I am a:</label>
-                    <div class="role-selector">
-                        <div class="role-option active" data-role="student">Student</div>
-                        <div class="role-option" data-role="teacher">Teacher</div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <div class="input-wrapper">
+                        <i data-feather="user"></i>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required>
                     </div>
-                </div> -->
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" required>
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i data-feather="mail"></i>
+                        <input type="email" id="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="error-text" id="emailError"></div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <div class="input-wrapper">
+                            <i data-feather="phone"></i>
+                            <input type="tel" id="phone" placeholder="01xxxxxxxxx" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i data-feather="lock"></i>
+                            <input type="password" id="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit" class="login-btn">
-                    <span class="btn-text">Create Account</span>
+                <button type="submit" class="signup-btn" id="submitBtn">
+                    <div class="spinner" id="btnSpinner"></div>
+                    <span id="btnText">Create Account</span>
                 </button>
             </form>
 
-            <div class="success-message" id="successMessage">
-                <h3>Account Created!</h3>
-                <p>Please wait for admin approval to access all features.</p>
-                <a href="signin.html">Go to Sign In</a>
+            <div class="success-overlay" id="successOverlay">
+                <div class="success-icon">
+                    <i data-feather="check-circle" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h3 style="color: var(--color-primary-navy); margin-bottom: 0.5rem;">Account Created!</h3>
+                <p style="color: var(--color-text-light); margin-bottom: 1.5rem;">Your account has been successfully
+                    registered. Redirecting you home...</p>
+                <a href="index.html" class="signup-btn" style="text-decoration: none;">Go to Home Now</a>
+            </div>
+
+            <div class="auth-footer" id="authFooter">
+                Already have an account? <a href="signin.html">Sign In</a>
             </div>
         </div>
     </div>
 
+    <script src="js/api-config.js"></script>
     <script>
-    const API_URL = "http://127.0.0.1:8000/api/v1";
-    let selectedRole = 'student'; // Default role
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
 
-    // 1. Role Selection Logic
-    const roleOptions = document.querySelectorAll('.role-option');
-    roleOptions.forEach(opt => {
-        opt.addEventListener('click', () => {
-            roleOptions.forEach(el => el.classList.remove('active'));
-            opt.classList.add('active');
-            selectedRole = opt.dataset.role;
-        });
-    });
+            const form = document.getElementById('signupForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const btnText = document.getElementById('btnText');
+            const emailError = document.getElementById('emailError');
 
-    // 2. Handle Signup Submission
-    const signupForm = document.getElementById('signupForm');
-    const emailError = document.getElementById('emailError');
-    const successMessage = document.getElementById('successMessage');
-    const submitBtn = signupForm.querySelector('.login-btn');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-    signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Reset UI state
-        emailError.textContent = "";
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.btn-text').textContent = "Creating Account...";
+                // UI State
+                emailError.style.display = 'none';
+                submitBtn.disabled = true;
+                btnSpinner.style.display = 'block';
+                btnText.textContent = "Registering...";
 
-        // Collect data from HTML
-        const emailValue = document.getElementById('email').value;
-        const phoneValue = document.getElementById('phone').value;
-        const passwordValue = document.getElementById('password').value;
+                const email = document.getElementById('email').value;
+                const signupData = {
+                    username: email,
+                    email: email,
+                    name: document.getElementById('fullName').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value,
+                    role: 'STUDENT'
+                };
 
-        // Construct the body exactly as your API expects
-        const signupData = {
-            email: emailValue,
-            name: emailValue.split('@')[0], // API requires 'name', using email prefix as placeholder
-            password: passwordValue,
-            phone: phoneValue
-            // Note: If your backend handles roles, you can add 'role: selectedRole' here
-        };
+                try {
+                    await ZakerAPI.auth.signup(signupData);
 
-        try {
-            const response = await fetch(`${API_URL}/auth/signup/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(signupData)
-            });
+                    // Success View
+                    form.style.display = 'none';
+                    document.getElementById('authFooter').style.display = 'none';
+                    document.getElementById('successOverlay').style.display = 'block';
+                    feather.replace();
 
-            const result = await response.json();
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
 
-            if (response.ok) {
-                // Success! Hide form and show success message
-                signupForm.style.display = 'none';
-                successMessage.style.display = 'block';
-            } else {
-                // Handle errors (like email already exists)
-                if (result.email) {
-                    emailError.textContent = result.email[0];
-                } else if (result.detail) {
-                    emailError.textContent = result.detail;
-                } else {
-                    emailError.textContent = "Signup failed. Please check your details.";
+                } catch (err) {
+                    console.error("Signup failed:", err);
+                    emailError.textContent = err.message || "Registration failed. Check your data.";
+                    emailError.style.display = 'block';
+
+                    submitBtn.disabled = false;
+                    btnSpinner.style.display = 'none';
+                    btnText.textContent = "Create Account";
                 }
-            }
-        } catch (err) {
-            console.error("Network error:", err);
-            emailError.textContent = "Cannot connect to server. Ensure your Python backend is running.";
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.querySelector('.btn-text').textContent = "Create Account";
-        }
-    });
-</script>
+            });
+        });
+    </script>
 </body>
+
 </html>

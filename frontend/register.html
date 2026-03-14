@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,9 +39,22 @@
             margin: 20px;
         }
 
-        .header { text-align: center; margin-bottom: 2rem; }
-        .header h1 { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 0; }
-        .header p { color: var(--text-muted); margin-top: 5px; }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
 
         /* Course Summary Box */
         .summary-grid {
@@ -53,13 +67,38 @@
             margin-bottom: 2rem;
         }
 
-        .item { display: flex; align-items: flex-start; gap: 12px; }
-        .item i { color: var(--primary); font-size: 1.1rem; margin-top: 3px; }
-        .item label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700; }
-        .item span { font-weight: 600; font-size: 1rem; color: var(--text-main); }
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+
+        .item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .item span {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
 
         /* Steps Layout */
-        .step-list { margin-bottom: 2.5rem; }
+        .step-list {
+            margin-bottom: 2.5rem;
+        }
+
         .step-row {
             display: flex;
             gap: 20px;
@@ -79,9 +118,23 @@
             flex-shrink: 0;
         }
 
-        .step-desc h4 { margin: 0 0 4px 0; font-size: 1rem; color: var(--text-main); }
-        .step-desc p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
-        .highlight { color: var(--primary); font-weight: 700; }
+        .step-desc h4 {
+            margin: 0 0 4px 0;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .step-desc p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
 
         /* Action Button */
         .btn-confirm {
@@ -114,139 +167,175 @@
             font-size: 0.9rem;
         }
 
-        .wa-link:hover { text-decoration: underline; }
+        .wa-link:hover {
+            text-decoration: underline;
+        }
 
         /* Loading State */
-        .hidden { display: none; }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
+
 <body>
 
-<div id="main-content" class="registration-card hidden">
-    <div class="header">
-        <h1>Course Registration</h1>
-        <p>Follow these steps to finalize your payment</p>
-    </div>
+    <div id="main-content" class="registration-card hidden">
+        <div class="header">
+            <h1>Course Registration</h1>
+            <p>Follow these steps to finalize your payment</p>
+        </div>
 
-    <div class="summary-grid">
-        <div class="item">
-            <i class="fas fa-graduation-cap"></i>
-            <div><label>Course</label><span id="cName">Loading...</span></div>
-        </div>
-        <div class="item">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <div><label>Teacher</label><span id="tName">Loading...</span></div>
-        </div>
-        <div class="item">
-            <i class="fas fa-tag"></i>
-            <div><label>Type</label><span id="cType">Full Term</span></div>
-        </div>
-        <div class="item">
-            <i class="fas fa-credit-card"></i>
-            <div><label>Price</label><span id="cPrice">EGP 0.00</span></div>
-        </div>
-    </div>
-
-    <div class="step-list">
-        <div class="step-row">
-            <div class="step-num">1</div>
-            <div class="step-desc">
-                <h4>InstaPay Transfer</h4>
-                <p>Send the exact amount to <span class="highlight">zakerhub@instapay</span></p>
+        <div class="summary-grid">
+            <div class="item">
+                <i class="fas fa-graduation-cap"></i>
+                <div><label>Course</label><span id="cName">Loading...</span></div>
+            </div>
+            <div class="item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <div><label>Teacher</label><span id="tName">Loading...</span></div>
+            </div>
+            <div class="item">
+                <i class="fas fa-tag"></i>
+                <div><label>Type</label><span id="cType">Full Term</span></div>
+            </div>
+            <div class="item">
+                <i class="fas fa-credit-card"></i>
+                <div><label>Price</label><span id="cPrice">EGP 0.00</span></div>
             </div>
         </div>
-        <div class="step-row">
-            <div class="step-num">2</div>
-            <div class="step-desc">
-                <h4>Screenshot Receipt</h4>
-                <p>Take a clear screenshot of the successful transaction page.</p>
+
+        <div class="step-list">
+            <div class="step-row">
+                <div class="step-num">1</div>
+                <div class="step-desc">
+                    <h4>InstaPay Transfer</h4>
+                    <p>Send the exact amount to <span class="highlight">zakerhub@instapay</span></p>
+                </div>
+            </div>
+            <div class="step-row">
+                <div class="step-num">2</div>
+                <div class="step-desc">
+                    <h4>Screenshot Receipt</h4>
+                    <p>Take a clear screenshot of the successful transaction page.</p>
+                </div>
+            </div>
+            <div class="step-row">
+                <div class="step-num">3</div>
+                <div class="step-desc">
+                    <h4>WhatsApp Verification</h4>
+                    <p>Send the screenshot to <span class="highlight">+01234567890</span> from your registered number.
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="step-row">
-            <div class="step-num">3</div>
-            <div class="step-desc">
-                <h4>WhatsApp Verification</h4>
-                <p>Send the screenshot to <span class="highlight">+01234567890</span> from your registered number.</p>
-            </div>
-        </div>
+
+        <button class="btn-confirm" onclick="confirmApplication()">
+            <i class="fas fa-check-double"></i> Confirm & Submit
+        </button>
+
+        <a href="https://wa.me/01234567890" class="wa-link">
+            <i class="fab fa-whatsapp"></i> Need help? Contact Support
+        </a>
     </div>
 
-    <button class="btn-confirm" onclick="confirmApplication()">
-        <i class="fas fa-check-double"></i> Confirm & Submit
-    </button>
+    <script src="js/api-config.js"></script>
+    <script>
+        let currentOptionId = null;
 
-    <a href="https://wa.me/01234567890" class="wa-link">
-        <i class="fab fa-whatsapp"></i> Need help? Contact Support
-    </a>
-</div>
-
-<script>
-    // 1. Initial Checks (Auth & Role)
-    async function checkAccess() {
-        try {
-            // We fetch the current user data from an endpoint (you might need to add this to your Express server)
-            // Or use a generic check if the route returns 401
-            const res = await fetch('/api/user-status'); 
-            // Note: Create a simple route server.get("/api/user-status", protectRoute, (req, res) => res.json(req.user));
-            
-            if (res.status === 401) {
-                window.location.href = "/"; // Not logged in
-                return;
-            }
-            
-            const user = await res.json();
-            
-            if (user.type === 'teacher') {
-                alert("Teachers cannot register for courses.");
-                window.location.href = "/dashboard";
+        // 1. Initial Checks (Auth & Role)
+        async function checkAccess() {
+            if (!ZakerAPI.auth.isAuthenticated()) {
+                window.location.href = "signin.html";
                 return;
             }
 
-            // If we get here, user is a student. Show the UI.
-            document.getElementById('main-content').classList.remove('hidden');
-            loadCourseData(); 
-        } catch (err) {
-            window.location.href = "/";
-        }
-    }
+            try {
+                const user = ZakerAPI.auth.getUser();
 
-    // 2. Fetch Course Details (Optional: You can pass these via URL params)
-    function loadCourseData() {
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('cName').innerText = params.get('name') || "Selected Course";
-        document.getElementById('tName').innerText = params.get('teacher') || "Main Instructor";
-        document.getElementById('cPrice').innerText = params.get('price') || "Contact Support";
-    }
+                if (user.role === 'TEACHER') {
+                    alert("Teachers cannot register for courses.");
+                    window.location.href = "dashboard.html";
+                    return;
+                }
 
-    // 3. Confirm API Request
-    async function confirmApplication() {
-        const params = new URLSearchParams(window.location.search);
-        const course_id = params.get('course_id');
-
-        if (!course_id) return alert("Missing Course ID");
-
-        try {
-            const response = await fetch('/api/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ course_id: course_id })
-            });
-
-            if (response.ok) {
-                alert("Confirmed! Please ensure you've sent the WhatsApp message.");
-                window.location.reload(); 
-            } else {
-                const msg = await response.text();
-                alert(msg);
+                // If we get here, user is a student. Show the UI.
+                document.getElementById('main-content').classList.remove('hidden');
+                await loadRegistrationData();
+            } catch (err) {
+                console.error("Access check failed:", err);
+                window.location.href = "signin.html";
             }
-        } catch (e) {
-            alert("Connection error occurred.");
         }
-    }
 
-    // Run access check on load
-    checkAccess();
-</script>
+        // 2. Fetch Course & Subscription Details
+        async function loadRegistrationData() {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('course');
+            const optionId = params.get('option');
+
+            if (!courseId) {
+                alert("No course selected.");
+                window.location.href = "courses.html";
+                return;
+            }
+
+            try {
+                // Fetch course details
+                const course = await ZakerAPI.fetch(`/academics/courses/${courseId}/`);
+                document.getElementById('cName').innerText = course.name;
+                document.getElementById('tName').innerText = course.teacher_name || "Expert Instructor";
+
+                let courseOption = null;
+
+                if (optionId) {
+                    // Fetch specific option if provided
+                    courseOption = await ZakerAPI.fetch(`/subscriptions/options/${optionId}/`);
+                } else {
+                    // Fallback: Fetch subscription options to find the first one for this course
+                    const options = await ZakerAPI.fetch('/subscriptions/options/');
+                    courseOption = options.find(opt => opt.course === parseInt(courseId));
+                }
+
+                if (courseOption) {
+                    currentOptionId = courseOption.id;
+                    document.getElementById('cPrice').innerText = `EGP ${courseOption.price}`;
+                    document.getElementById('cType').innerText = `${courseOption.level_detail ? courseOption.level_detail.name : 'General'} - ${courseOption.plan_type}`;
+                } else {
+                    document.getElementById('cPrice').innerText = "Pricing TBA";
+                    alert("This course does not have an active subscription plan yet. Please contact support.");
+                }
+
+            } catch (err) {
+                console.error("Failed to load registration data:", err);
+            }
+        }
+
+        // 3. Confirm API Request
+        async function confirmApplication() {
+            if (!currentOptionId) {
+                return alert("No active subscription plan found for this course.");
+            }
+
+            try {
+                const result = await ZakerAPI.fetch('/subscriptions/enrollments/', {
+                    method: 'POST',
+                    body: JSON.stringify({ subscription_option: currentOptionId })
+                });
+
+                alert("Application submitted! Your enrollment is now PENDING. Please complete the InstaPay transfer and send the screenshot to WhatsApp as instructed.");
+                window.location.href = 'dashboard.html';
+
+            } catch (err) {
+                console.error("Enrollment failed:", err);
+                alert(err.message || "Failed to submit enrollment request.");
+            }
+        }
+
+        // Run access check on load
+        window.onload = checkAccess;
+    </script>
 
 </body>
+
 </html>

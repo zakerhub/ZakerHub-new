@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration Hub | Zaker Hub</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/feather-icons"></script> 
+
+    <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
         /* --- 1. Variables and Global Reset (Consistent with Landing Page) --- */
         :root {
-            --color-primary-navy: #172a50; 
-            --color-primary-accent: #635bff; 
-            --color-text-dark: #30313d; 
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #30313d;
             --color-text-light: #525f7f;
-            --color-bg-light: #f6f9fc; 
+            --color-bg-light: #f6f9fc;
             --color-white: #ffffff;
-            --color-shadow: rgba(23, 42, 80, 0.15); 
+            --color-shadow: rgba(23, 42, 80, 0.15);
             --font-family-sans: 'Inter', sans-serif;
             --border-radius-lg: 12px;
             --border-radius-sm: 6px;
@@ -61,7 +62,7 @@
             color: var(--color-primary-accent);
             font-weight: 800;
         }
-        
+
         .back-link {
             color: var(--color-primary-navy);
             text-decoration: none;
@@ -70,6 +71,7 @@
             align-items: center;
             transition: color 0.2s;
         }
+
         .back-link:hover {
             color: var(--color-primary-accent);
         }
@@ -116,7 +118,8 @@
             text-align: left;
             position: relative;
             overflow: hidden;
-            opacity: 0; /* Initial state for JS animation */
+            opacity: 0;
+            /* Initial state for JS animation */
             transform: translateY(20px);
         }
 
@@ -125,7 +128,7 @@
             box-shadow: 0 15px 40px rgba(23, 42, 80, 0.1);
             border-color: var(--color-primary-accent);
         }
-        
+
         /* Colored Top Accent Bar */
         .curriculum-card::before {
             content: '';
@@ -137,14 +140,38 @@
             background-color: var(--color-primary-navy);
             transition: background-color 0.3s ease;
         }
-        
+
         /* Specific colors for visual variety */
-        .curriculum-card[data-type="igcse"]::before { background-color: #388e3c; } /* Green */
-        .curriculum-card[data-type="ad"]::before { background-color: #1976d2; } /* Blue */
-        .curriculum-card[data-type="dp"]::before { background-color: #e53935; } /* Red */
-        .curriculum-card[data-type="sat"]::before { background-color: #ffbd44; } /* Yellow */
-        .curriculum-card[data-type="act"]::before { background-color: #00ca4e; } /* Bright Green */
-        .curriculum-card[data-type="est"]::before { background-color: #635bff; } /* Accent Blue/Purple */
+        .curriculum-card[data-type="igcse"]::before {
+            background-color: #388e3c;
+        }
+
+        /* Green */
+        .curriculum-card[data-type="ad"]::before {
+            background-color: #1976d2;
+        }
+
+        /* Blue */
+        .curriculum-card[data-type="dp"]::before {
+            background-color: #e53935;
+        }
+
+        /* Red */
+        .curriculum-card[data-type="sat"]::before {
+            background-color: #ffbd44;
+        }
+
+        /* Yellow */
+        .curriculum-card[data-type="act"]::before {
+            background-color: #00ca4e;
+        }
+
+        /* Bright Green */
+        .curriculum-card[data-type="est"]::before {
+            background-color: #635bff;
+        }
+
+        /* Accent Blue/Purple */
 
         .card-icon {
             color: var(--color-primary-navy);
@@ -181,7 +208,7 @@
             height: 18px;
             transition: transform 0.3s ease;
         }
-        
+
         .curriculum-card:hover .action-text i {
             transform: translateX(5px);
         }
@@ -197,6 +224,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <header class="navbar">
@@ -209,7 +237,7 @@
     </header>
 
     <div class="main-container">
-        
+
         <div class="header-content">
             <h1>Register a Course</h1>
             <p>Click on any of the following to view the available subjects and begin your course registration.</p>
@@ -220,42 +248,48 @@
             <div class="curriculum-card animated-card" data-type="igcse">
                 <i data-feather="globe" class="card-icon"></i>
                 <h3>IGCSE / IG</h3>
-                <p>Comprehensive support for Cambridge, Edexcel, and Oxford AQA International General Certificate of Secondary Education programs.</p>
+                <p>Comprehensive support for Cambridge, Edexcel, and Oxford AQA International General Certificate of
+                    Secondary Education programs.</p>
                 <span class="action-text">Register <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="ad">
                 <i data-feather="book-open" class="card-icon"></i>
                 <h3>American Diploma (AD)</h3>
-                <p>Full academic track tailored for US high school requirements, including honors, AP prep, and elective subject registration.</p>
+                <p>Full academic track tailored for US high school requirements, including honors, AP prep, and elective
+                    subject registration.</p>
                 <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
             </div>
 
             <div class="curriculum-card animated-card" data-type="dp">
                 <i data-feather="trello" class="card-icon"></i>
                 <h3>IB Diploma Programme (DP)</h3>
-                <p>Enroll in standard and higher level courses, with specialized registration for TOK, EE, and CAS components.</p>
+                <p>Enroll in standard and higher level courses, with specialized registration for TOK, EE, and CAS
+                    components.</p>
                 <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
             </div>
 
             <div class="curriculum-card animated-card" data-type="sat">
                 <i data-feather="edit" class="card-icon"></i>
                 <h3>SAT (Digital & Paper)</h3>
-                <p>Targeted prep courses for all sections of the Scholastic Assessment Test to maximize your university admissions score.</p>
+                <p>Targeted prep courses for all sections of the Scholastic Assessment Test to maximize your university
+                    admissions score.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="act">
                 <i data-feather="check-circle" class="card-icon"></i>
                 <h3>ACT</h3>
-                <p>Focused subject review and timed practice tests for the American College Testing exam's English, Math, Science, and Reading sections.</p>
+                <p>Focused subject review and timed practice tests for the American College Testing exam's English,
+                    Math, Science, and Reading sections.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="est">
                 <i data-feather="compass" class="card-icon"></i>
                 <h3>EST (Egyptian Scholastic)</h3>
-                <p>Specialized courses designed specifically for the local Egyptian Scholastic Test curriculum and assessment structure.</p>
+                <p>Specialized courses designed specifically for the local Egyptian Scholastic Test curriculum and
+                    assessment structure.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
 
@@ -266,79 +300,204 @@
         <p>&copy; 2026 Zaker Hub. Global Education Management. Built by WebVera | <a href="#">Need Help?</a></p>
     </footer>
 
+    <script src="js/api-config.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        let currentCurriculum = null;
+        let currentSubject = null;
+        let currentTeacher = null;
+        let currentCourse = null;
+        let userEnrollments = [];
+
+        async function fetchUserEnrollments() {
+            if (ZakerAPI.auth.isAuthenticated()) {
+                const user = ZakerAPI.auth.getUser();
+                if (user.role === 'STUDENT') {
+                    try {
+                        const enrollments = await ZakerAPI.fetch('/subscriptions/enrollments/');
+                        userEnrollments = enrollments
+                            .filter(e => e.status === 'APPROVED' || e.status === 'PENDING')
+                            .map(e => `${e.subscription_detail.course_detail.id}-${e.subscription_detail.level_detail ? e.subscription_detail.level_detail.id : 'null'}`);
+                    } catch (err) {
+                        console.error("Failed to fetch enrollments:", err);
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
             feather.replace();
 
-            // --- 1. Scroll-Based Fade-In Animation (Card Entrance) ---
-            const observerOptions = {
-                root: null, 
-                rootMargin: '0px',
-                threshold: 0.1 
-            };
+            const urlParams = new URLSearchParams(window.location.search);
+            const curriculumId = urlParams.get('curriculum');
 
-            const itemsToObserve = document.querySelectorAll('.curriculum-card');
+            if (!curriculumId) {
+                window.location.href = 'curricula.html';
+                return;
+            }
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Apply animation via CSS properties
-                        entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            itemsToObserve.forEach((item, index) => {
-                // Stagger the item reveals for a waterfall effect
-                item.style.transitionDelay = `${index * 0.1}s`;
-                observer.observe(item);
-            });
-            
-            // --- 2. Card Click Handler (Simulated Navigation) ---
-            itemsToObserve.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    const curriculumType = card.getAttribute('data-type');
-                    // In a real application, this would redirect or dynamically load content.
-                    alert(`You clicked to register for: ${curriculumType.toUpperCase()} Courses. \n\nNext step: Loading the list of subjects...`);
-                    // Example: window.location.href = `/register/subjects?curriculum=${curriculumType}`;
-                });
-            });
-
+            try {
+                await fetchUserEnrollments();
+                currentCurriculum = await ZakerAPI.fetch(`/academics/curriculums/${curriculumId}/`);
+                updateHeader(`${currentCurriculum.name} Subjects`, `Select a subject to view available instructors.`);
+                await loadSubjects(curriculumId);
+            } catch (err) {
+                console.error("Initialization failed:", err);
+            }
         });
 
+        function updateHeader(title, desc) {
+            document.querySelector('.header-content h1').innerText = title;
+            document.querySelector('.header-content p').innerText = desc;
+        }
 
+        async function loadSubjects(curriculumId) {
+            const container = document.querySelector('.curriculum-grid');
+            container.innerHTML = '<p class="text-center w-100">Loading subjects...</p>';
 
-        import { getCourses } from './backend/queries/courses.js';
-
-
-
-        window.onload = function() {
-            let parameters = new URLSearchParams(window.location.search);
-            let pathway = parameters.get("pathway");
-            function updateTitle(path) {
-                if (pathway == 'igcse') {
-                    title = "IGCSE / IG";
-                } else if (pathway == 'ad') {
-                    title = "American Diploma (AD)";
-                } else if (pathway == 'dp') {
-                    title = "IB Diploma Programme (DP)";
-                } else if (pathway == 'sat') {
-                    title = "SAT";
-                } else if (pathway == 'act') {
-                    title = "ACT";
-                } else if (pathway == 'est') {
-                    title = "EST";
+            try {
+                const subjects = await ZakerAPI.fetch(`/academics/subjects/?curriculum=${curriculumId}`);
+                if (subjects.length === 0) {
+                    container.innerHTML = '<p class="text-center w-100">No subjects available.</p>';
+                    return;
                 }
-                document.title = `${title} Courses | ZakerHub`
+
+                container.innerHTML = subjects.map((sub, index) => `
+                    <div class="curriculum-card animated-card" onclick="selectSubject(${sub.id}, '${sub.name}')" style="opacity: 1; transform: translateY(0); transition-delay: ${index * 0.1}s">
+                        <i data-feather="book" class="card-icon"></i>
+                        <h3>${sub.name}</h3>
+                        <p>Find the best instructors for ${sub.name}.</p>
+                        <span class="action-text">View Teachers <i data-feather="arrow-right"></i></span>
+                    </div>
+                `).join('');
+                feather.replace();
+            } catch (err) {
+                container.innerHTML = `<p class="text-center w-100 error">Error: ${err.message}</p>`;
             }
-            updateTitle(pathway);
-            activateTheme();
-            searchbar.value = query;
-            results(query);
+        }
+
+        async function selectSubject(id, name) {
+            currentSubject = { id, name };
+            updateHeader(`${name} Instructors`, `Choose your preferred teacher for ${name}.`);
+
+            const container = document.querySelector('.curriculum-grid');
+            container.innerHTML = '<p class="text-center w-100">Loading teachers...</p>';
+
+            try {
+                const courses = await ZakerAPI.fetch(`/academics/courses/?subject=${id}`);
+
+                // Group by teacher
+                const teachersMap = {};
+                courses.forEach(c => {
+                    if (!teachersMap[c.teacher]) {
+                        teachersMap[c.teacher] = {
+                            id: c.teacher,
+                            name: c.teacher_name,
+                            courseCount: 0
+                        };
+                    }
+                    teachersMap[c.teacher].courseCount++;
+                });
+
+                const teachers = Object.values(teachersMap);
+
+                if (teachers.length === 0) {
+                    container.innerHTML = '<p class="text-center w-100">No teachers currently offering courses for this subject.</p>';
+                    return;
+                }
+
+                container.innerHTML = teachers.map((t, index) => `
+                    <div class="curriculum-card animated-card" onclick="selectTeacher(${t.id}, '${t.name}')" style="opacity: 1; transform: translateY(0); transition-delay: ${index * 0.1}s">
+                        <i data-feather="user" class="card-icon"></i>
+                        <h3>${t.name}</h3>
+                        <p>Teaching ${t.courseCount} course(s) in ${currentSubject.name}.</p>
+                        <span class="action-text">View Courses <i data-feather="arrow-right"></i></span>
+                    </div>
+                `).join('');
+                feather.replace();
+            } catch (err) {
+                container.innerHTML = `<p class="text-center w-100 error">Error: ${err.message}</p>`;
+            }
+        }
+
+        async function selectTeacher(id, name) {
+            currentTeacher = { id, name };
+            updateHeader(`Courses by ${name}`, `Select a course to view available enrollment plans.`);
+
+            const container = document.querySelector('.curriculum-grid');
+            container.innerHTML = '<p class="text-center w-100">Loading courses...</p>';
+
+            try {
+                const courses = await ZakerAPI.fetch(`/academics/courses/?subject=${currentSubject.id}&teacher=${id}`);
+
+                if (courses.length === 0) {
+                    container.innerHTML = '<p class="text-center w-100">No active courses found for this teacher.</p>';
+                    return;
+                }
+
+                container.innerHTML = courses.map((c, index) => `
+                    <div class="curriculum-card animated-card" onclick="selectCourse(${JSON.stringify(c).replace(/"/g, '&quot;')})" style="opacity: 1; transform: translateY(0); transition-delay: ${index * 0.1}s">
+                        <i data-feather="play-circle" class="card-icon"></i>
+                        <h3>${c.name || 'Core Course'}</h3>
+                        <p>${c.description || 'No description available.'}</p>
+                        <span class="action-text">View Plans <i data-feather="arrow-right"></i></span>
+                    </div>
+                `).join('');
+                feather.replace();
+            } catch (err) {
+                container.innerHTML = `<p class="text-center w-100 error">Error: ${err.message}</p>`;
+            }
+        }
+
+        function selectCourse(course) {
+            currentCourse = course;
+            updateHeader(`${course.name || 'Course'} Plans`, `Select your preferred level and payment frequency.`);
+
+            const container = document.querySelector('.curriculum-grid');
+
+            if (!course.subscription_options || course.subscription_options.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-warning w-100" style="background: #fff8e1; padding: 2rem; border-radius: 12px; border: 1px solid #ffe082; color: #795548;">
+                        <i data-feather="alert-triangle"></i>
+                        <h4 style="margin-top: 10px;">No active plans</h4>
+                        <p>This course doesn't have any subscription options yet. Please check back later or contact the instructor.</p>
+                        <button onclick="selectTeacher(${currentTeacher.id}, '${currentTeacher.name}')" class="btn-primary" style="margin-top: 1rem; border:none; padding: 10px 20px; border-radius:8px; cursor:pointer;">Go Back</button>
+                    </div>
+                `;
+                feather.replace();
+                return;
+            }
+
+            container.innerHTML = course.subscription_options.map((opt, index) => {
+                // Check enrollment for this SPECIFIC level
+                const levelKey = `${course.id}-${opt.level_id || 'null'}`;
+                const isEnrolled = userEnrollments.includes(levelKey);
+
+                const actionText = isEnrolled ? 'Already Enrolled' : 'Enroll Now';
+                const actionIcon = isEnrolled ? 'check-circle' : 'check';
+                const onClick = isEnrolled ? `window.location.href='course.html?id=${course.id}'` : `proceedToRegister(${opt.id})`;
+                const cardStyle = isEnrolled ? 'opacity: 0.8; cursor: pointer;' : '';
+
+                return `
+                <div class="curriculum-card animated-card" onclick="${onClick}" style="opacity: 1; transform: translateY(0); transition-delay: ${index * 0.1}s; border-left-color: ${opt.level_name === 'ADVANCED' ? '#635bff' : '#172a50'}; ${cardStyle}">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <span style="background: ${opt.level_name === 'ADVANCED' ? '#ede9fe' : '#f1f5f9'}; color: ${opt.level_name === 'ADVANCED' ? '#635bff' : '#172a50'}; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 800;">
+                            ${opt.level_name || 'GENERAL'}
+                        </span>
+                        <span style="font-weight: 800; color: #10b981;">EGP ${opt.price}</span>
+                    </div>
+                    <h3 style="font-size: 1.4rem;">${opt.plan_type}</h3>
+                    <p>Access all ${currentSubject.name} materials for ${opt.duration_days} days.</p>
+                    <span class="action-text">${actionText} <i data-feather="${actionIcon}"></i></span>
+                </div>
+            `;
+            }).join('');
+            feather.replace();
+        }
+
+        function proceedToRegister(optionId) {
+            window.location.href = `register.html?option=${optionId}&course=${currentCourse.id}`;
         }
     </script>
 </body>
+
 </html>

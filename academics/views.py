@@ -1,10 +1,13 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Curriculum, Subject, Course, Level, CourseItem
+from .models import Curriculum, Subject, Course, Level, CourseItem, StudentProgress
 from .serializers import CurriculumSerializer, SubjectSerializer, CourseSerializer, LevelSerializer, CourseItemSerializer
 from subscriptions.models import Enrollment
 from datetime import date
 from django.db.models import Q
+from django.utils import timezone
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -34,10 +37,17 @@ class LevelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
 
 class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['subject', 'teacher']
+
+    def get_queryset(self):
+        user = self.request.user
+        if not user.is_authenticated:
+            return Course.objects.all()
+        if user.role == 'TEACHER':
+            return Course.objects.filter(teacher=user)
+        return Course.objects.all()
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
@@ -45,7 +55,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         return [IsTeacherOrAdmin()]
 
     def perform_create(self, serializer):
-        # Admin can specific teacher, Teacher is assigned themselves
+        # Admin can specify teacher, Teacher is assigned themselves
         if self.request.user.role == 'TEACHER':
             serializer.save(teacher=self.request.user)
         else:
@@ -68,13 +78,10 @@ class CourseItemViewSet(viewsets.ModelViewSet):
             return queryset.filter(course__teacher=user)
 
         if user.role == 'STUDENT':
-            today = date.today()
-            # Get approved enrollments that are active
+            # Get approved enrollments
             enrollments = Enrollment.objects.filter(
                 student=user,
-                status='APPROVED',
-                start_date__lte=today,
-                end_date__gte=today
+                status='APPROVED'
             )
             
             if not enrollments.exists():
@@ -86,13 +93,40 @@ class CourseItemViewSet(viewsets.ModelViewSet):
                 c_id = sub.course_id
                 l_id = sub.level_id
                 
-                # If subscription has a specific level, allowing checking that level + generic items (null level)
+                # Filter items for this course and (option's level OR generic items)
+                item_filter = Q(course_id=c_id)
                 if l_id:
-                    q_obj |= Q(course_id=c_id, level_id=l_id) | Q(course_id=c_id, level__isnull=True)
+                    item_filter &= (Q(level_id=l_id) | Q(level__isnull=True))
                 else:
-                    # If subscription has no level (generic course), allow items with no level
-                    q_obj |= Q(course_id=c_id, level__isnull=True)
+                    item_filter &= Q(level__isnull=True)
+                
+                q_obj |= item_filter
             
-            return queryset.filter(q_obj)
+            return queryset.filter(q_obj).distinct()
 
         return queryset.none()
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def toggle_complete(self, request, pk=None):
+        item = self.get_object()
+        user = request.user
+        
+        progress, created = StudentProgress.objects.get_or_create(
+            student=user,
+            course_item=item
+        )
+        
+        # If it was completed, uncomplete it. If not, complete it.
+        progress.is_completed = not progress.is_completed
+        if progress.is_completed:
+            progress.completed_at = timezone.now()
+        else:
+            progress.completed_at = None
+            
+        progress.save()
+        
+        return Response({
+            'status': 'success',
+            'is_completed': progress.is_completed,
+            'completed_at': progress.completed_at
+        })

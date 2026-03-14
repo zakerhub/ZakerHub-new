@@ -20,6 +20,27 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('student', 'status', 'approved_by', 'approved_at', 'start_date', 'end_date')
 
+    def validate(self, data):
+        student = self.context['request'].user
+        option = data.get('subscription_option')
+        
+        if not option:
+            raise serializers.ValidationError("Subscription option is required.")
+            
+        # Check if student already has a PENDING or APPROVED enrollment for the same COURSE and LEVEL
+        existing = Enrollment.objects.filter(
+            student=student, 
+            subscription_option__course=option.course,
+            subscription_option__level=option.level,
+            status__in=['PENDING', 'APPROVED']
+        ).exists()
+        
+        if existing:
+            level_name = option.level.name if option.level else "this level"
+            raise serializers.ValidationError(f"You already have an active or pending enrollment for {level_name}.")
+            
+        return data
+
     def create(self, validated_data):
         validated_data['student'] = self.context['request'].user
         validated_data['status'] = 'PENDING'

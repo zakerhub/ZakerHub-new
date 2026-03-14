@@ -1,430 +1,656 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Course Management | Zaker Hub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management | Zaker Hub</title>
 
-<link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
-<script src="[https://unpkg.com/feather-icons](https://unpkg.com/feather-icons)"></script> 
+    <link
+        href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap)"
+        rel="stylesheet">
+    <script src="[https://unpkg.com/feather-icons](https://unpkg.com/feather-icons)"></script>
 
-<style>
-    :root {
-        --color-primary-navy: #172a50; 
-        --color-primary-accent: #635bff; 
-        --color-text-dark: #1a1f36; 
-        --color-text-light: #4f566b;
-        --color-bg-page: #f7f9fc; 
-        --color-white: #ffffff;
-        --color-border: #e3e8ee;
-        --color-danger: #ff4d4d;
-        --color-shadow: rgba(23, 42, 80, 0.08);
-        --border-radius-lg: 12px;
-        --border-radius-md: #8px;
-    }
+    <style>
+        :root {
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #1a1f36;
+            --color-text-light: #4f566b;
+            --color-bg-page: #f7f9fc;
+            --color-white: #ffffff;
+            --color-border: #e3e8ee;
+            --color-danger: #ff4d4d;
+            --color-shadow: rgba(23, 42, 80, 0.08);
+            --border-radius-lg: 12px;
+            --border-radius-md: #8px;
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--color-bg-page);
-        color: var(--color-text-dark);
-        line-height: 1.5;
-        display: none; 
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-page);
+            color: var(--color-text-dark);
+            line-height: 1.5;
+            display: none;
+        }
 
-    #auth-loader {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: var(--color-bg-page);
-        display: flex; justify-content: center; align-items: center;
-        z-index: 9999; display: flex; flex-direction: column; gap: 1rem;
-    }
+        #auth-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg-page);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-    .navbar {
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 0.75rem 6%; background-color: var(--color-white);
-        border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 1000;
-    }
-    .logo { font-size: 1.4rem; font-weight: 800; color: var(--color-primary-navy); text-decoration: none; }
-    .logo-hub { color: var(--color-primary-accent); }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 6%;
+            background-color: var(--color-white);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .user-nav-profile { display: flex; align-items: center; gap: 12px; }
-    .nav-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--color-border); }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-primary-navy);
+            text-decoration: none;
+        }
 
-    .tabs-container {
-        max-width: 1000px; margin: 1rem auto 0; display: flex;
-        justify-content: center; gap: 1rem; border-bottom: 1px solid var(--color-border);
-        background: var(--color-white);
-    }
+        .logo-hub {
+            color: var(--color-primary-accent);
+        }
 
-    .tab-link {
-        padding: 1rem 1.5rem; cursor: pointer; font-weight: 600;
-        color: var(--color-text-light); border-bottom: 3px solid transparent;
-        transition: 0.3s; display: flex; align-items: center; gap: 8px;
-    }
-    .tab-link.active { color: var(--color-primary-accent); border-bottom-color: var(--color-primary-accent); }
+        .user-nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .tab-content {
-        max-width: 1000px; margin: 2rem auto; padding: 0 20px;
-        display: none; animation: fadeIn 0.4s ease;
-    }
+        .nav-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border);
+        }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .tab-content.active { display: block; }
+        .tabs-container {
+            max-width: 1000px;
+            margin: 1rem auto 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-white);
+        }
 
-    .hero-banner {
-        position: relative; height: 200px; border-radius: var(--border-radius-lg);
-        background-size: cover; background-position: center;
-        display: flex; flex-direction: column; justify-content: flex-end;
-        padding: 2.5rem; color: white; margin-bottom: 2rem; box-shadow: 0 10px 30px var(--color-shadow);
-    }
-    .hero-banner::after {
-        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); border-radius: var(--border-radius-lg);
-    }
-    .hero-text { position: relative; z-index: 2; }
-    .hero-text h1 { font-size: 2.2rem; font-weight: 800; }
+        .tab-link {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--color-text-light);
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .data-card { background: white; border-radius: var(--border-radius-lg); border: 1px solid var(--color-border); overflow: hidden; }
-    .student-row { display: flex; align-items: center; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--color-border); justify-content: space-between; }
-    .student-info { display: flex; align-items: center; gap: 15px; }
+        .tab-link.active {
+            color: var(--color-primary-accent);
+            border-bottom-color: var(--color-primary-accent);
+        }
 
-    .form-section { background: white; padding: 2rem; border-radius: var(--border-radius-lg); border: 1px solid var(--color-border); }
-    .post-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-    .post-type-card { padding: 1.2rem; border: 2px solid var(--color-border); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; }
-    .post-type-card.selected { border-color: var(--color-primary-accent); background: #f0f0ff; }
-    
-    .form-group { margin-bottom: 1.25rem; }
-    label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--color-primary-navy); }
-    input, textarea { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); font-family: inherit; font-size: 0.95rem; }
-    input:focus, textarea:focus { outline: none; border-color: var(--color-primary-accent); }
-    
-    .datetime-flex { display: flex; gap: 1rem; }
-    .datetime-flex div { flex: 1; }
-    .cairo-hint { font-size: 0.75rem; color: var(--color-primary-accent); margin-top: 5px; display: block; font-weight: 600; }
+        .tab-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
 
-    .btn-submit { background: var(--color-primary-accent); color: white; border: none; padding: 14px; border-radius: var(--border-radius-md); font-weight: 700; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn-submit:hover { background: #4f46e5; }
-    
-    .btn-drop { background: #fff1f1; color: var(--color-danger); border: 1px solid #ffebeb; padding: 6px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-    .btn-drop:hover { background: var(--color-danger); color: white; }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-    .feed-item { background: white; border: 1px solid var(--color-border); border-radius: var(--border-radius-lg); padding: 1.25rem; display: flex; align-items: center; gap: 20px; margin-bottom: 1rem; cursor: pointer; transition: transform 0.2s; }
-    .feed-item:hover { transform: scale(1.01); }
-    .icon-box { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--color-primary-navy); color: white; }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-</style>
+        .tab-content.active {
+            display: block;
+        }
+
+        .hero-banner {
+            position: relative;
+            height: 200px;
+            border-radius: var(--border-radius-lg);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--color-shadow);
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            border-radius: var(--border-radius-lg);
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .data-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        .student-row {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+            justify-content: space-between;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-border);
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-type-card {
+            padding: 1.2rem;
+            border: 2px solid var(--color-border);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .post-type-card.selected {
+            border-color: var(--color-primary-accent);
+            background: #f0f0ff;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-primary-navy);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-md);
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-primary-accent);
+        }
+
+        .datetime-flex {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .datetime-flex div {
+            flex: 1;
+        }
+
+        .cairo-hint {
+            font-size: 0.75rem;
+            color: var(--color-primary-accent);
+            margin-top: 5px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            background: var(--color-primary-accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: var(--border-radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #4f46e5;
+        }
+
+        .btn-drop {
+            background: #fff1f1;
+            color: var(--color-danger);
+            border: 1px solid #ffebeb;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-drop:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .feed-item {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .feed-item:hover {
+            transform: scale(1.01);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-primary-navy);
+            color: white;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div id="auth-loader">
-    <div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #635bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-    <p style="font-weight: 600; color: #172a50;">Verifying Access...</p>
-</div>
-
-<nav class="navbar">
-    <a href="dashboard.html" class="logo">Zaker<span class="logo-hub">Hub</span></a>
-    <div class="user-nav-profile">
-        <div style="text-align: right; margin-right: 10px;">
-            <span id="userName" style="display: block; font-weight: 700; font-size: 0.9rem;">Loading...</span>
-            <span id="userRole" style="font-size: 0.75rem; color: var(--color-text-light);">Teacher</span>
+    <div id="auth-loader">
+        <div
+            style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #635bff; border-radius: 50%; animation: spin 1s linear infinite;">
         </div>
-        <img id="userAvatar" src="[https://ui-avatars.com/api/?name=User&background=172a50&color=fff](https://ui-avatars.com/api/?name=User&background=172a50&color=fff)" class="nav-avatar">
+        <p style="font-weight: 600; color: #172a50;">Verifying Access...</p>
     </div>
-</nav>
 
-<div class="tabs-container">
-    <div class="tab-link active" onclick="openTab(event, 'stream-tab')">
-        <i data-feather="layout"></i> Stream
-    </div>
-    <div class="tab-link" onclick="openTab(event, 'people-tab')">
-        <i data-feather="users"></i> Students
-    </div>
-    <div class="tab-link" onclick="openTab(event, 'create-tab')">
-        <i data-feather="plus-circle"></i> Create
-    </div>
-</div>
+    <nav class="navbar">
+        <a href="dashboard.html" class="logo">Zaker<span class="logo-hub">Hub</span></a>
+        <div class="user-nav-profile">
+            <div style="text-align: right; margin-right: 10px;">
+                <span id="userName" style="display: block; font-weight: 700; font-size: 0.9rem;">Loading...</span>
+                <span id="userRole" style="font-size: 0.75rem; color: var(--color-text-light);">Teacher</span>
+            </div>
+            <img id="userAvatar"
+                src="[https://ui-avatars.com/api/?name=User&background=172a50&color=fff](https://ui-avatars.com/api/?name=User&background=172a50&color=fff)"
+                class="nav-avatar">
+        </div>
+    </nav>
 
-<div id="stream-tab" class="tab-content active">
-    <div class="hero-banner" id="courseBanner" style="background-image: url('[https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000](https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000)');">
-        <div class="hero-text">
-            <h1 id="courseTitleDisplay">Loading Course...</h1>
-            <p id="courseCurriculumDisplay">Curriculum</p>
+    <div class="tabs-container">
+        <div class="tab-link active" onclick="openTab(event, 'stream-tab')">
+            <i data-feather="layout"></i> Stream
         </div>
-    </div>
-    <div id="courseFeed"></div>
-</div>
-
-<div id="people-tab" class="tab-content">
-    <h2 style="margin-bottom: 1.5rem;">Enrolled Students</h2>
-    <div class="data-card" id="studentList"></div>
-</div>
-
-<div id="create-tab" class="tab-content">
-    <h2 style="margin-bottom: 1.5rem;">Create New Content</h2>
-    <div class="post-grid">
-        <div class="post-type-card selected" onclick="toggleForm('assignment', this)">
-            <i data-feather="edit-3"></i><p>Assignment</p>
+        <div class="tab-link" onclick="openTab(event, 'people-tab')">
+            <i data-feather="users"></i> Students
         </div>
-        <div class="post-type-card" onclick="toggleForm('material', this)">
-            <i data-feather="book"></i><p>Material</p>
-        </div>
-        <div class="post-type-card" onclick="toggleForm('announcement', this)">
-            <i data-feather="message-circle"></i><p>Announcement</p>
-        </div>
-        <div class="post-type-card" onclick="toggleForm('zoom', this)">
-            <i data-feather="video"></i><p>Zoom Meeting</p>
+        <div class="tab-link" onclick="openTab(event, 'create-tab')">
+            <i data-feather="plus-circle"></i> Create
         </div>
     </div>
 
-    <div class="form-section">
-        <div class="form-group">
-            <label id="titleLabel">Assignment Title</label>
-            <input type="text" id="postTitle" placeholder="e.g. Chapter 1 Practice">
+    <div id="stream-tab" class="tab-content active">
+        <div class="hero-banner" id="courseBanner"
+            style="background-image: url('[https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000](https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000)');">
+            <div class="hero-text">
+                <h1 id="courseTitleDisplay">Loading Course...</h1>
+                <p id="courseCurriculumDisplay">Curriculum</p>
+            </div>
         </div>
-        
-        <div id="dateTimeContainer" class="form-group">
-            <div class="datetime-flex">
-                <div id="dateGroup">
-                    <label id="dateLabel">Due Date</label>
-                    <input type="date" id="postDate">
-                </div>
-                <div id="timeGroup" style="display: none;">
-                    <label>Start Time</label>
-                    <input type="time" id="postTime">
-                    <span class="cairo-hint">Cairo Local Time (GMT+2)</span>
-                </div>
+        <div id="courseFeed"></div>
+    </div>
+
+    <div id="people-tab" class="tab-content">
+        <h2 style="margin-bottom: 1.5rem;">Enrolled Students</h2>
+        <div class="data-card" id="studentList"></div>
+    </div>
+
+    <div id="create-tab" class="tab-content">
+        <h2 style="margin-bottom: 1.5rem;">Create New Content</h2>
+        <div class="post-grid">
+            <div class="post-type-card selected" onclick="toggleForm('assignment', this)">
+                <i data-feather="edit-3"></i>
+                <p>Assignment</p>
+            </div>
+            <div class="post-type-card" onclick="toggleForm('material', this)">
+                <i data-feather="book"></i>
+                <p>Material</p>
+            </div>
+            <div class="post-type-card" onclick="toggleForm('announcement', this)">
+                <i data-feather="message-circle"></i>
+                <p>Announcement</p>
+            </div>
+            <div class="post-type-card" onclick="toggleForm('zoom', this)">
+                <i data-feather="video"></i>
+                <p>Zoom Meeting</p>
             </div>
         </div>
 
-        <div id="linkGroup" class="form-group" style="display: none;">
-            <label>Meeting Link</label>
-            <input type="url" id="zoomLink" placeholder="[https://zoom.us/j/](https://zoom.us/j/)...">
-        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label id="titleLabel">Assignment Title</label>
+                <input type="text" id="postTitle" placeholder="e.g. Chapter 1 Practice">
+            </div>
 
-        <div class="form-group">
-            <label>Description / Details</label>
-            <textarea id="postDesc" rows="4" placeholder="Add instructions or information..."></textarea>
-        </div>
+            <div id="dateTimeContainer" class="form-group">
+                <div class="datetime-flex">
+                    <div id="dateGroup">
+                        <label id="dateLabel">Due Date</label>
+                        <input type="date" id="postDate">
+                    </div>
+                    <div id="timeGroup" style="display: none;">
+                        <label>Start Time</label>
+                        <input type="time" id="postTime">
+                        <span class="cairo-hint">Cairo Local Time (GMT+2)</span>
+                    </div>
+                </div>
+            </div>
 
-        <button id="submitBtn" class="btn-submit" onclick="submitPost()">Post to Course</button>
+            <div id="linkGroup" class="form-group" style="display: none;">
+                <label>Meeting Link</label>
+                <input type="url" id="zoomLink" placeholder="[https://zoom.us/j/](https://zoom.us/j/)...">
+            </div>
+
+            <div class="form-group">
+                <label>Description / Details</label>
+                <textarea id="postDesc" rows="4" placeholder="Add instructions or information..."></textarea>
+            </div>
+
+            <button id="submitBtn" class="btn-submit" onclick="submitPost()">Post to Course</button>
+        </div>
     </div>
-</div>
 
-<script>
-    const API_URL = "[http://127.0.0.1:8000/api/v1](http://127.0.0.1:8000/api/v1)";
-    const token = localStorage.getItem('token');
-    let currentCourseId = new URLSearchParams(window.location.search).get('course');
-    let activePostType = 'assignment';
+    <script src="js/api-config.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCourseId = urlParams.get('id') || urlParams.get('course');
+        let activePostType = 'assignment';
 
-    async function validateAccess() {
-        if (!token || !currentCourseId) {
-            window.location.href = "signin.html";
-            return;
-        }
+        async function validateAccess() {
+            if (!ZakerAPI.auth.isAuthenticated()) {
+                console.error("No token found");
+                window.location.href = "signin.html";
+                return;
+            }
 
-        try {
-            const userRes = await fetch(`${API_URL}/auth/me/`, {
-                headers: { 'Authorization': `Token ${token}` }
-            });
-            const userData = await userRes.json();
-
-            if (!userRes.ok || userData.role !== 'teacher') {
+            if (!currentCourseId) {
+                alert("Error: Course ID is missing from URL. Returning to dashboard.");
                 window.location.href = "dashboard.html";
                 return;
             }
 
-            document.getElementById('userName').innerText = userData.name;
-            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${userData.name}&background=172a50&color=fff`;
+            try {
+                const user = ZakerAPI.auth.getUser();
 
-            const courseRes = await fetch(`${API_URL}/academics/courses/${currentCourseId}/`, {
-                headers: { 'Authorization': `Token ${token}` }
-            });
-            const courseData = await courseRes.json();
+                document.getElementById('userName').innerText = user.name;
+                document.getElementById('userRole').innerText = user.role.charAt(0) + user.role.slice(1).toLowerCase();
+                document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=172a50&color=fff`;
 
-            if (courseRes.ok) {
+                // If student, hide management tabs
+                if (user.role === 'STUDENT') {
+                    document.querySelectorAll('.tab-link[onclick*="people-tab"], .tab-link[onclick*="create-tab"]').forEach(el => el.style.display = 'none');
+                }
+
+                const courseData = await ZakerAPI.fetch(`/academics/courses/${currentCourseId}/`);
                 document.getElementById('courseTitleDisplay').innerText = courseData.name;
-                document.getElementById('courseCurriculumDisplay').innerText = courseData.curriculum || "General";
+                document.getElementById('courseCurriculumDisplay').innerText = courseData.subject_name || "General";
+
                 showPage();
-            } else {
-                window.location.href = "dashboard.html";
+            } catch (err) {
+                console.error("Auth / API Error", err);
+                const loader = document.getElementById('auth-loader');
+                if (loader) {
+                    loader.innerHTML = `
+                        <p style="color:red; font-weight:700;">Error: ${err.message}</p>
+                        <p>If this is a database error, please ensure migrations are run.</p>
+                        <a href="dashboard.html" style="color:var(--color-primary-accent); text-decoration:none;">Go back to dashboard</a>
+                    `;
+                }
+            }
+        }
+
+        function showPage() {
+            const loader = document.getElementById('auth-loader');
+            if (loader) loader.style.display = 'none';
+            document.body.style.display = 'block';
+
+            const user = ZakerAPI.auth.getUser();
+            if (user.role !== 'STUDENT') {
+                fetchStudents();
+            }
+            fetchFeed();
+            feather.replace();
+        }
+
+        async function fetchStudents() {
+            try {
+                const students = await ZakerAPI.fetch(`/academics/courses/${currentCourseId}/students/`);
+                renderStudents(students);
+            } catch (err) {
+                console.error("Fetch Students Error", err);
+            }
+        }
+
+        function renderStudents(students) {
+            const container = document.getElementById('studentList');
+            if (!students || students.length === 0) {
+                container.innerHTML = '<p style="padding: 2rem; text-align: center; color: var(--color-text-light);">No students enrolled in this course.</p>';
+                return;
+            }
+            container.innerHTML = students.map(s => `
+        <div class="row align-items-center mb-3 p-2 bg-light rounded" style="border: 1px solid #e3e8ee;">
+            <div class="col-auto">
+                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=random" style="width:38px; border-radius:50%">
+            </div>
+            <div class="col">
+                <strong>${s.name}</strong><br><small class="text-muted">${s.phone || s.email || ''}</small>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-danger" onclick="dropStudent(${s.id})">Drop</button>
+            </div>
+        </div>
+        `).join('');
+        }
+
+        async function fetchFeed() {
+            try {
+                const feedItems = await ZakerAPI.fetch(`/academics/items/?course=${currentCourseId}`);
+                renderFeed(feedItems);
+            } catch (err) {
+                console.error("Fetch Feed Error", err);
+            }
+        }
+
+        function renderFeed(items) {
+            const container = document.getElementById('courseFeed');
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div class="text-center p-5 bg-white rounded border border-dashed"><p>No activity yet.</p></div>';
+                return;
             }
 
-        } catch (err) {
-            console.error("Auth Error", err);
-            window.location.href = "signin.html";
-        }
-    }
+            const icons = {
+                'assignment': 'file-text',
+                'material': 'book',
+                'announcement': 'message-circle',
+                'zoom': 'video'
+            };
 
-    function showPage() {
-        document.getElementById('auth-loader').style.display = 'none';
-        document.body.style.display = 'block';
-        fetchStudents();
-        fetchFeed();
-        feather.replace();
-    }
+            container.innerHTML = items.map(item => {
+                const hasFile = !!item.file;
+                const hasUrl = !!item.content_url;
 
-    async function fetchStudents() {
-        try {
-            const res = await fetch(`${API_URL}/academics/courses/${currentCourseId}/students/`, {
-                headers: { 'Authorization': `Token ${token}` }
-            });
-            const students = await res.json();
-            renderStudents(students);
-        } catch (err) {
-            console.error("Fetch Students Error", err);
-        }
-    }
-
-    function renderStudents(students) {
-        const container = document.getElementById('studentList');
-        if (students.length === 0) {
-            container.innerHTML = '<p style="padding: 2rem; text-align: center; color: var(--color-text-light);">No students enrolled in this course.</p>';
-            return;
-        }
-        container.innerHTML = students.map(s => `
-            <div class="student-row">
-                <div class="student-info">
-                    <img src="[https://ui-avatars.com/api/?name=$](https://ui-avatars.com/api/?name=$){s.name}&background=random" style="width:38px; border-radius:50%">
-                    <div><strong>${s.name}</strong><br><small>${s.phone || s.email}</small></div>
+                return `
+                <div class="feed-item p-3 mb-3 bg-white border rounded d-flex align-items-center gap-3" onclick="viewItem(${item.id}, '${item.type || 'assignment'}', '${item.content_url || ''}', '${item.file || ''}')">
+                    <div class="bg-primary text-white p-2 rounded"><i data-feather="${icons[item.type] || 'grid'}"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0">${item.title}</h5>
+                            ${hasFile ? '<span class="badge bg-light text-primary border"><i data-feather="paperclip" style="width:12px"></i> File</span>' : ''}
+                            ${hasUrl && !hasFile ? '<span class="badge bg-light text-success border"><i data-feather="link" style="width:12px"></i> Link</span>' : ''}
+                        </div>
+                        <small class="text-muted">${new Date(item.created_at).toLocaleDateString()}</small>
+                    </div>
+                    <i data-feather="chevron-right"></i>
                 </div>
-                <button class="btn-drop" onclick="dropStudent(${s.id})">Drop</button>
-            </div>
-        `).join('');
-    }
-
-    async function fetchFeed() {
-        try {
-            const res = await fetch(`${API_URL}/academics/courses/${currentCourseId}/feed/`, {
-                headers: { 'Authorization': `Token ${token}` }
-            });
-            const feedItems = await res.json();
-            renderFeed(feedItems);
-        } catch (err) {
-            console.error("Fetch Feed Error", err);
-        }
-    }
-
-    function renderFeed(items) {
-        const container = document.getElementById('courseFeed');
-        if (items.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding: 3rem; background: white; border-radius: 12px; border: 1px dashed var(--color-border);"><p>No activity yet. Start by creating an assignment or announcement.</p></div>';
-            return;
+                `;
+            }).join('');
+            feather.replace();
         }
 
-        const icons = {
-            'assignment': 'file-text',
-            'material': 'book',
-            'announcement': 'message-circle',
-            'zoom': 'video'
-        };
+        async function submitPost() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postDesc').value;
 
-        container.innerHTML = items.map(item => `
-            <div class="feed-item" onclick="viewItem(${item.id}, '${item.type}')">
-                <div class="icon-box"><i data-feather="${icons[item.type] || 'grid'}"></i></div>
-                <div style="flex:1">
-                    <h4 style="font-weight:700">${item.title}</h4>
-                    <p style="font-size:0.85rem; color:var(--color-text-light)">
-                        ${item.type.charAt(0).toUpperCase() + item.type.slice(1)} • ${new Date(item.created_at).toLocaleDateString()}
-                    </p>
-                </div>
-                <i data-feather="chevron-right" style="color:var(--color-border)"></i>
-            </div>
-        `).join('');
-        feather.replace();
-    }
+            if (!title) { alert("Please enter a title."); return; }
 
-    function toggleForm(type, element) {
-        activePostType = type;
-        document.querySelectorAll('.post-type-card').forEach(c => c.classList.remove('selected'));
-        element.classList.add('selected');
-        
-        const timeGroup = document.getElementById('timeGroup');
-        const linkGroup = document.getElementById('linkGroup');
-        const dateContainer = document.getElementById('dateTimeContainer');
-        const titleLabel = document.getElementById('titleLabel');
-        const dateLabel = document.getElementById('dateLabel');
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Posting...";
 
-        timeGroup.style.display = type === 'zoom' ? "block" : "none";
-        linkGroup.style.display = type === 'zoom' ? "block" : "none";
-        dateContainer.style.display = (type === 'assignment' || type === 'zoom') ? "block" : "none";
-        
-        titleLabel.innerText = type === 'announcement' ? "Subject" : (type === 'zoom' ? "Meeting Topic" : "Title");
-        dateLabel.innerText = type === 'zoom' ? "Meeting Date" : "Due Date";
-    }
+            try {
+                await ZakerAPI.fetch('/academics/items/', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        course: currentCourseId,
+                        title: title,
+                        content: content
+                    })
+                });
 
-    async function submitPost() {
-        const title = document.getElementById('postTitle').value;
-        const description = document.getElementById('postDesc').value;
-        const date = document.getElementById('postDate').value;
-        const time = document.getElementById('postTime').value;
-        const link = document.getElementById('zoomLink').value;
-
-        if (!title) { alert("Please enter a title."); return; }
-
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Posting...";
-
-        try {
-            const res = await fetch(`${API_URL}/academics/courses/${currentCourseId}/post/`, {
-                method: 'POST',
-                headers: { 
-                    'Authorization': `Token ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    type: activePostType,
-                    title: title,
-                    description: description,
-                    due_date: date,
-                    meeting_time: time,
-                    zoom_link: link
-                })
-            });
-
-            if (res.ok) {
                 alert("Content posted successfully!");
-                window.location.reload();
-            } else {
-                alert("Failed to post. Please check your inputs.");
+                location.reload();
+            } catch (err) {
+                console.error("Submit Error", err);
+                alert("Failed to post: " + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Post to Course";
             }
-        } catch (err) {
-            console.error("Submit Error", err);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Post to Course";
         }
-    }
 
-    async function dropStudent(studentId) {
-        if (!confirm("Are you sure you want to remove this student?")) return;
-        try {
-            const res = await fetch(`${API_URL}/academics/courses/${currentCourseId}/students/${studentId}/drop/`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Token ${token}` }
-            });
-            if (res.ok) fetchStudents();
-        } catch (err) {
-            console.error("Drop Error", err);
+        async function dropStudent(studentId) {
+            if (!confirm("Remove this student?")) return;
+            try {
+                await ZakerAPI.fetch(`/academics/courses/${currentCourseId}/students/${studentId}/drop/`, {
+                    method: 'DELETE'
+                });
+                fetchStudents();
+            } catch (err) {
+                console.error("Drop Error", err);
+            }
         }
-    }
 
-    function openTab(evt, tabId) {
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-        feather.replace();
-    }
+        function toggleForm(type, element) {
+            activePostType = type;
+            document.querySelectorAll('.post-type-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+        }
 
-    function viewItem(id, type) {
-        window.location.href = `content-detail.html?id=${id}&type=${type}`;
-    }
+        function openTab(evt, tabId) {
+            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+            document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            feather.replace();
+        }
 
-    window.onload = validateAccess;
-</script>
+        function viewItem(id, type, url, file) {
+            // If it's a zoom link, open it directly
+            if (type === 'zoom' && url) {
+                window.open(url, '_blank');
+                return;
+            }
+            // For other types, go to detail page
+            window.location.href = `assignment.html?id=${id}`;
+        }
+
+        window.onload = validateAccess;
+    </script>
 </body>
+
 </html>

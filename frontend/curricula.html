@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration Hub | Zaker Hub</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/feather-icons"></script> 
+
+    <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
         /* --- 1. Variables and Global Reset (Consistent with Landing Page) --- */
         :root {
-            --color-primary-navy: #172a50; 
-            --color-primary-accent: #635bff; 
-            --color-text-dark: #30313d; 
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #30313d;
             --color-text-light: #525f7f;
-            --color-bg-light: #f6f9fc; 
+            --color-bg-light: #f6f9fc;
             --color-white: #ffffff;
-            --color-shadow: rgba(23, 42, 80, 0.15); 
+            --color-shadow: rgba(23, 42, 80, 0.15);
             --font-family-sans: 'Inter', sans-serif;
             --border-radius-lg: 12px;
             --border-radius-sm: 6px;
@@ -61,7 +62,7 @@
             color: var(--color-primary-accent);
             font-weight: 800;
         }
-        
+
         .back-link {
             color: var(--color-primary-navy);
             text-decoration: none;
@@ -70,6 +71,7 @@
             align-items: center;
             transition: color 0.2s;
         }
+
         .back-link:hover {
             color: var(--color-primary-accent);
         }
@@ -116,7 +118,8 @@
             text-align: left;
             position: relative;
             overflow: hidden;
-            opacity: 0; /* Initial state for JS animation */
+            opacity: 0;
+            /* Initial state for JS animation */
             transform: translateY(20px);
         }
 
@@ -125,7 +128,7 @@
             box-shadow: 0 15px 40px rgba(23, 42, 80, 0.1);
             border-color: var(--color-primary-accent);
         }
-        
+
         /* Colored Top Accent Bar */
         .curriculum-card::before {
             content: '';
@@ -137,14 +140,38 @@
             background-color: var(--color-primary-navy);
             transition: background-color 0.3s ease;
         }
-        
+
         /* Specific colors for visual variety */
-        .curriculum-card[data-type="igcse"]::before { background-color: #388e3c; } /* Green */
-        .curriculum-card[data-type="ad"]::before { background-color: #1976d2; } /* Blue */
-        .curriculum-card[data-type="dp"]::before { background-color: #e53935; } /* Red */
-        .curriculum-card[data-type="sat"]::before { background-color: #ffbd44; } /* Yellow */
-        .curriculum-card[data-type="act"]::before { background-color: #00ca4e; } /* Bright Green */
-        .curriculum-card[data-type="est"]::before { background-color: #635bff; } /* Accent Blue/Purple */
+        .curriculum-card[data-type="igcse"]::before {
+            background-color: #388e3c;
+        }
+
+        /* Green */
+        .curriculum-card[data-type="ad"]::before {
+            background-color: #1976d2;
+        }
+
+        /* Blue */
+        .curriculum-card[data-type="dp"]::before {
+            background-color: #e53935;
+        }
+
+        /* Red */
+        .curriculum-card[data-type="sat"]::before {
+            background-color: #ffbd44;
+        }
+
+        /* Yellow */
+        .curriculum-card[data-type="act"]::before {
+            background-color: #00ca4e;
+        }
+
+        /* Bright Green */
+        .curriculum-card[data-type="est"]::before {
+            background-color: #635bff;
+        }
+
+        /* Accent Blue/Purple */
 
         .card-icon {
             color: var(--color-primary-navy);
@@ -181,7 +208,7 @@
             height: 18px;
             transition: transform 0.3s ease;
         }
-        
+
         .curriculum-card:hover .action-text i {
             transform: translateX(5px);
         }
@@ -197,6 +224,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <header class="navbar">
@@ -209,7 +237,7 @@
     </header>
 
     <div class="main-container">
-        
+
         <div class="header-content">
             <h1>Select Your Curriculum Pathway</h1>
             <p>Click on any of the following to view the available subjects and begin your course registration.</p>
@@ -220,42 +248,48 @@
             <div class="curriculum-card animated-card" data-type="igcse">
                 <i data-feather="globe" class="card-icon"></i>
                 <h3>IGCSE / IG</h3>
-                <p>Comprehensive support for Cambridge, Edexcel, and Oxford AQA International General Certificate of Secondary Education programs.</p>
+                <p>Comprehensive support for Cambridge, Edexcel, and Oxford AQA International General Certificate of
+                    Secondary Education programs.</p>
                 <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="ad">
                 <i data-feather="book-open" class="card-icon"></i>
                 <h3>American Diploma (AD)</h3>
-                <p>Full academic track tailored for US high school requirements, including honors, AP prep, and elective subject registration.</p>
+                <p>Full academic track tailored for US high school requirements, including honors, AP prep, and elective
+                    subject registration.</p>
                 <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
             </div>
 
             <div class="curriculum-card animated-card" data-type="dp">
                 <i data-feather="trello" class="card-icon"></i>
                 <h3>IB Diploma Programme (DP)</h3>
-                <p>Enroll in standard and higher level courses, with specialized registration for TOK, EE, and CAS components.</p>
+                <p>Enroll in standard and higher level courses, with specialized registration for TOK, EE, and CAS
+                    components.</p>
                 <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
             </div>
 
             <div class="curriculum-card animated-card" data-type="sat">
                 <i data-feather="edit" class="card-icon"></i>
                 <h3>SAT (Digital & Paper)</h3>
-                <p>Targeted prep courses for all sections of the Scholastic Assessment Test to maximize your university admissions score.</p>
+                <p>Targeted prep courses for all sections of the Scholastic Assessment Test to maximize your university
+                    admissions score.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="act">
                 <i data-feather="check-circle" class="card-icon"></i>
                 <h3>ACT</h3>
-                <p>Focused subject review and timed practice tests for the American College Testing exam's English, Math, Science, and Reading sections.</p>
+                <p>Focused subject review and timed practice tests for the American College Testing exam's English,
+                    Math, Science, and Reading sections.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
-            
+
             <div class="curriculum-card animated-card" data-type="est">
                 <i data-feather="compass" class="card-icon"></i>
                 <h3>EST (Egyptian Scholastic)</h3>
-                <p>Specialized courses designed specifically for the local Egyptian Scholastic Test curriculum and assessment structure.</p>
+                <p>Specialized courses designed specifically for the local Egyptian Scholastic Test curriculum and
+                    assessment structure.</p>
                 <span class="action-text">View Prep Courses <i data-feather="arrow-right"></i></span>
             </div>
 
@@ -266,48 +300,46 @@
         <p>&copy; 2026 Zaker Hub. Global Education Management. Built by WebVera | <a href="#">Need Help?</a></p>
     </footer>
 
+    <script src="js/api-config.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             feather.replace();
 
-            // --- 1. Scroll-Based Fade-In Animation (Card Entrance) ---
-            const observerOptions = {
-                root: null, 
-                rootMargin: '0px',
-                threshold: 0.1 
-            };
+            const container = document.querySelector('.curriculum-grid');
 
-            const itemsToObserve = document.querySelectorAll('.curriculum-card');
+            try {
+                const curricula = await ZakerAPI.fetch('/academics/curriculums/');
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Apply animation via CSS properties
-                        entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
-                    }
+                if (curricula.length === 0) {
+                    container.innerHTML = '<p class="text-center w-100">No curricula available at the moment.</p>';
+                    return;
+                }
+
+                container.innerHTML = curricula.map((curr, index) => `
+                    <div class="curriculum-card animated-card" data-id="${curr.id}" style="opacity: 1; transform: translateY(0); transition-delay: ${index * 0.1}s">
+                        <i data-feather="book-open" class="card-icon"></i>
+                        <h3>${curr.name}</h3>
+                        <p>${curr.description || 'Comprehensive support for ' + curr.name + ' programs.'}</p>
+                        <span class="action-text">View Subjects <i data-feather="arrow-right"></i></span>
+                    </div>
+                `).join('');
+
+                feather.replace();
+
+                // Add click handlers to new cards
+                document.querySelectorAll('.curriculum-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const id = card.getAttribute('data-id');
+                        window.location.href = `courses.html?curriculum=${id}`;
+                    });
                 });
-            }, observerOptions);
 
-            itemsToObserve.forEach((item, index) => {
-                // Stagger the item reveals for a waterfall effect
-                item.style.transitionDelay = `${index * 0.1}s`;
-                observer.observe(item);
-            });
-            
-            // --- 2. Card Click Handler (Simulated Navigation) ---
-            itemsToObserve.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    const curriculumType = card.getAttribute('data-type');
-                    // In a real application, this would redirect or dynamically load content.
-                    alert(`You clicked to register for: ${curriculumType.toUpperCase()} Courses. \n\nNext step: Loading the list of subjects...`);
-                    // Example: window.location.href = `/register/subjects?curriculum=${curriculumType}`;
-                });
-            });
-
+            } catch (err) {
+                console.error("Failed to load curricula:", err);
+                container.innerHTML = '<p class="text-center w-100 text-danger">Failed to load curricula. Please try again later.</p>';
+            }
         });
     </script>
 </body>
+
 </html>

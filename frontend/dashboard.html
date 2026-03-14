@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Zaker Hub</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script> 
+    <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
         :root {
-            --color-primary-navy: #172a50; 
-            --color-primary-accent: #635bff; 
-            --color-text-dark: #1a1f36; 
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #1a1f36;
             --color-text-light: #4f566b;
-            --color-bg-page: #f7f9fc; 
+            --color-bg-page: #f7f9fc;
             --color-white: #ffffff;
             --color-border: #e3e8ee;
             --sidebar-width: 260px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -42,10 +47,20 @@
             height: 100vh;
         }
 
-        .logo-area { font-size: 1.5rem; font-weight: 800; margin-bottom: 3rem; }
-        .logo-hub { color: var(--color-primary-accent); }
+        .logo-area {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+        }
 
-        .main-nav { flex-grow: 1; }
+        .logo-hub {
+            color: var(--color-primary-accent);
+        }
+
+        .main-nav {
+            flex-grow: 1;
+        }
+
         .nav-item {
             display: flex;
             align-items: center;
@@ -56,7 +71,12 @@
             border-radius: 8px;
             transition: 0.3s;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
         /* --- Main Content --- */
         .main-content {
@@ -72,14 +92,37 @@
             margin-bottom: 3rem;
         }
 
-        .user-profile { display: flex; align-items: center; gap: 15px; }
-        .profile-info { text-align: right; }
-        .user-name { display: block; font-weight: 700; color: var(--color-text-dark); }
-        .user-role { font-size: 0.85rem; color: var(--color-text-light); }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-info {
+            text-align: right;
+        }
+
+        .user-name {
+            display: block;
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        .user-role {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+        }
+
         .avatar {
-            width: 45px; height: 45px; background: var(--color-primary-accent);
-            color: white; border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; font-weight: 700;
+            width: 45px;
+            height: 45px;
+            background: var(--color-primary-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
         }
 
         /* --- Course Grid --- */
@@ -95,27 +138,70 @@
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid var(--color-border);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
         }
 
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-        .curriculum-tag { font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; }
-        .dp-tag { background: #e1f5fe; color: #0288d1; }
-        .igcse-tag { background: #f3e5f5; color: #7b1fa2; }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
 
-        .progress-bar-container { height: 8px; background: #eee; border-radius: 4px; margin: 15px 0 5px; position: relative; }
-        .progress-bar { height: 100%; background: var(--color-primary-accent); border-radius: 4px; transition: width 1s ease-in-out; }
-        .progress-text { font-size: 0.75rem; color: var(--color-text-light); }
+        .curriculum-tag {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+        }
+
+        .dp-tag {
+            background: #e1f5fe;
+            color: #0288d1;
+        }
+
+        .igcse-tag {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 15px 0 5px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--color-primary-accent);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
 
         .btn-card-access {
-            display: inline-block; margin-top: 1rem; color: var(--color-primary-accent);
-            text-decoration: none; font-weight: 700; font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--color-primary-accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         /* --- Section States --- */
-        #loading-overlay { font-style: italic; color: var(--color-text-light); }
+        #loading-overlay {
+            font-style: italic;
+            color: var(--color-text-light);
+        }
     </style>
 </head>
+
 <body>
 
     <aside class="sidebar">
@@ -123,10 +209,14 @@
         <nav class="main-nav">
             <a href="index.html" class="nav-item"><i data-feather="grid" style="margin-right: 12px;"></i> Home</a>
             <a href="#" class="nav-item active"><i data-feather="book-open" style="margin-right: 12px;"></i> Courses</a>
-            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i> Registration</a>
+            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i>
+                Registration</a>
+            <a href="assignments.html" class="nav-item"><i data-feather="edit-3" style="margin-right: 12px;"></i>
+                Assignments</a>
         </nav>
         <div class="sidebar-footer">
-            <a href="#" class="nav-item" onclick="logout()"><i data-feather="log-out" style="margin-right: 12px;"></i> Log Out</a>
+            <a href="#" class="nav-item" onclick="logout()"><i data-feather="log-out" style="margin-right: 12px;"></i>
+                Log Out</a>
         </div>
     </aside>
 
@@ -146,54 +236,59 @@
             <h2>Current Courses</h2>
             <div id="loading-overlay">Fetching your courses...</div>
             <div class="course-cards-container" id="courseGrid">
-                </div>
+            </div>
         </section>
     </main>
 
+    <script src="js/api-config.js"></script>
     <script>
-        // --- CONFIG ---
-        const API_URL = "https://your-api-domain.com/api";
-
-        // --- UTILITIES ---
-        const getCookie = (name) => {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return null;
-        };
-
-        const logout = () => {
-            document.cookie = "zakerHubUserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "zakerHubUserStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = "signin.html";
-        };
-
         // --- CORE LOGIC ---
         async function initializeDashboard() {
-            const userId = getCookie('zakerHubUserId');
-            const userStatus = getCookie('zakerHubUserStatus');
-
-            // 1. Auth Guard
-            if (!userId || !userStatus) {
+            if (!ZakerAPI.auth.isAuthenticated()) {
                 window.location.href = "signin.html";
                 return;
             }
 
+            const user = ZakerAPI.auth.getUser();
+
             try {
-                // 2. Fetch Data in Parallel
-                const [userRes, coursesRes] = await Promise.all([
-                    fetch(`${API_URL}/users/${userId}`),
-                    fetch(`${API_URL}/${userStatus}/courses?id=${userId}`)
-                ]);
+                // 1. Render Basic Profile from Auth Data (Faster)
+                renderProfile({
+                    firstName: user.name.split(' ')[0],
+                    fullName: user.name,
+                    phone: user.role === 'TEACHER' ? 'Instructor' : (user.phone || user.email)
+                });
 
-                const userData = await userRes.json();
-                const coursesData = await coursesRes.json();
+                let activeCourses = [];
 
-                // 3. Render Profile
-                renderProfile(userData);
+                if (user.role === 'TEACHER') {
+                    // Fetch courses taught by this teacher
+                    const teacherCourses = await ZakerAPI.fetch(`/academics/courses/?teacher=${user.id}`);
+                    activeCourses = teacherCourses.map(c => ({
+                        id: c.id,
+                        name: c.name,
+                        curriculum: c.subject_name || "General",
+                        instructorName: "You",
+                        progress: 100 // Visual only
+                    }));
+                } else {
+                    // Fetch Enrolled Courses via Subscriptions for students
+                    const enrollments = await ZakerAPI.fetch('/subscriptions/enrollments/');
+                    activeCourses = enrollments
+                        .filter(e => e.status === 'APPROVED')
+                        .map(e => ({
+                            id: e.subscription_detail.course_detail.id,
+                            name: e.subscription_detail.course_detail.name,
+                            curriculum: e.subscription_detail.course_detail.subject_name || "General",
+                            instructorName: e.subscription_detail.course_detail.teacher_name || "TBA",
+                            planType: e.subscription_detail.plan_type,
+                            levelName: e.subscription_detail.level_detail ? e.subscription_detail.level_detail.name : "General",
+                            progress: 0
+                        }));
+                }
 
-                // 4. Render Courses
-                renderCourses(coursesData);
+                // 3. Render Courses
+                renderCourses(activeCourses);
 
             } catch (error) {
                 console.error("Dashboard Load Error:", error);
@@ -206,21 +301,25 @@
         function renderProfile(user) {
             document.getElementById('welcomeGreeting').innerText = `Welcome Back, ${user.firstName || 'User'}!`;
             document.getElementById('displayFullName').innerText = user.fullName || 'User Name';
-            document.getElementById('displayRoleInfo').innerText = user.phone || user.email || 'Member';
-            
-            const initials = (user.firstName?.[0] || '') + (user.lastName?.[0] || '');
-            document.getElementById('displayInitials').innerText = initials.toUpperCase() || 'ZH';
+            document.getElementById('displayRoleInfo').innerText = user.phone || 'Member';
+
+            const initials = user.fullName ? user.fullName.substring(0, 2).toUpperCase() : 'ZH';
+            document.getElementById('displayInitials').innerText = initials;
         }
 
         function renderCourses(courses) {
             const grid = document.getElementById('courseGrid');
             const loader = document.getElementById('loading-overlay');
-            
+
             loader.style.display = 'none';
             grid.innerHTML = "";
 
             if (!courses || courses.length === 0) {
-                grid.innerHTML = "<p>No active courses found.</p>";
+                grid.innerHTML = `
+                    <div class="alert alert-info w-100">
+                        You have no active courses. <a href="curricula.html" class="alert-link">Browse and Enroll now!</a>
+                    </div>
+                `;
                 return;
             }
 
@@ -228,28 +327,41 @@
                 const card = `
                     <div class="course-card">
                         <div class="card-header">
-                            <h3>${course.name}</h3>
-                            <span class="curriculum-tag ${course.curriculum.toLowerCase()}-tag">
-                                ${course.curriculum}
-                            </span>
+                            <div>
+                                <h3 class="mb-1">${course.name}</h3>
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                    <span class="curriculum-tag dp-tag">${course.curriculum}</span>
+                                    <span class="curriculum-tag" style="background: #e1f5fe; color: #0288d1; border: 1px solid #b3e5fc;">${course.planType}</span>
+                                    <span class="curriculum-tag" style="background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2;">${course.levelName}</span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="instructor" style="font-size: 0.9rem; color: #4f566b;">
-                            Instructor: ${course.instructorName}
+                        <p class="instructor mt-3" style="font-size: 0.9rem; color: #4f566b; margin-bottom: 0.5rem;">
+                            Instructor: <strong>${course.instructorName}</strong>
                         </p>
                         <div class="progress-bar-container">
                             <div class="progress-bar" style="width: ${course.progress}%"></div>
                         </div>
-                        <span class="progress-text">${course.progress}% Complete</span>
-                        <br>
-                        <a href="course.html?course=${course.id}" class="btn-card-access">Access Course →</a>
+                        <div class="d-flex justify-content-between">
+                            <span class="progress-text">${course.progress}% Complete</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="course.html?id=${course.id}" class="btn-card-access">Access Course →</a>
+                            <a href="course.html?id=${course.id}" class="btn-card-access" style="color: #635bff;">Assignments →</a>
+                        </div>
                     </div>
                 `;
                 grid.innerHTML += card;
             });
         }
 
+        function logout() {
+            ZakerAPI.auth.logout();
+        }
+
         // Run on load
         window.addEventListener('DOMContentLoaded', initializeDashboard);
     </script>
 </body>
+
 </html>

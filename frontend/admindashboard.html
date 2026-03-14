@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Command Center | Zaker Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
         :root {
@@ -19,7 +21,10 @@
             --border: #e2e8f0;
         }
 
-        * { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -31,19 +36,42 @@
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @keyframes scaleUp {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .animate-slide { animation: slideIn 0.5s ease-out; }
-        .animate-scale { animation: scaleUp 0.4s ease-out; }
+        .animate-slide {
+            animation: slideIn 0.5s ease-out;
+        }
 
-        .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+        .animate-scale {
+            animation: scaleUp 0.4s ease-out;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
         header {
             display: flex;
@@ -52,8 +80,16 @@
             padding: 40px 0;
         }
 
-        .logo-area h1 { font-weight: 800; font-size: 1.75rem; margin: 0; color: var(--text-main); }
-        .logo-area span { color: var(--primary); }
+        .logo-area h1 {
+            font-weight: 800;
+            font-size: 1.75rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .logo-area span {
+            color: var(--primary);
+        }
 
         .dashboard-grid {
             display: grid;
@@ -62,7 +98,9 @@
         }
 
         @media (min-width: 1024px) {
-            .dashboard-grid { grid-template-columns: 380px 1fr; }
+            .dashboard-grid {
+                grid-template-columns: 380px 1fr;
+            }
         }
 
         .card {
@@ -70,15 +108,34 @@
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .card:hover { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
 
-        h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        .form-group { margin-bottom: 20px; }
-        label { font-size: 0.85rem; font-weight: 700; color: var(--text-dim); display: block; margin-bottom: 8px; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 8px;
+        }
+
         input {
             width: 100%;
             padding: 14px;
@@ -87,7 +144,13 @@
             background: #fdfdfd;
             font-size: 1rem;
         }
-        input:focus { border-color: var(--primary); outline: none; background: #fff; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
 
         .btn {
             padding: 14px 20px;
@@ -102,21 +165,78 @@
             font-size: 1rem;
         }
 
-        .btn-primary { background: var(--primary); color: white; width: 100%; }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
-        
-        .btn-icon { padding: 10px; border-radius: 10px; }
-        .btn-success { background: #dcfce7; color: var(--success); }
-        .btn-danger { background: #fee2e2; color: var(--danger); }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
 
-        .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        th { text-align: left; padding: 12px; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-        td { padding: 16px 12px; background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        td:first-child { border-left: 1px solid var(--border); border-radius: 12px 0 0 12px; }
-        td:last-child { border-right: 1px solid var(--border); border-radius: 0 12px 12px 0; text-align: right; }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
 
-        .phone-text { font-family: monospace; font-weight: 600; color: var(--primary); background: #f5f3ff; padding: 2px 6px; border-radius: 4px; }
+        .btn-icon {
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .btn-success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .btn-danger {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 16px 12px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td:first-child {
+            border-left: 1px solid var(--border);
+            border-radius: 12px 0 0 12px;
+        }
+
+        td:last-child {
+            border-right: 1px solid var(--border);
+            border-radius: 0 12px 12px 0;
+            text-align: right;
+        }
+
+        .phone-text {
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--primary);
+            background: #f5f3ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
         .badge {
             padding: 6px 12px;
@@ -127,185 +247,179 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container animate-scale">
-    <header>
-        <div class="logo-area">
-            <h1>Zaker<span>Hub</span> Admin</h1>
+    <div class="container animate-scale">
+        <header>
+            <div class="logo-area">
+                <h1>Zaker<span>Hub</span> Admin</h1>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <aside class="animate-slide">
+                <div class="card">
+                    <h2><i data-feather="user-plus" style="color: var(--primary);"></i> Add New Teacher</h2>
+                    <form id="teacherForm">
+                        <div class="form-group">
+                            <label>Teacher Full Name</label>
+                            <input type="text" id="tName" placeholder="e.g. Mr. Ahmed Ali" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number (Login ID)</label>
+                            <input type="tel" id="tPhone" placeholder="01XXXXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Access Password</label>
+                            <input type="password" id="tPass" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="shield"></i> Create Teacher Account
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="animate-slide" style="animation-delay: 0.1s;">
+
+                <div class="card" style="margin-bottom: 30px;">
+                    <h2><i data-feather="check-circle" style="color: var(--success);"></i> Purchase Approvals</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student Phone</th>
+                                    <th>Course Details</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enrollmentBody">
+                                <tr>
+                                    <td colspan="3" style="text-align:center;">Loading pending approvals...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i data-feather="users" style="color: var(--text-dim);"></i> User Management</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTable">
+                                <tr>
+                                    <td colspan="4" style="text-align:center;">Loading user list...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
         </div>
-    </header>
-
-    <div class="dashboard-grid">
-        <aside class="animate-slide">
-            <div class="card">
-                <h2><i data-feather="user-plus" style="color: var(--primary);"></i> Add New Teacher</h2>
-                <form id="teacherForm">
-                    <div class="form-group">
-                        <label>Teacher Full Name</label>
-                        <input type="text" id="tName" placeholder="e.g. Mr. Ahmed Ali" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number (Login ID)</label>
-                        <input type="tel" id="tPhone" placeholder="01XXXXXXXXX" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Access Password</label>
-                        <input type="password" id="tPass" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i data-feather="shield"></i> Create Teacher Account
-                    </button>
-                </form>
-            </div>
-        </aside>
-
-        <main class="animate-slide" style="animation-delay: 0.1s;">
-            
-            <div class="card" style="margin-bottom: 30px;">
-                <h2><i data-feather="check-circle" style="color: var(--success);"></i> Purchase Approvals</h2>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Student Phone</th>
-                                <th>Course Details</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="enrollmentBody">
-                            <tr><td colspan="3" style="text-align:center;">Loading pending approvals...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2><i data-feather="users" style="color: var(--text-dim);"></i> User Management</h2>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTable">
-                            <tr><td colspan="4" style="text-align:center;">Loading user list...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </main>
     </div>
-</div>
 
-<script>
-    const API_URL = "http://127.0.0.1:8000/api/v1";
-    const token = localStorage.getItem('token');
-
-    async function checkAuth() {
-        if (!token) { window.location.href = 'signin.html'; return; }
-        const res = await fetch(`${API_URL}/auth/me/`, {
-            headers: { 'Authorization': `Token ${token}` }
-        });
-        const user = await res.json();
-        if (user.role !== 'admin') { window.location.href = 'dashboard.html'; }
-    }
-
-    async function loadEnrollments() {
-        const res = await fetch(`${API_URL}/subscriptions/enrollments/?status=pending`, {
-            headers: { 'Authorization': `Token ${token}` }
-        });
-        const data = await res.json();
-        const tbody = document.getElementById('enrollmentBody');
-        if (data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No pending purchases</td></tr>';
-            return;
+    <script src="js/api-config.js"></script>
+    <script>
+        async function checkAuth() {
+            if (!ZakerAPI.auth.isAuthenticated()) {
+                window.location.href = 'signin.html';
+                return;
+            }
+            const user = ZakerAPI.auth.getUser();
+            if (user.role !== 'ADMIN') {
+                window.location.href = 'dashboard.html';
+            }
         }
-        tbody.innerHTML = data.map(reg => `
-            <tr>
-                <td><span class="phone-text">${reg.student_phone}</span></td>
-                <td>
-                    <div style="font-weight: 700;">${reg.course_name}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-dim);">ID: #${reg.id}</div>
-                </td>
-                <td>
-                    <button class="btn btn-icon btn-success" onclick="updateStatus(${reg.id}, 'approved')"><i data-feather="check"></i></button>
-                    <button class="btn btn-icon btn-danger" onclick="updateStatus(${reg.id}, 'rejected')"><i data-feather="x"></i></button>
-                </td>
-            </tr>
-        `).join('');
-        feather.replace();
-    }
 
-    async function loadUsers() {
-        const res = await fetch(`${API_URL}/auth/users/`, {
-            headers: { 'Authorization': `Token ${token}` }
-        });
-        const data = await res.json();
-        const tbody = document.getElementById('userTable');
-        tbody.innerHTML = data.map(user => `
-            <tr>
-                <td style="font-weight: 700;">${user.name}</td>
-                <td><span class="phone-text">${user.phone}</span></td>
-                <td><span class="badge" style="background: ${user.role === 'teacher' ? '#e0e7ff' : '#f1f5f9'}; color: ${user.role === 'teacher' ? 'var(--primary)' : '#475569'};">${user.role}</span></td>
-                <td><button class="btn btn-danger" style="padding: 8px 12px; font-size: 0.8rem;" onclick="deleteUser(${user.id})">Remove</button></td>
-            </tr>
-        `).join('');
-        feather.replace();
-    }
+        async function loadEnrollments() {
+            try {
+                const data = await ZakerAPI.fetch('/subscriptions/enrollments/');
+                const pending = data.filter(e => e.status === 'PENDING');
+                const tbody = document.getElementById('enrollmentBody');
 
-    async function updateStatus(id, status) {
-        if (!confirm(`Confirm ${status} for this request?`)) return;
-        const res = await fetch(`${API_URL}/subscriptions/enrollments/${id}/`, {
-            method: 'PATCH',
-            headers: { 'Authorization': `Token ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: status })
-        });
-        if (res.ok) loadEnrollments();
-    }
+                if (pending.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No pending purchases</td></tr>';
+                    return;
+                }
 
-    async function deleteUser(id) {
-        if (!confirm("Are you sure you want to remove this user?")) return;
-        const res = await fetch(`${API_URL}/auth/users/${id}/`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Token ${token}` }
-        });
-        if (res.ok) loadUsers();
-    }
+                tbody.innerHTML = pending.map(reg => `
+                    <tr>
+                        <td><span class="phone-text">${reg.student_detail.phone || 'No Phone'}</span></td>
+                        <td>
+                            <div style="font-weight: 700;">${reg.subscription_detail.course_detail.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">ID: #${reg.id}</div>
+                        </td>
+                        <td>
+                            <button class="btn btn-icon btn-success" onclick="updateStatus(${reg.id}, 'APPROVED')"><i data-feather="check"></i></button>
+                            <button class="btn btn-icon btn-danger" onclick="updateStatus(${reg.id}, 'REJECTED')"><i data-feather="x"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+                feather.replace();
+            } catch (err) {
+                console.error("Load enrollments failed:", err);
+            }
+        }
 
-    document.getElementById('teacherForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const data = {
-            name: document.getElementById('tName').value,
-            phone: document.getElementById('tPhone').value,
-            password: document.getElementById('tPass').value,
-            role: 'teacher'
-        };
-        const res = await fetch(`${API_URL}/auth/signup/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
-            body: JSON.stringify(data)
+        async function loadUsers() {
+            try {
+                const tbody = document.getElementById('userTable');
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">User list restricted to Super Admins via Django Admin.</td></tr>';
+            } catch (err) {
+                console.error("Load users failed:", err);
+            }
+        }
+
+        async function updateStatus(id, status) {
+            if (!confirm(`Confirm ${status} for this request?`)) return;
+            try {
+                await ZakerAPI.fetch(`/subscriptions/enrollments/${id}/`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({ status: status })
+                });
+                loadEnrollments();
+            } catch (err) {
+                alert("Failed to update status: " + err.message);
+            }
+        }
+
+        document.getElementById('teacherForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('tName').value,
+                email: document.getElementById('tPhone').value + '@zakerhub.com',
+                phone: document.getElementById('tPhone').value,
+                password: document.getElementById('tPass').value,
+                role: 'TEACHER'
+            };
+
+            try {
+                await ZakerAPI.auth.signup(data);
+                alert("Teacher account created.");
+                document.getElementById('teacherForm').reset();
+                loadUsers();
+            } catch (err) {
+                alert("Registration failed: " + err.message);
+            }
         });
-        if (res.ok) {
-            alert("Teacher account created.");
-            document.getElementById('teacherForm').reset();
+
+        window.onload = async () => {
+            feather.replace();
+            await checkAuth();
+            loadEnrollments();
             loadUsers();
-        } else {
-            alert("Registration failed. Phone number might exist.");
-        }
-    });
-
-    window.onload = async () => {
-        feather.replace();
-        await checkAuth();
-        loadEnrollments();
-        loadUsers();
-    };
-</script>
+        };
+    </script>
 </body>
+
 </html>

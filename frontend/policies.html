@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies | Zaker Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-text-dark: #30313d;
+            --color-text-light: #525f7f;
+            --color-bg-light: #f6f9fc;
+            --color-white: #ffffff;
+            --color-shadow: rgba(23, 42, 80, 0.15);
+            --font-family-sans: 'Inter', sans-serif;
+            --border-radius-lg: 12px;
+            --border-radius-sm: 6px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            line-height: 1.6;
+            color: var(--color-text-dark);
+            background-color: var(--color-bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Navigation Bar (Shared) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--color-white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-navy);
+            text-decoration: none;
+        }
+
+        .logo-hub {
+            color: var(--color-primary-accent);
+            font-weight: 800;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary-navy);
+        }
+
+        .cta-link {
+            color: var(--color-primary-navy);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: background-color 0.2s;
+        }
+
+        .cta-link:hover {
+            background-color: rgba(23, 42, 80, 0.08);
+        }
+
+        /* --- Header Section --- */
+        .policies-header {
+            background-color: var(--color-primary-navy);
+            color: var(--color-white);
+            padding: 6rem 6% 4rem;
+            text-align: center;
+        }
+
+        .policies-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .policies-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- Main Content (Accordion) --- */
+        .container {
+            max-width: 900px;
+            margin: -3rem auto 4rem;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .accordion {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 10px 30px var(--color-shadow);
+            overflow: hidden;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #e6ebf1;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: #f9fbfc;
+        }
+
+        .accordion-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-primary-navy);
+            display: flex;
+            align-items: center;
+        }
+
+        .accordion-header h2 span {
+            margin-right: 1rem;
+            color: var(--color-primary-accent);
+            font-size: 0.9rem;
+            background: rgba(99, 91, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-icon::before,
+        .accordion-icon::after {
+            content: '';
+            position: absolute;
+            background-color: var(--color-primary-navy);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .accordion-icon::before {
+            width: 12px;
+            height: 2px;
+        }
+
+        .accordion-icon::after {
+            width: 2px;
+            height: 12px;
+            transition: opacity 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-item.active .accordion-icon::after {
+            opacity: 0;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease;
+            background: var(--color-white);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px; /* Large enough for content */
+            padding-bottom: 2rem;
+        }
+
+        .content-inner {
+            padding: 0 2rem 1.5rem;
+            color: var(--color-text-light);
+            font-size: 1.05rem;
+        }
+
+        .content-inner p {
+            margin-bottom: 1.2rem;
+        }
+
+        .content-inner ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-inner li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .content-inner li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary-accent);
+            font-weight: bold;
+        }
+
+        .contact-box {
+            background: var(--color-bg-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            border-left: 4px solid var(--color-primary-accent);
+            margin-top: 2rem;
+        }
+
+        .contact-box h3 {
+            color: var(--color-primary-navy);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- Footer (Shared) --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            border-top: 1px solid #e6ebf1;
+            background: var(--color-white);
+        }
+
+        footer a {
+            color: var(--color-primary-accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-hub">ZH</span> Zaker Hub
+        </a>
+        <nav class="nav-links">
+            <a href="curricula.html">Curricula</a>
+            <a href="index.html#features">Features</a>
+            <a id="nav-auth-link" href="signin.html" class="cta-link">Sign In</a>
+        </nav>
+    </header>
+
+    <section class="policies-header">
+        <h1>Platform Policies</h1>
+        <p>Your guide to the standards, usage, and safety measures that keep Zaker Hub a premier learning environment.</p>
+    </section>
+
+    <main class="container">
+        <div class="accordion">
+            <!-- Policy 1 -->
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <h2><span>01</span> Content Usage Policy</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-inner">
+                        <p>All educational materials provided through the ZakerHub platform are intended exclusively for students enrolled in ZakerHub programs. These materials may include class recordings, practice exams, worksheets, presentations, lesson notes, and other learning resources.</p>
+                        <p>All platform content is protected under intellectual property and copyright laws and remains the property of ZakerHub or its authorized instructors.</p>
+                        <p>Students are granted limited, non-transferable access to this content strictly for personal educational purposes related to their exam preparation.</p>
+                        
+                        <p><strong>Students may use the content for:</strong></p>
+                        <ul>
+                            <li>Personal study and revision</li>
+                            <li>Reviewing recorded classes</li>
+                            <li>Completing assignments and practice exercises</li>
+                            <li>Improving understanding of course materials</li>
+                        </ul>
+
+                        <p><strong>Strictly prohibited activities:</strong></p>
+                        <ul>
+                            <li>Uploading ZakerHub materials to other websites or platforms</li>
+                            <li>Sharing class recordings publicly or with individuals not enrolled in the program</li>
+                            <li>Selling, distributing, or redistributing course materials</li>
+                            <li>Copying or reproducing large portions of platform content for commercial use</li>
+                            <li>Using ZakerHub materials to create competing educational products</li>
+                        </ul>
+
+                        <p>Unauthorized use, sharing, or distribution of platform content may result in immediate suspension or termination of the user account, removal of access to platform services, and legal action where applicable under intellectual property laws.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policy 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><span>02</span> Account Termination Policy</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-inner">
+                        <p>ZakerHub reserves the right to suspend, restrict, or permanently terminate user accounts that violate platform rules, policies, or terms of service.</p>
+                        <p>Account termination decisions are made to maintain a safe, respectful, and professional learning environment for all students and instructors.</p>
+                        
+                        <p><strong>Reasons for suspension or termination include:</strong></p>
+                        <ul>
+                            <li>Harassment, bullying, or inappropriate behavior toward instructors or other students</li>
+                            <li>Disruptive behavior during live classes or in communication channels</li>
+                            <li>Sharing account access with other individuals</li>
+                            <li>Unauthorized distribution or sharing of platform content</li>
+                            <li>Violating academic integrity policies</li>
+                            <li>Attempting to bypass platform rules or technical systems</li>
+                            <li>Any activity that harms the platform, its instructors, or its students</li>
+                        </ul>
+
+                        <p>Serious violations may result in immediate account termination without prior notice. If an account is terminated, the user may lose access to live classes, recorded lessons, and all platform resources.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policy 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><span>03</span> Complaint & Dispute Resolution Policy</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-inner">
+                        <p>ZakerHub aims to maintain high standards of service and encourages students to communicate any concerns or issues they may experience while using the platform.</p>
+                        <p>Students who encounter problems related to classes, instructors, scheduling, technical issues, or platform services may submit a formal complaint through the ZakerHub support team.</p>
+                        
+                        <p><strong>When submitting a complaint, please provide:</strong></p>
+                        <ul>
+                            <li>The nature of the issue or concern</li>
+                            <li>The date and time of the class or event involved</li>
+                            <li>The instructor or class related to the issue</li>
+                            <li>Any relevant supporting information</li>
+                        </ul>
+
+                        <p>Our team will investigate the reported issue, communicate with relevant parties, and provide clarification or support to the student, implementing corrective measures where necessary.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Information -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><span>04</span> Support & Contact</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-inner">
+                        <p>Support requests and complaints may be submitted through the following official ZakerHub communication channels:</p>
+                        <div class="contact-box">
+                            <h3>Official Channels:</h3>
+                            <ul>
+                                <li><strong>Email:</strong> zakerhub@gmail.com</li>
+                                <li><strong>WhatsApp:</strong> The official support number listed on our website</li>
+                            </ul>
+                            <p><em>The ZakerHub support team will review all submitted inquiries carefully and respond within a reasonable timeframe.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Zaker Hub. Global Education Management. <a href="policies.html">Policies</a> | Built by WebVera.</p>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Accordion Logic ---
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.parentElement;
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other items
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // --- 2. Auth Logic (Shared from index) ---
+            const authLink = document.getElementById('nav-auth-link');
+            if (typeof ZakerAPI !== 'undefined' && ZakerAPI.auth.isAuthenticated()) {
+                const user = ZakerAPI.auth.getUser();
+                const dashboardUrl = (user.role === 'ADMIN') ? 'admindashboard.html' : 'dashboard.html';
+
+                if (authLink) {
+                    authLink.innerText = 'Dashboard';
+                    authLink.href = dashboardUrl;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaker Hub | Global Curricula, Local Excellence</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         /* --- 1. Global Reset and Variables (Updated Navy Theme) --- */
         :root {
-            --color-primary-navy: #172a50; /* Sleek Navy Blue */
-            --color-primary-accent: #635bff; /* Stripe's bright blue/purple for CTAs */
-            --color-text-dark: #30313d; 
-            --color-text-light: #525f7f; 
-            --color-bg-light: #f6f9fc; /* Light background for sections */
+            --color-primary-navy: #172a50;
+            /* Sleek Navy Blue */
+            --color-primary-accent: #635bff;
+            /* Stripe's bright blue/purple for CTAs */
+            --color-text-dark: #30313d;
+            --color-text-light: #525f7f;
+            --color-bg-light: #f6f9fc;
+            /* Light background for sections */
             --color-white: #ffffff;
-            --color-shadow: rgba(23, 42, 80, 0.15); /* Shadow from Navy */
+            --color-shadow: rgba(23, 42, 80, 0.15);
+            /* Shadow from Navy */
             --font-family-sans: 'Inter', sans-serif;
             --border-radius-lg: 12px;
             --border-radius-sm: 6px;
@@ -33,18 +38,19 @@
             line-height: 1.6;
             color: var(--color-text-dark);
             background-color: var(--color-white);
-            overflow-x: hidden; /* Prevents horizontal scroll from animations */
+            overflow-x: hidden;
+            /* Prevents horizontal scroll from animations */
         }
 
         /* --- 2. Typography & Emphasis --- */
         h1 {
-            font-size: 4rem; 
+            font-size: 4rem;
             line-height: 1.1;
             font-weight: 800;
         }
 
         h1 strong {
-            color: var(--color-primary-navy); 
+            color: var(--color-primary-navy);
             font-style: normal;
         }
 
@@ -62,7 +68,8 @@
         }
 
         /* --- 3. Utility (Buttons and Links) --- */
-        .btn-primary, .btn-secondary {
+        .btn-primary,
+        .btn-secondary {
             display: inline-block;
             padding: 1rem 2rem;
             margin: 0.5rem;
@@ -74,7 +81,7 @@
         }
 
         .btn-primary {
-            background-color: var(--color-primary-accent); 
+            background-color: var(--color-primary-accent);
             color: var(--color-white);
             box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
         }
@@ -87,7 +94,7 @@
 
         .btn-secondary {
             background-color: transparent;
-            color: var(--color-primary-navy); 
+            color: var(--color-primary-navy);
             border-color: var(--color-primary-navy);
         }
 
@@ -153,7 +160,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4rem 6%; 
+            padding: 4rem 6%;
             max-width: 1400px;
             margin: 0 auto;
             min-height: 80vh;
@@ -210,8 +217,10 @@
             box-shadow: 0 20px 50px var(--color-shadow);
             overflow: hidden;
             border: 1px solid #e6ebf1;
-            transform: perspective(1000px) rotateY(-10deg) scale(0.95); /* Initial 3D tilt */
-            opacity: 0; /* Initial state for JS animation */
+            transform: perspective(1000px) rotateY(-10deg) scale(0.95);
+            /* Initial 3D tilt */
+            opacity: 0;
+            /* Initial state for JS animation */
         }
 
         .card-header {
@@ -222,15 +231,26 @@
             border-bottom: 1px solid #e6ebf1;
         }
 
-        .dot-red, .dot-yellow, .dot-green {
+        .dot-red,
+        .dot-yellow,
+        .dot-green {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             margin-right: 5px;
         }
-        .dot-red { background-color: #ff5c5c; }
-        .dot-yellow { background-color: #ffbd44; }
-        .dot-green { background-color: #00ca4e; }
+
+        .dot-red {
+            background-color: #ff5c5c;
+        }
+
+        .dot-yellow {
+            background-color: #ffbd44;
+        }
+
+        .dot-green {
+            background-color: #00ca4e;
+        }
 
         .card-tab {
             margin-left: 1.5rem;
@@ -287,23 +307,37 @@
             width: 15%;
             background-color: var(--color-primary-navy);
             border-radius: 4px 4px 0 0;
-            transition: height 0.8s ease-out; 
+            transition: height 0.8s ease-out;
         }
 
         /* Initial/Default bar heights for the visual */
-        .bar-1 { height: 40%; }
-        .bar-2 { height: 75%; }
-        .bar-3 { height: 50%; }
-        .bar-4 { height: 90%; }
-        .bar-5 { height: 65%; }
+        .bar-1 {
+            height: 40%;
+        }
+
+        .bar-2 {
+            height: 75%;
+        }
+
+        .bar-3 {
+            height: 50%;
+        }
+
+        .bar-4 {
+            height: 90%;
+        }
+
+        .bar-5 {
+            height: 65%;
+        }
 
         /* --- 7. Curriculum Focus Section --- */
         .curriculum-section {
             padding: 6rem 6%;
-            background-color: var(--color-white); 
+            background-color: var(--color-white);
             text-align: center;
         }
-        
+
         .curriculum-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -311,24 +345,24 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         .curriculum-item {
             background-color: var(--color-bg-light);
             padding: 2.5rem 1.5rem;
             border-radius: var(--border-radius-lg);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            border-left: 5px solid var(--color-primary-navy); 
+            border-left: 5px solid var(--color-primary-navy);
             transition: all 0.3s ease;
-            opacity: 0; 
+            opacity: 0;
             transform: translateY(20px);
             text-align: left;
         }
-        
+
         .curriculum-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px var(--color-shadow);
         }
-        
+
         .curriculum-item h3 {
             font-size: 1.5rem;
             font-weight: 700;
@@ -337,17 +371,17 @@
             display: flex;
             align-items: center;
         }
-        
+
         .curriculum-item .icon {
             font-size: 1.5rem;
             margin-right: 0.5rem;
-            color: var(--color-primary-accent); 
+            color: var(--color-primary-accent);
         }
 
         /* --- 8. Featurette Section --- */
         .featurette-section {
             padding: 6rem 6%;
-            background-color: var(--color-bg-light); 
+            background-color: var(--color-bg-light);
             border-top: 1px solid #e6ebf1;
         }
 
@@ -366,7 +400,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             border: 1px solid #e6ebf1;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0; 
+            opacity: 0;
             transform: translateY(20px);
         }
 
@@ -376,7 +410,7 @@
         }
 
         .feature-item h3 .icon {
-            color: var(--color-primary-navy); 
+            color: var(--color-primary-navy);
         }
 
         /* --- 9. Footer --- */
@@ -401,41 +435,58 @@
         }
     </style>
 </head>
+
 <body>
 
     <header class="navbar">
-        <div class="logo">
-            <span class="logo-hub">ZH</span> Zaker Hub
-        </div>
+        <a href="index.html" class="logo">
+            <img src="images/logo.jpeg" alt="Zaker Hub Logo"
+                style="height: 160px; width: auto; display: block; margin: -60px 0; mix-blend-mode: multiply;">
+        </a>
         <nav class="nav-links">
             <a href="curricula.html">Curricula</a>
             <a href="#features">Features</a>
-            <a href="#">Policies</a>
-            <a href="signin.html" class="cta-link">Sign In</a>
+            <a id="nav-auth-link" href="signin.html" class="cta-link">Sign In</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="hero-content">
             <h1 class="hero-headline" id="headline-text">
-                <br><div style="color: f6f9fc; visibility: hidden;">The</div> Sleekest Platform for <br>Global Curriculum Management.
+                Your next step toward a high score
             </h1>
             <p class="hero-subtext">
-                Zaker Hub is engineered to manage **IGCSE, American Diploma, and DP** programs with unmatched clarity and a refined, powerful aesthetic.
+                Join a community where students learn together with experienced teachers who support and guide them step
+                by step
             </p>
             <div class="hero-cta-group">
                 <a href="curricula.html" class="btn-primary">Explore Courses Now</a>
-                <a href="dashboard.html" class="btn-secondary">Open Dashboard <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="trusted-by">
-                <p>Trusted by premier international schools.</p>
-                <div class="logos">
-                    <span>IGCSE Prep</span>
-                    <span>AD Academy</span>
-                    <span>DP Centre</span>
-                </div>
+                <a href="dashboard.html" class="btn-secondary" id="hero-dashboard-btn">Open Dashboard <span
+                        aria-hidden="true">→</span></a>
             </div>
         </div>
+
+        <script src="js/api-config.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const authLink = document.getElementById('nav-auth-link');
+                const heroDashboardBtn = document.getElementById('hero-dashboard-btn');
+
+                if (ZakerAPI.auth.isAuthenticated()) {
+                    const user = ZakerAPI.auth.getUser();
+                    const dashboardUrl = (user.role === 'ADMIN') ? 'admindashboard.html' : 'dashboard.html';
+
+                    if (authLink) {
+                        authLink.innerText = 'Dashboard';
+                        authLink.href = dashboardUrl;
+                    }
+                    if (heroDashboardBtn) {
+                        heroDashboardBtn.href = dashboardUrl;
+                        heroDashboardBtn.innerText = 'Go to Dashboard →';
+                    }
+                }
+            });
+        </script>
 
         <div class="hero-visual" id="visual-card">
             <div class="card-mockup">
@@ -448,9 +499,9 @@
                 </div>
                 <div class="card-body">
                     <div class="metric-box">
-                        <p class="metric-label">Students Enrolled This Quarter</p>
-                        <h2 class="metric-value">2,150</h2>
-                        <span class="metric-change">+8.2% in Q3</span>
+                        <p class="metric-label">Teachers with </p>
+                        <h2 class="metric-value">10+ experience</h2>
+                        <!-- <span class="metric-change">+8.2% in Q3</span> -->
                     </div>
                     <div class="chart-area">
                         <div class="chart-bar bar-1"></div>
@@ -463,45 +514,59 @@
             </div>
         </div>
     </section>
-    
+
+    <section style="text-align: center; padding: 4rem 6%; background: #f6f9fc; border-top: 1px solid #e6ebf1;">
+        <h2 style="font-size: 2.5rem; font-weight: 800; color: #172a50; margin: 0;">Trusted by premier international
+            schools</h2>
+        <div class="logos">
+            <span>IGCSE • American Diploma • IB Diploma • SAT • ACT • EST</span>
+        </div>
+    </section>
+
     <section class="curriculum-section" id="curricula">
         <h2>Curricula Managed with Precision.</h2>
         <div class="curriculum-grid">
             <div class="curriculum-item fade-in" data-curriculum="igcse">
-                <h3><span class="icon">🇬🇧</span> IGCSE</h3>
-                <p>Detailed tracking for Cambridge and Edexcel syllabi, from Checkpoint to A-Levels. Fully compliant and comprehensive.</p>
+                <h3><span class="icon">🇬🇧</span> IGCSE (Coming Soon)</h3>
+                <p>An international curriculum developed by Cambridge and Edexcel that prepares students with strong
+                    academic foundations from Checkpoint through IGCSE and A-Levels.</p>
             </div>
             <div class="curriculum-item fade-in" data-curriculum="ad">
                 <h3><span class="icon">🇺🇸</span> American Diploma</h3>
-                <p>Gradebook and credit management system designed for US high school requirements, including elective and AP course pathways.</p>
+                <p>A flexible high school curriculum used in the United States that allows students to earn credits
+                    across core subjects, electives, and advanced courses.</p>
             </div>
             <div class="curriculum-item fade-in" data-curriculum="dp">
-                <h3><span class="icon">🌐</span> Diploma Programme (DP)</h3>
-                <p>Integrated tools for managing CAS, Extended Essay (EE), and Theory of Knowledge (TOK). Streamlined IB compliance.</p>
+                <h3><span class="icon">🌐</span> Diploma Programme (DP) (Coming Soon)</h3>
+                <p>An internationally recognized IB curriculum that challenges students through academic courses,
+                    research projects, and personal development components like CAS and TOK.</p>
             </div>
         </div>
     </section>
 
     <section class="featurette-section" id="features">
-        <h2>Built for **Scale** and **Simplicity**.</h2>
+        <h2>Features designed for better learning</h2>
         <div class="feature-grid">
             <div class="feature-item fade-in">
-                <h3><span class="icon">✨</span> Gorgeous UX</h3>
-                <p>An intuitive interface inspired by the best of modern fintech platforms. No clutter, just clarity.</p>
+                <h3><span class="icon">🔄</span> Instructor Switching</h3>
+                <p>Flexible Instructor Choice: Students can switch instructors with zero switching fees.</p>
             </div>
             <div class="feature-item fade-in">
-                <h3><span class="icon">🔗</span> Integration</h3>
-                <p>Connect with your teacher and tools via a powerful, well-documented app. Seamless data flow.</p>
+                <h3><span class="icon">🎓</span> Teachers with 10+ Years of Experience</h3>
+                <p>Learn from Experienced Teachers: Our instructors bring over 10 years of teaching experience and guide
+                    students with clear explanations and proven methods.</p>
             </div>
             <div class="feature-item fade-in">
-                <h3><span class="icon">🔒</span> Enterprise-Grade Security</h3>
-                <p>World-class security and compliance built-in from the ground up, protecting your students' data.</p>
+                <h3><span class="icon">�</span> Online Sessions, Recordings & Mock Exams</h3>
+                <p>Learn, Review, and Practice: Join live online sessions, review recorded lessons, and prepare with
+                    mock exams that help students build confidence.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Zaker Hub. Global Education Management. Built by WebVera.</p>
+        <p>&copy; 2026 Zaker Hub. Global Education Management. <a href="policies.html">Policies</a> | Built by WebVera.
+        </p>
     </footer>
 
     <script>
@@ -512,12 +577,12 @@
             const visualCard = document.getElementById('visual-card');
 
             // Split headline text into words for individual animation
-            headline.innerHTML = headline.textContent.split(' ').map(word => 
+            headline.innerHTML = headline.textContent.trim().split(/\s+/).map(word =>
                 `<span style="display: inline-block; opacity: 0;">${word}</span>`
             ).join(' ');
 
             const words = headline.querySelectorAll('span');
-            
+
             // Animate words in sequence
             words.forEach((word, index) => {
                 setTimeout(() => {
@@ -535,17 +600,17 @@
                     mockup.style.opacity = '1';
                     mockup.style.transform = 'perspective(1000px) rotateY(0deg) scale(1)';
                 }
-            }, 500); 
+            }, 500);
 
             // --- 2. Chart Value Animation (Simulating Live Data) ---
             const chartBars = document.querySelectorAll('.chart-bar');
-            
+
             // Give the chart a burst of animation to look like live data loading
             setTimeout(() => {
                 chartBars.forEach(bar => {
-                    const originalHeight = bar.style.height; 
+                    const originalHeight = bar.style.height;
                     bar.style.height = '10%'; // Shrink for "loading" effect
-                    
+
                     setTimeout(() => {
                         bar.style.height = originalHeight; // Restore to animate
                     }, 100);
@@ -555,9 +620,9 @@
 
             // --- 3. Scroll-Based Fade-In Animation (Curriculum and Featurette Sections) ---
             const observerOptions = {
-                root: null, 
+                root: null,
                 rootMargin: '0px',
-                threshold: 0.1 
+                threshold: 0.1
             };
 
             const itemsToObserve = document.querySelectorAll('.feature-item, .curriculum-item');
@@ -593,4 +658,5 @@
         });
     </script>
 </body>
+
 </html>
