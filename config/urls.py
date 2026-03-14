@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 # Customizing Admin Texts
 admin.site.site_header = "ZakerHub Administration"
@@ -52,6 +53,11 @@ def get_app_list(self, request, app_label=None):
 admin.AdminSite.get_app_list = get_app_list
 
 urlpatterns = [
+    # Static Frontend Routes
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('<str:page>.html', lambda request, page: TemplateView.as_view(template_name=f"{page}.html")(request)),
+
+    # Admin route
     path('admin/', admin.site.urls),
     
     # API Version 1
