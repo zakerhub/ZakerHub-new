@@ -3,7 +3,10 @@
  */
 
 const API_CONFIG = {
-    BASE_URL: "http://127.0.0.1:8000/api/v1", // Change to production URL for Render
+    // Automatically use local Django server for development, and relative path for production
+    BASE_URL: window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.protocol === 'file:' 
+        ? "http://127.0.0.1:8000/api/v1" 
+        : "/api/v1",
     TOKEN_KEY: "zaker_auth_token",
     USER_KEY: "zaker_user_data"
 };
