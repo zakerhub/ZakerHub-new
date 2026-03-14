@@ -158,6 +158,14 @@ REST_FRAMEWORK = {
 # CORS configuration
 CORS_ALLOW_ALL_ORIGINS = True
 
+# CSRF Trusted Origins (Required for POST requests on production)
+CSRF_TRUSTED_ORIGINS = [
+    'https://zakerhub.com',
+    'https://*.zakerhub.com',
+]
+if render_external_hostname:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{render_external_hostname}")
+
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
