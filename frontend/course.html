@@ -90,7 +90,13 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 2px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-primary-accent);
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .tabs-container {
@@ -352,13 +358,11 @@
     <nav class="navbar">
         <a href="dashboard.html" class="logo">Zaker<span class="logo-hub">Hub</span></a>
         <div class="user-nav-profile">
-            <div style="text-align: right; margin-right: 10px;">
-                <span id="userName" style="display: block; font-weight: 700; font-size: 0.9rem;">Loading...</span>
-                <span id="userRole" style="font-size: 0.75rem; color: var(--color-text-light);">Teacher</span>
+            <div style="text-align: right; margin-right: 12px;">
+                <span id="userName" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--color-text-dark);">Loading...</span>
+                <span id="userRole" style="font-size: 0.85rem; color: var(--color-text-light);">Member</span>
             </div>
-            <img id="userAvatar"
-                src="[https://ui-avatars.com/api/?name=User&background=172a50&color=fff](https://ui-avatars.com/api/?name=User&background=172a50&color=fff)"
-                class="nav-avatar">
+            <div id="userInitials" class="nav-avatar">??</div>
         </div>
     </nav>
 
@@ -469,7 +473,7 @@
 
                 document.getElementById('userName').innerText = user.name;
                 document.getElementById('userRole').innerText = user.role.charAt(0) + user.role.slice(1).toLowerCase();
-                document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=172a50&color=fff`;
+                document.getElementById('userInitials').innerText = user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
 
                 // If student, hide management tabs
                 if (user.role === 'STUDENT') {
@@ -522,19 +526,21 @@
                 container.innerHTML = '<p style="padding: 2rem; text-align: center; color: var(--color-text-light);">No students enrolled in this course.</p>';
                 return;
             }
-            container.innerHTML = students.map(s => `
-        <div class="row align-items-center mb-3 p-2 bg-light rounded" style="border: 1px solid #e3e8ee;">
-            <div class="col-auto">
-                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=random" style="width:38px; border-radius:50%">
+            container.innerHTML = students.map(s => {
+                const initials = s.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                return `
+        <div class="student-row">
+            <div class="student-info">
+                <div style="text-align: left;">
+                    <span style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--color-text-dark);">${s.name}</span>
+                    <span style="font-size: 0.8rem; color: var(--color-text-light);">${s.phone || s.email || 'Member'}</span>
+                </div>
+                <div class="nav-avatar" style="width: 40px; height: 40px; font-size: 0.85rem;">${initials}</div>
             </div>
-            <div class="col">
-                <strong>${s.name}</strong><br><small class="text-muted">${s.phone || s.email || ''}</small>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-sm btn-danger" onclick="dropStudent(${s.id})">Drop</button>
-            </div>
+            <button class="btn-drop" onclick="event.stopPropagation(); dropStudent(${s.id})">Drop</button>
         </div>
-        `).join('');
+        `;
+            }).join('');
         }
 
         async function fetchFeed() {

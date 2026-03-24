@@ -70,9 +70,16 @@
         }
 
         .nav-avatar {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--google-blue); /* Default until data loads */
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .tabs-container {
@@ -288,16 +295,20 @@
 
     <nav class="top-nav">
         <div class="nav-left">
-            <a href="course-stream.html" class="btn-return" id="back-link">
+            <a href="dashboard.html" class="btn-return" id="back-link">
                 <i data-feather="arrow-left" style="width: 18px;"></i>
                 Return to course
             </a>
         </div>
-        <div class="nav-right">
+        <div class="nav-right" style="display: flex; align-items: center; gap: 12px;">
             <button class="cog-btn" id="teacher-cog" onclick="toggleModal(true)" style="display: none;">
                 <i data-feather="settings"></i>
             </button>
-            <img src="https://ui-avatars.com/api/?name=User&background=172a50&color=fff" class="nav-avatar">
+            <div style="text-align: right; margin-right: 12px;">
+                <span id="nav-user-name" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-dark);"></span>
+                <span id="nav-user-role" style="font-size: 0.85rem; color: #4f566b;"></span>
+            </div>
+            <div id="nav-user-initials" class="nav-avatar">??</div>
         </div>
     </nav>
 
@@ -401,11 +412,18 @@
 
             try {
                 const user = ZakerAPI.auth.getUser();
-                document.querySelector('.nav-avatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=172a50&color=fff`;
+                document.getElementById('nav-user-name').innerText = user.name;
+                document.getElementById('nav-user-role').innerText = user.role.charAt(0) + user.role.slice(1).toLowerCase();
+                document.getElementById('nav-user-initials').innerText = user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
 
                 // Fetch assignment details (using CourseItem from backend)
                 const asmData = await ZakerAPI.fetch(`/academics/items/${assignmentId}/`);
                 renderAssignmentDetails(asmData);
+
+                // Set the back link to the correct course page
+                if (asmData.course) {
+                    document.getElementById('back-link').href = `course.html?id=${asmData.course}`;
+                }
 
                 if (user.role === 'TEACHER' || user.role === 'ADMIN') {
                     setupTeacherView(asmData);
