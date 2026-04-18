@@ -346,10 +346,6 @@
             <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i> Registration</a>
             <a href="assignments.html" class="nav-item"><i data-feather="edit-3" style="margin-right: 12px;"></i> Assignments</a>
             <a href="support.html" class="nav-item"><i data-feather="phone-call" style="margin-right: 12px;"></i> We're Here for You</a>
-            
-            <a href="vimeo_upload.html" class="nav-item" id="navUploadVideo" style="display: none; margin-top: 2rem; border: 1px solid var(--color-primary-accent); color: var(--color-primary-accent);">
-                <i data-feather="upload-cloud" style="margin-right: 12px;"></i> Upload Video
-            </a>
         </nav>
         <div class="sidebar-footer">
             <a href="#" class="nav-item" onclick="logout()"><i data-feather="log-out" style="margin-right: 12px;"></i>
@@ -412,10 +408,6 @@
                     phone: user.role === 'TEACHER' ? 'Instructor' : (user.phone || user.email)
                 });
                 
-                if (user.is_staff) {
-                    const navUploadVideo = document.getElementById('navUploadVideo');
-                    if (navUploadVideo) navUploadVideo.style.display = 'flex';
-                }
 
                 let activeCourses = [];
 
