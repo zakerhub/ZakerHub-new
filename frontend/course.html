@@ -268,11 +268,6 @@
                 <i class="fa-solid fa-laptop-code fa-2x"></i>
                 Online meetings
             </button>
-            <!-- Staff Only Tab -->
-            <button class="tab-btn" id="createTabBtn" style="display:none;" onclick="switchTab('create', this)">
-                <i class="fa-solid fa-plus-circle fa-2x"></i>
-                Create Content
-            </button>
         </div>
 
         <!-- Content Area -->
@@ -317,40 +312,6 @@
                 </div>
             </div>
 
-            <!-- Create Tab (Staff Only) -->
-            <div id="tab-create" class="tab-pane">
-                <div class="form-section">
-                    <h4 class="mb-4">Add Course Content</h4>
-                    <div class="mb-3">
-                        <label>Content Type</label>
-                        <select id="postType" class="form-select" onchange="toggleFormFields()">
-                            <option value="ASSIGNMENT">Assignment</option>
-                            <option value="MATERIAL">Material (File/Link)</option>
-                            <option value="MEETING">Live Session (Zoom)</option>
-                            <option value="RECORDED_SESSION">Recorded Session</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Title</label>
-                        <input type="text" id="postTitle" class="form-control" required>
-                    </div>
-                    <div class="mb-3" id="linkGroup" style="display:none;">
-                        <label>Meeting Link</label>
-                        <input type="url" id="postLink" class="form-control">
-                    </div>
-                    <div class="mb-3" id="videoGroup" style="display:none;">
-                        <label>Vimeo Video ID</label>
-                        <input type="text" id="postVideoId" class="form-control">
-                        <small><a href="vimeo_upload.html" target="_blank" style="color: #635bff;">Upload video here</a></small>
-                    </div>
-                    <div class="mb-3" id="fileGroup">
-                        <label>Attachment (Optional)</label>
-                        <input type="file" id="postFile" class="form-control">
-                    </div>
-                    <button class="btn btn-primary w-100" id="submitBtn" onclick="submitPost()" style="background-color: var(--color-navy); border:none;">Post to Course</button>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -392,10 +353,6 @@
             document.getElementById('userName').innerText = user.name;
             document.getElementById('userRole').innerText = user.role.charAt(0) + user.role.slice(1).toLowerCase();
             document.getElementById('userInitials').innerText = user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
-
-            if (user.is_staff) {
-                document.getElementById('createTabBtn').style.display = 'flex';
-            }
 
             try {
                 const courseData = await ZakerAPI.fetch(`/academics/courses/${currentCourseId}/`);
@@ -509,57 +466,6 @@
             
             document.getElementById(`tab-${tabId}`).classList.add('active');
             btnElement.classList.add('active');
-        }
-
-        function toggleFormFields() {
-            const type = document.getElementById('postType').value;
-            document.getElementById('linkGroup').style.display = type === 'MEETING' ? 'block' : 'none';
-            document.getElementById('videoGroup').style.display = type === 'RECORDED_SESSION' ? 'block' : 'none';
-            document.getElementById('fileGroup').style.display = type === 'RECORDED_SESSION' ? 'none' : 'block';
-        }
-
-        async function submitPost() {
-            const type = document.getElementById('postType').value;
-            const title = document.getElementById('postTitle').value;
-            
-            if (!title) { alert("Title is required"); return; }
-            
-            const formData = new FormData();
-            formData.append('course', currentCourseId);
-            formData.append('type', type);
-            formData.append('title', title);
-            
-            if (type === 'MEETING') formData.append('content_url', document.getElementById('postLink').value);
-            if (type === 'RECORDED_SESSION') formData.append('video_id', document.getElementById('postVideoId').value);
-            
-            const fileInput = document.getElementById('postFile');
-            if (fileInput.files[0]) {
-                formData.append('file', fileInput.files[0]);
-            }
-
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "Posting...";
-
-            try {
-                const token = localStorage.getItem('zaker_token');
-                const res = await fetch(`${ZakerAPI.config.BASE_URL}/academics/items/`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Token ${token}` },
-                    body: formData
-                });
-                
-                if (!res.ok) throw new Error("Failed to post content");
-                
-                alert("Content added!");
-                window.location.reload();
-            } catch (err) {
-                console.error(err);
-                alert("Error: " + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Post to Course";
-            }
         }
 
         function playVideo(title, videoId) {
