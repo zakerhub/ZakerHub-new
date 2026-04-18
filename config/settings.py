@@ -168,3 +168,6 @@ if render_external_hostname:
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Vimeo API
+VIMEO_ACCESS_TOKEN = os.environ.get('VIMEO_ACCESS_TOKEN')

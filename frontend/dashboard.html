@@ -128,7 +128,7 @@
         /* --- Course Grid --- */
         .course-cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
@@ -139,37 +139,77 @@
             border-radius: 12px;
             border: 1px solid var(--color-border);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: var(--color-primary-navy);
+        }
+        
+        .course-card[data-type*="DP"]::before { background-color: #e53935; }
+        .course-card[data-type*="IGCSE"]::before { background-color: #388e3c; }
+        .course-card[data-type*="AD"]::before { background-color: #1976d2; }
+        .course-card[data-type*="SAT"]::before { background-color: #ffbd44; }
+        .course-card[data-type*="EST"]::before { background-color: #635bff; }
+        .course-card[data-type*="ACT"]::before { background-color: #00ca4e; }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin: 0;
         }
 
         .curriculum-tag {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: 800;
+            text-transform: uppercase;
+            background: var(--color-primary-navy);
+            color: white;
         }
 
-        .dp-tag {
-            background: #e1f5fe;
-            color: #0288d1;
-        }
+        .curriculum-dp { background: #e53935; }
+        .curriculum-igcse { background: #388e3c; }
+        .curriculum-ad { background: #1976d2; }
+        .curriculum-sat { background: #ffbd44; color: #1a1f36; }
+        .curriculum-est { background: #635bff; }
+        .curriculum-act { background: #00ca4e; }
 
-        .igcse-tag {
-            background: #f3e5f5;
-            color: #7b1fa2;
+        .instructor {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            margin-bottom: 1.5rem;
         }
 
         .progress-bar-container {
-            height: 8px;
-            background: #eee;
+            height: 6px;
+            background: #f0f2f5;
             border-radius: 4px;
-            margin: 15px 0 5px;
+            margin: 0 0 8px;
             position: relative;
         }
 
@@ -183,15 +223,107 @@
         .progress-text {
             font-size: 0.75rem;
             color: var(--color-text-light);
+            margin-bottom: 1rem;
         }
 
         .btn-card-access {
             display: inline-block;
-            margin-top: 1rem;
+            margin-top: auto;
             color: var(--color-primary-accent);
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .btn-card-access:hover {
+            color: #4f46e5;
+        }
+
+        /* --- Lower Sections --- */
+        .bottom-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .list-item {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .item-info-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--color-text-dark);
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+            margin-bottom: 2px;
+        }
+
+        .item-subtitle {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+        }
+
+        .btn-action {
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-submit {
+            background: var(--color-primary-accent);
+            color: white;
+        }
+
+        .btn-start {
+            background: #ffbd44;
+            color: white;
+        }
+
+        .btn-join {
+            background: #00ca4e;
+            color: white;
+        }
+
+        .btn-view {
+            background: #f0f2f5;
+            color: var(--color-text-dark);
         }
 
         /* --- Section States --- */
@@ -205,14 +337,19 @@
 <body>
 
     <aside class="sidebar">
-        <div class="logo-area"><span class="logo-hub">ZH</span> Zaker Hub</div>
+        <div class="logo-area" style="text-align: center; margin-bottom: 2rem;">
+            <img src="images/logo_d.png" alt="Zaker Hub Logo" style="max-width: 80%; height: auto;">
+        </div>
         <nav class="main-nav">
             <a href="index.html" class="nav-item"><i data-feather="grid" style="margin-right: 12px;"></i> Home</a>
             <a href="#" class="nav-item active"><i data-feather="book-open" style="margin-right: 12px;"></i> Courses</a>
-            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i>
-                Registration</a>
-            <a href="assignments.html" class="nav-item"><i data-feather="edit-3" style="margin-right: 12px;"></i>
-                Assignments</a>
+            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i> Registration</a>
+            <a href="assignments.html" class="nav-item"><i data-feather="edit-3" style="margin-right: 12px;"></i> Assignments</a>
+            <a href="support.html" class="nav-item"><i data-feather="phone-call" style="margin-right: 12px;"></i> We're Here for You</a>
+            
+            <a href="vimeo_upload.html" class="nav-item" id="navUploadVideo" style="display: none; margin-top: 2rem; border: 1px solid var(--color-primary-accent); color: var(--color-primary-accent);">
+                <i data-feather="upload-cloud" style="margin-right: 12px;"></i> Upload Video
+            </a>
         </nav>
         <div class="sidebar-footer">
             <a href="#" class="nav-item" onclick="logout()"><i data-feather="log-out" style="margin-right: 12px;"></i>
@@ -238,6 +375,22 @@
             <div class="course-cards-container" id="courseGrid">
             </div>
         </section>
+
+        <div class="bottom-sections">
+            <section class="dashboard-section" style="padding: 0;">
+                <h2 class="section-title">Assignments Due</h2>
+                <div id="assignmentsList">
+                    <div style="font-style: italic; color: var(--color-text-light); font-size: 0.9rem;">Loading assignments...</div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" style="padding: 0;">
+                <h2 class="section-title">Online Meetings (Zoom)</h2>
+                <div id="meetingsList">
+                    <div style="font-style: italic; color: var(--color-text-light); font-size: 0.9rem;">Loading meetings...</div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script src="js/api-config.js"></script>
@@ -258,6 +411,11 @@
                     fullName: user.name,
                     phone: user.role === 'TEACHER' ? 'Instructor' : (user.phone || user.email)
                 });
+                
+                if (user.is_staff) {
+                    const navUploadVideo = document.getElementById('navUploadVideo');
+                    if (navUploadVideo) navUploadVideo.style.display = 'flex';
+                }
 
                 let activeCourses = [];
 
@@ -267,7 +425,7 @@
                     activeCourses = teacherCourses.map(c => ({
                         id: c.id,
                         name: c.name,
-                        curriculum: c.subject_name || "General",
+                        curriculum: c.subject_name || "DP",
                         instructorName: "You",
                         progress: 100 // Visual only
                     }));
@@ -276,19 +434,34 @@
                     const enrollments = await ZakerAPI.fetch('/subscriptions/enrollments/');
                     activeCourses = enrollments
                         .filter(e => e.status === 'APPROVED')
-                        .map(e => ({
-                            id: e.subscription_detail.course_detail.id,
-                            name: e.subscription_detail.course_detail.name,
-                            curriculum: e.subscription_detail.course_detail.subject_name || "General",
-                            instructorName: e.subscription_detail.course_detail.teacher_name || "TBA",
-                            planType: e.subscription_detail.plan_type,
-                            levelName: e.subscription_detail.level_detail ? e.subscription_detail.level_detail.name : "General",
-                            progress: 0
-                        }));
+                        .map(e => {
+                            let prog = 0;
+                            if (e.start_date && e.end_date) {
+                                const start = new Date(e.start_date).getTime();
+                                const end = new Date(e.end_date).getTime();
+                                const now = new Date().getTime();
+                                if (now >= end) prog = 100;
+                                else if (now > start) prog = Math.round(((now - start) / (end - start)) * 100);
+                            }
+                            
+                            return {
+                                id: e.subscription_detail.course_detail.id,
+                                name: e.subscription_detail.course_detail.name,
+                                curriculum: e.subscription_detail.course_detail.subject_name || "IGCSE",
+                                instructorName: e.subscription_detail.course_detail.teacher_name || "TBA",
+                                planType: e.subscription_detail.plan_type,
+                                levelName: e.subscription_detail.level_detail ? e.subscription_detail.level_detail.name : "General",
+                                progress: prog
+                            };
+                        });
                 }
 
                 // 3. Render Courses
                 renderCourses(activeCourses);
+
+                // 4. Fetch and Render Items (Assignments & Meetings)
+                const items = await ZakerAPI.fetch('/academics/items/');
+                renderDashboardItems(items);
 
             } catch (error) {
                 console.error("Dashboard Load Error:", error);
@@ -324,35 +497,83 @@
             }
 
             courses.forEach(course => {
+                const curriculumType = course.curriculum.toUpperCase();
                 const card = `
-                    <div class="course-card">
+                    <div class="course-card" data-type="${curriculumType}">
                         <div class="card-header">
-                            <div>
-                                <h3 class="mb-1">${course.name}</h3>
-                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                                    <span class="curriculum-tag dp-tag">${course.curriculum}</span>
-                                    <span class="curriculum-tag" style="background: #e1f5fe; color: #0288d1; border: 1px solid #b3e5fc;">${course.planType}</span>
-                                    <span class="curriculum-tag" style="background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2;">${course.levelName}</span>
-                                </div>
-                            </div>
+                            <h3>${course.name}</h3>
+                            <span class="curriculum-tag curriculum-${curriculumType.toLowerCase()}">${curriculumType.substring(0,5)}</span>
                         </div>
-                        <p class="instructor mt-3" style="font-size: 0.9rem; color: #4f566b; margin-bottom: 0.5rem;">
-                            Instructor: <strong>${course.instructorName}</strong>
-                        </p>
+                        <p class="instructor">Instructor: ${course.instructorName}</p>
+                        
                         <div class="progress-bar-container">
                             <div class="progress-bar" style="width: ${course.progress}%"></div>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <span class="progress-text">${course.progress}% Complete</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="course.html?id=${course.id}" class="btn-card-access">Access Course →</a>
-                            <a href="course.html?id=${course.id}" class="btn-card-access" style="color: #635bff;">Assignments →</a>
-                        </div>
+                        <div class="progress-text">${course.progress}% Complete</div>
+                        
+                        <a href="course.html?id=${course.id}" class="btn-card-access">Access Course →</a>
                     </div>
                 `;
                 grid.innerHTML += card;
             });
+        }
+
+        function renderDashboardItems(items) {
+            const assignmentsList = document.getElementById('assignmentsList');
+            const meetingsList = document.getElementById('meetingsList');
+            
+            assignmentsList.innerHTML = "";
+            meetingsList.innerHTML = "";
+            
+            // Filter items by type. Based on Python choices: 'ASSIGNMENT', 'MEETING'
+            const assignments = items.filter(i => i.type === 'ASSIGNMENT' && !i.is_completed);
+            const meetings = items.filter(i => i.type === 'MEETING');
+            
+            if (assignments.length === 0) {
+                assignmentsList.innerHTML = "<p style='color: var(--color-text-light); font-size: 0.95rem; margin-top: 10px;'>No pending assignments. You're all caught up!</p>";
+            } else {
+                assignments.slice(0, 3).forEach(item => {
+                    const dateStr = new Date(item.created_at).toLocaleDateString();
+                    assignmentsList.innerHTML += `
+                        <div class="list-item">
+                            <div class="item-info-wrapper">
+                                <div class="item-icon" style="background: #f0f2f5;">
+                                    <i data-feather="edit-3"></i>
+                                </div>
+                                <div>
+                                    <div class="item-title">${item.title}</div>
+                                    <div class="item-subtitle">${item.course_name || 'General'} | Added: ${dateStr}</div>
+                                </div>
+                            </div>
+                            <a href="assignment.html?id=${item.id}" class="btn-action btn-submit" style="text-decoration: none;">View</a>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (meetings.length === 0) {
+                meetingsList.innerHTML = "<p style='color: var(--color-text-light); font-size: 0.95rem; margin-top: 10px;'>No upcoming online meetings scheduled.</p>";
+            } else {
+                meetings.slice(0, 3).forEach(item => {
+                    const dateStr = new Date(item.created_at).toLocaleDateString();
+                    meetingsList.innerHTML += `
+                        <div class="list-item" style="border-color: #00ca4e;">
+                            <div class="item-info-wrapper">
+                                <div class="item-icon" style="color: #00ca4e; background: #e8f5e9;">
+                                    <i data-feather="video"></i>
+                                </div>
+                                <div>
+                                    <div class="item-title">${item.title}</div>
+                                    <div class="item-subtitle">${item.course_name || 'General'} | Added: ${dateStr}</div>
+                                </div>
+                            </div>
+                            <a href="${item.content_url || '#'}" target="_blank" class="btn-action btn-join" style="text-decoration: none;">Join Zoom</a>
+                        </div>
+                    `;
+                });
+            }
+            
+            feather.replace();
         }
 
         function logout() {

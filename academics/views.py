@@ -8,6 +8,22 @@ from subscriptions.models import Enrollment
 from datetime import date
 from django.db.models import Q
 from django.utils import timezone
+import time
+import hashlib
+import requests
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+def staff_only(user):
+    return user.is_authenticated and user.is_staff
+
+@login_required
+@user_passes_test(staff_only)
+def vimeo_upload_page(request):
+    return render(request, "vimeo_upload.html")
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -17,7 +33,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 class IsTeacherOrAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role in ['TEACHER', 'ADMIN']
+        return request.user.is_authenticated and request.user.is_staff
 
 class CurriculumViewSet(viewsets.ModelViewSet):
     queryset = Curriculum.objects.all()
@@ -130,3 +146,55 @@ class CourseItemViewSet(viewsets.ModelViewSet):
             'is_completed': progress.is_completed,
             'completed_at': progress.completed_at
         })
+
+class VimeoUploadAPIView(APIView):
+    permission_classes = [IsTeacherOrAdmin]
+
+    def post(self, request):
+        title = request.data.get("title", "").strip()
+        size = request.data.get("size")
+        
+        if not title:
+            return Response({"error": "Title is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not size:
+            return Response({"error": "File size is required for Vimeo upload"}, status=status.HTTP_400_BAD_REQUEST)
+
+        token = settings.VIMEO_ACCESS_TOKEN
+        if not token:
+            return Response({"error": "Missing VIMEO_ACCESS_TOKEN"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            r = requests.post(
+                "https://api.vimeo.com/me/videos",
+                headers={
+                    "Authorization": f"bearer {token}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/vnd.vimeo.*+json;version=3.4"
+                },
+                json={
+                    "upload": {
+                        "approach": "tus",
+                        "size": size
+                    },
+                    "name": title
+                },
+                timeout=30,
+            )
+            r.raise_for_status()
+            data = r.json()
+            
+            upload_link = data.get("upload", {}).get("upload_link")
+            uri = data.get("uri")
+            video_id = uri.split("/")[-1] if uri else None
+
+            if not upload_link or not video_id:
+                return Response({"error": "Failed to get upload link or video ID from Vimeo"}, status=status.HTTP_400_BAD_REQUEST)
+                
+        except requests.RequestException as e:
+            return Response({"error": f"Vimeo API error: {e}"}, status=status.HTTP_502_BAD_GATEWAY)
+
+        return Response({
+            "uploadUrl": upload_link,
+            "videoId": video_id,
+            "embedUrl": f"https://player.vimeo.com/video/{video_id}",
+        }, status=status.HTTP_201_CREATED)

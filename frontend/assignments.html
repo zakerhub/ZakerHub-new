@@ -188,12 +188,14 @@
         <div class="logo-area"><span class="logo-hub">ZH</span> Zaker Hub</div>
         <nav class="main-nav">
             <a href="dashboard.html" class="nav-item"><i data-feather="grid" style="margin-right: 12px;"></i> Home</a>
-            <a href="dashboard.html" class="nav-item"><i data-feather="book-open" style="margin-right: 12px;"></i>
-                Courses</a>
-            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i>
-                Registration</a>
-            <a href="assignments.html" class="nav-item active"><i data-feather="edit-3" style="margin-right: 12px;"></i>
-                Assignments</a>
+            <a href="dashboard.html" class="nav-item"><i data-feather="book-open" style="margin-right: 12px;"></i> Courses</a>
+            <a href="curricula.html" class="nav-item"><i data-feather="file-text" style="margin-right: 12px;"></i> Registration</a>
+            <a href="assignments.html" class="nav-item active"><i data-feather="edit-3" style="margin-right: 12px;"></i> Assignments</a>
+            <a href="support.html" class="nav-item"><i data-feather="phone-call" style="margin-right: 12px;"></i> We're Here for You</a>
+            
+            <a href="vimeo_upload.html" class="nav-item" id="navUploadVideo" style="display: none; margin-top: 2rem; border: 1px solid var(--google-blue); color: var(--google-blue);">
+                <i data-feather="upload-cloud" style="margin-right: 12px;"></i> Upload Video
+            </a>
         </nav>
     </aside>
 
@@ -228,6 +230,12 @@
             if (!ZakerAPI.auth.isAuthenticated()) {
                 window.location.href = "signin.html";
                 return;
+            }
+            
+            const user = ZakerAPI.auth.getUser();
+            if (user && user.is_staff) {
+                const navUploadVideo = document.getElementById('navUploadVideo');
+                if (navUploadVideo) navUploadVideo.style.display = 'flex';
             }
 
             try {

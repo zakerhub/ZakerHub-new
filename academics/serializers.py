@@ -56,7 +56,7 @@ class CourseItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseItem
-        fields = ('id', 'course', 'course_name', 'level', 'type', 'title', 'content_url', 'file', 'is_completed', 'created_at')
+        fields = ('id', 'course', 'course_name', 'level', 'type', 'title', 'content_url', 'video_id', 'file', 'is_completed', 'created_at')
 
     def get_is_completed(self, obj):
         request = self.context.get('request')

@@ -69,6 +69,7 @@ class CourseItemAdmin(admin.ModelAdmin):
     list_display = ('title', 'course', 'type', 'file', 'level', 'created_at')
     list_filter = ('course', 'type', 'level')
     search_fields = ('title',)
+    change_list_template = "admin/academics/courseitem/change_list.html"
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -81,6 +82,15 @@ class CourseItemAdmin(admin.ModelAdmin):
             if not (request.user.is_superuser or request.user.role == 'ADMIN'):
                 kwargs["queryset"] = Course.objects.filter(teacher=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        
+    def get_urls(self):
+        from django.urls import path
+        from .views import vimeo_upload_page
+        urls = super().get_urls()
+        custom_urls = [
+            path('vimeo-upload/', self.admin_site.admin_view(vimeo_upload_page), name='academics_courseitem_vimeo_upload'),
+        ]
+        return custom_urls + urls
 
     def has_module_permission(self, request):
         return request.user.is_staff

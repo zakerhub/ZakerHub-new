@@ -6,6 +6,7 @@ class SubscriptionOption(models.Model):
     PLAN_TYPE_CHOICES = (
         ('WEEKLY', 'Weekly'),
         ('MONTHLY', 'Monthly'),
+        ('FULL_COURSE', 'Full Course'),
     )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subscription_options')
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, blank=True)

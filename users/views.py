@@ -26,7 +26,8 @@ class LoginView(ObtainAuthToken):
             'token': token.key,
             'user_id': user.pk,
             'name': user.name,
-            'role': user.role
+            'role': user.role,
+            'is_staff': user.is_staff
         })
 
 class CurrentUserView(generics.RetrieveAPIView):

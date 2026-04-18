@@ -53,14 +53,16 @@ class CourseItem(models.Model):
     TYPE_CHOICES = (
         ('MATERIAL', 'Material'),
         ('ASSIGNMENT', 'Assignment'),
-        ('MEETING', 'Meeting'),
+        ('MEETING', 'Online Meeting'),
         ('ANNOUNCEMENT', 'Announcement'),
+        ('RECORDED_SESSION', 'Recorded Session'),
     )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='items')
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, blank=True)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     title = models.CharField(max_length=255)
     content_url = models.URLField(blank=True, null=True)
+    video_id = models.CharField(max_length=255, blank=True, null=True, help_text="Vimeo video ID for recorded sessions")
     file = models.FileField(upload_to='course_items/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

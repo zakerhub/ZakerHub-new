@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video | Zaker Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            --color-primary-navy: #172a50;
+            --color-primary-accent: #635bff;
+            --color-bg-page: #f7f9fc;
+            --color-border: #e3e8ee;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-page);
+            padding: 2rem;
+        }
+        .upload-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .header h2 {
+            color: var(--color-primary-navy);
+            font-weight: 800;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: var(--color-primary-navy);
+            margin-bottom: 0.5rem;
+        }
+        .btn-primary {
+            background-color: var(--color-primary-accent);
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-weight: 700;
+        }
+        .btn-primary:hover {
+            background-color: #4f46e5;
+        }
+        .progress {
+            height: 20px;
+            margin-top: 1rem;
+            display: none;
+        }
+        .result-box {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result-box h4 {
+            color: #2e7d32;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .video-id-display {
+            font-family: monospace;
+            font-size: 1.2rem;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed #a5d6a7;
+            user-select: all;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-container">
+        <div class="header">
+            <h2><i data-feather="video"></i> Vimeo Video Uploader</h2>
+            <p class="text-muted">Upload your course videos directly to our servers</p>
+        </div>
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="videoTitle">Video Title</label>
+                <input type="text" id="videoTitle" class="form-control" placeholder="e.g. Chapter 1: Introduction" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="videoFile">Select Video File</label>
+                <input type="file" id="videoFile" class="form-control" accept="video/*" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="uploadBtn">
+                <i data-feather="upload-cloud"></i> Start Upload
+            </button>
+
+            <div class="progress" id="progressContainer">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </form>
+
+        <div class="result-box" id="resultBox">
+            <h4>Upload Complete!</h4>
+            <p>Copy this Video ID and paste it in the Admin Panel:</p>
+            <div class="video-id-display" id="videoIdResult"></div>
+            <button class="btn btn-sm btn-outline-success mt-2" onclick="copyToClipboard()">Copy ID</button>
+        </div>
+    </div>
+
+    <script src="js/api-config.js"></script>
+    <!-- Include TUS client -->
+    <script src="https://cdn.jsdelivr.net/npm/tus-js-client@3.0.0/dist/tus.min.js"></script>
+    <script>
+        feather.replace();
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const isDjangoAdmin = window.location.pathname.includes('/admin/');
+            
+            if (!isDjangoAdmin) {
+                if (!ZakerAPI.auth.isAuthenticated()) {
+                    alert("Please log in first.");
+                    window.location.href = "/signin.html";
+                    return;
+                }
+                
+                const user = ZakerAPI.auth.getUser();
+                if (!user.is_staff) {
+                    alert("Access Denied. Only staff members can access this page.");
+                    window.location.href = "/dashboard.html";
+                }
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('videoFile');
+            const titleInput = document.getElementById('videoTitle');
+            const file = fileInput.files[0];
+            const title = titleInput.value;
+
+            if (!file) return;
+
+            document.getElementById('uploadBtn').disabled = true;
+            document.getElementById('uploadBtn').innerHTML = 'Initializing...';
+            document.getElementById('progressContainer').style.display = 'flex';
+            document.getElementById('resultBox').style.display = 'none';
+
+            try {
+                // Get token or setup headers based on context (Django Admin vs Frontend)
+                const isDjangoAdmin = window.location.pathname.includes('/admin/');
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                
+                if (isDjangoAdmin) {
+                    // Django Admin uses Session/CSRF authentication
+                    function getCookie(name) {
+                        let cookieValue = null;
+                        if (document.cookie && document.cookie !== '') {
+                            const cookies = document.cookie.split(';');
+                            for (let i = 0; i < cookies.length; i++) {
+                                const cookie = cookies[i].trim();
+                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                    break;
+                                }
+                            }
+                        }
+                        return cookieValue;
+                    }
+                    headers['X-CSRFToken'] = getCookie('csrftoken');
+                } else {
+                    // Frontend uses Token authentication
+                    headers['Authorization'] = `Token ${localStorage.getItem('zaker_token')}`;
+                }
+
+                // 1. Get Upload Link & Video ID
+                const initRes = await fetch(`/api/v1/academics/vimeo/upload/`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ title: title, size: file.size })
+                });
+
+                if (!initRes.ok) {
+                    throw new Error("Failed to initialize upload");
+                }
+
+                const uploadData = await initRes.json();
+
+                // 2. Start TUS Upload
+                const upload = new tus.Upload(file, {
+                    uploadUrl: uploadData.uploadUrl,
+                    retryDelays: [0, 3000, 5000, 10000, 20000],
+                    metadata: {
+                        filename: file.name,
+                        filetype: file.type
+                    },
+                    onError: function(error) {
+                        console.error("Upload failed:", error);
+                        alert("Upload failed: " + error);
+                        resetForm();
+                    },
+                    onProgress: function(bytesUploaded, bytesTotal) {
+                        const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+                        const progressBar = document.getElementById('progressBar');
+                        progressBar.style.width = percentage + '%';
+                        progressBar.innerText = percentage + '%';
+                    },
+                    onSuccess: function() {
+                        document.getElementById('uploadBtn').innerHTML = '<i data-feather="check"></i> Uploaded';
+                        document.getElementById('resultBox').style.display = 'block';
+                        document.getElementById('videoIdResult').innerText = uploadData.videoId;
+                        feather.replace();
+                    }
+                });
+
+                upload.start();
+                document.getElementById('uploadBtn').innerHTML = 'Uploading...';
+
+            } catch (err) {
+                console.error(err);
+                alert("Error: " + err.message);
+                resetForm();
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('uploadBtn').disabled = false;
+            document.getElementById('uploadBtn').innerHTML = '<i data-feather="upload-cloud"></i> Start Upload';
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            feather.replace();
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('videoIdResult').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>
