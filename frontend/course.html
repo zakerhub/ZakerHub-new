@@ -53,6 +53,20 @@
             align-items: center;
             gap: 15px;
         }
+        .profile-info {
+            text-align: right;
+        }
+        .user-name {
+            display: block;
+            font-weight: 700;
+            color: #1a1f36; /* matching dashboard var(--color-text-dark) */
+            font-size: 1rem;
+        }
+        .user-role {
+            display: block;
+            font-size: 0.85rem;
+            color: #4f566b; /* matching dashboard var(--color-text-light) */
+        }
         .user-avatar {
             width: 45px;
             height: 45px;
@@ -62,8 +76,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1rem;
         }
         /* Banner */
         .banner-wrapper {
@@ -167,7 +181,31 @@
             font-size: 1.1rem;
             font-weight: 500;
             overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
+        .list-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        /* Custom Scrollbar for list-container */
+        .list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .list-container::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 10px;
+        }
+        .list-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 10px;
+        }
+        .list-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
         .list-row {
             background-color: var(--color-light-gray);
             border-radius: 25px;
@@ -185,6 +223,13 @@
         
         .custom-list-header .col-date, .custom-list-header .col-action {
             border-left: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .list-row .col-date, .list-row .col-action {
+            border-left: 2px solid rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -239,11 +284,11 @@
             <img src="images/logo.jpeg" alt="Zaker Hub" style="mix-blend-mode: multiply;">
         </div>
         <div class="user-profile">
-            <div class="text-end">
-                <div id="userName" class="fw-bold" style="color: var(--color-navy);">Loading...</div>
-                <div id="userRole" class="text-muted small">Student</div>
+            <div class="profile-info">
+                <span class="user-name" id="userName">Loading...</span>
+                <span class="user-role" id="userRole">...</span>
             </div>
-            <div id="userInitials" class="user-avatar">??</div>
+            <div class="user-avatar" id="userInitials">??</div>
         </div>
     </nav>
 
@@ -275,13 +320,15 @@
             
             <!-- Assignments Tab -->
             <div id="tab-assignments" class="tab-pane active scroll-indicator">
-                <div class="custom-list-header">
-                    <div class="col-name">Assignments:</div>
-                    <div class="col-date">Date:</div>
-                    <div class="col-action">Submit <i class="fa-solid fa-arrow-down ms-2"></i></div>
-                </div>
-                <div id="assignmentsList">
-                    <!-- Items populated via JS -->
+                <div class="list-container">
+                    <div class="custom-list-header">
+                        <div class="col-name">Assignments:</div>
+                        <div class="col-date">Date:</div>
+                        <div class="col-action">Submit <i class="fa-solid fa-arrow-down ms-2"></i></div>
+                    </div>
+                    <div id="assignmentsList">
+                        <!-- Items populated via JS -->
+                    </div>
                 </div>
             </div>
 
@@ -290,23 +337,27 @@
                 <div class="row">
                     <!-- Live Sessions -->
                     <div class="col-md-6 scroll-indicator">
-                        <div class="custom-list-header">
-                            <div class="col-name">Live sessions:</div>
-                            <div class="col-date">Date:</div>
-                        </div>
-                        <div id="liveList">
-                            <!-- Items populated via JS -->
+                        <div class="list-container">
+                            <div class="custom-list-header">
+                                <div class="col-name">Live sessions:</div>
+                                <div class="col-date">Date:</div>
+                            </div>
+                            <div id="liveList">
+                                <!-- Items populated via JS -->
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Recorded Sessions -->
                     <div class="col-md-6 scroll-indicator">
-                        <div class="custom-list-header">
-                            <div class="col-name">Recorded sessions:</div>
-                            <div class="col-date">Date:</div>
-                        </div>
-                        <div id="recordedList">
-                            <!-- Items populated via JS -->
+                        <div class="list-container">
+                            <div class="custom-list-header">
+                                <div class="col-name">Recorded sessions:</div>
+                                <div class="col-date">Date:</div>
+                            </div>
+                            <div id="recordedList">
+                                <!-- Items populated via JS -->
+                            </div>
                         </div>
                     </div>
                 </div>
